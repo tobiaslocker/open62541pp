@@ -219,6 +219,7 @@ class Identifier {
   UA_Guid m_guid;
 
  public:
+  Identifier();
   explicit Identifier(UA_UInt32 const &numeric);
   explicit Identifier(UA_String const &string);
   explicit Identifier(UA_Guid const &guid);

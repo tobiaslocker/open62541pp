@@ -106,6 +106,8 @@ json EndpointDescription::to_json() const {
   return j;
 }
 
+Identifier::Identifier() {}
+
 Identifier::Identifier(UA_UInt32 const &numeric)
     : m_numeric{numeric}, m_type{Type::Numeric} {}
 
@@ -150,6 +152,7 @@ Identifier Identifier::from_node_id(UA_NodeId const &node_id) {
     case UA_NODEIDTYPE_BYTESTRING:
       return Identifier(node_id.identifier.byteString);
   }
+  return Identifier();
 }
 
 std::string Identifier::type_to_string() const {
@@ -163,6 +166,7 @@ std::string Identifier::type_to_string() const {
     case Type::Guid:
       return "Guid";
   }
+  return std::string();
 }
 
 std::string Identifier::to_string() const {
