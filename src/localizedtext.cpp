@@ -2,19 +2,14 @@
 
 namespace open62541 {
 
-std::string to_std_string(UA_String const &str) {
-  if (str.data) {
-    char *arr = reinterpret_cast<char *>(str.data);
-    if (arr) {
-      return std::string(reinterpret_cast<char *>(str.data), str.length);
-    }
+LocalizedText::LocalizedText(UA_LocalizedText const &display_name) {
+  if (auto c = reinterpret_cast<char *>(display_name.text.data)) {
+      m_text = std::string(c);
   }
-  return std::string();
+  if (auto c = reinterpret_cast<char *>(display_name.locale.data)) {
+      m_locale = std::string(c);
+  }
 }
-
-LocalizedText::LocalizedText(UA_LocalizedText const &display_name)
-    : m_text{to_std_string(display_name.text)},
-      m_locale{to_std_string(display_name.locale)} {}
 
 LocalizedText::LocalizedText() : m_is_empty{true} {}
 

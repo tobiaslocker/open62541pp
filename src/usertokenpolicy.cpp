@@ -2,23 +2,21 @@
 
 namespace open62541 {
 
-std::string to_std_string(UA_String const &str) {
-  if (str.data) {
-    char *arr = reinterpret_cast<char *>(str.data);
-    if (arr) {
-      return std::string(reinterpret_cast<char *>(str.data), str.length);
-    }
-  }
-  return std::string();
-}
-
 UserTokenPolicy::UserTokenPolicy(UA_UserTokenPolicy user_token_policy)
-    : m_policy_id{to_std_string(user_token_policy.policyId)},
-      m_token_type{UserTokenType(user_token_policy.tokenType)},
-      m_issued_token_type{to_std_string(user_token_policy.issuedTokenType)},
-      m_issuer_endpoint_url{to_std_string(user_token_policy.issuerEndpointUrl)},
-      m_security_policy_uri{
-          to_std_string(user_token_policy.securityPolicyUri)} {}
+     : m_token_type{UserTokenType(user_token_policy.tokenType)} {
+  if (auto c = reinterpret_cast<char *>(user_token_policy.policyId.data)) {
+      m_policy_id = std::string(c);
+  }
+  if (auto c = reinterpret_cast<char *>(user_token_policy.issuedTokenType.data)) {
+      m_issued_token_type = std::string(c);
+  }
+  if (auto c = reinterpret_cast<char *>(user_token_policy.issuerEndpointUrl.data)) {
+      m_issuer_endpoint_url = std::string(c);
+  }
+  if (auto c = reinterpret_cast<char *>(user_token_policy.securityPolicyUri.data)) {
+      m_security_policy_uri = std::string(c);
+  }
+}
 
 std::string UserTokenPolicy::policy_id() const { return m_policy_id; }
 
@@ -37,28 +35,26 @@ std::string UserTokenPolicy::security_policy_uri() const {
 }
 
 json UserTokenPolicy::to_json() const {
-  json j;
-  j["PolicyId"] = m_policy_id;
-  j["IssuedTokenType"] = m_issued_token_type;
-  j["IssuerEndpointUrl"] = m_policy_id;
-  j["SecurityPolicyUri"] = m_policy_id;
-
+  json policy;
+  policy["PolicyId"] = m_policy_id;
+  policy["IssuedTokenType"] = m_issued_token_type;
+  policy["IssuerEndpointUrl"] = m_policy_id;
+  policy["SecurityPolicyUri"] = m_policy_id;
   switch (m_token_type) {
     case UserTokenType::Anonymous:
-      j["UserTokenType"] = "Anonymous";
+      policy["UserTokenType"] = "Anonymous";
       break;
     case UserTokenType::UserName:
-      j["UserTokenType"] = "UserName";
+      policy["UserTokenType"] = "UserName";
       break;
     case UserTokenType::Certificate:
-      j["UserTokenType"] = "Certificate";
+      policy["UserTokenType"] = "Certificate";
       break;
     case UserTokenType::IssuedToken:
-      j["UserTokenType"] = "IssuedToken";
+      policy["UserTokenType"] = "IssuedToken";
       break;
   }
-
-  return j;
+  return policy;
 }
 
 }  // namespace open62541

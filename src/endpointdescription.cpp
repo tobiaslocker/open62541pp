@@ -15,20 +15,24 @@ std::string to_std_string(UA_String const &str) {
 EndpointDescription::EndpointDescription() {}
 
 EndpointDescription::EndpointDescription(
-    const UA_EndpointDescription &endpoint_decription)
-    : m_endpoint_url{to_std_string(endpoint_decription.endpointUrl)},
-      m_server{endpoint_decription.server},
-      m_server_certificate{endpoint_decription.serverCertificate},
-      m_security_mode{MessageSecurityMode(endpoint_decription.securityMode)},
-      m_security_policy_uri{
-          to_std_string(endpoint_decription.securityPolicyUri)},
-      m_user_identity_tokens_size{endpoint_decription.userIdentityTokensSize},
-      m_transport_profile_uri{
-          to_std_string(endpoint_decription.transportProfileUri)},
-      m_security_level{endpoint_decription.securityLevel} {
-  for (size_t i = 0; i < endpoint_decription.userIdentityTokensSize; ++i) {
-    auto policy = UserTokenPolicy(endpoint_decription.userIdentityTokens[i]);
+    const UA_EndpointDescription &endpoint_description)
+    : m_server{endpoint_description.server},
+      m_server_certificate{endpoint_description.serverCertificate},
+      m_security_mode{MessageSecurityMode(endpoint_description.securityMode)},
+      m_user_identity_tokens_size{endpoint_description.userIdentityTokensSize},
+      m_security_level{endpoint_description.securityLevel} {
+  for (size_t i = 0; i < endpoint_description.userIdentityTokensSize; ++i) {
+    auto policy = UserTokenPolicy(endpoint_description.userIdentityTokens[i]);
     m_user_identity_tokens.push_back(policy);
+  }
+  if (auto c = reinterpret_cast<char *>(endpoint_description.endpointUrl.data)) {
+      m_endpoint_url = std::string(c);
+  }
+  if (auto c = reinterpret_cast<char *>(endpoint_description.securityPolicyUri.data)) {
+      m_security_policy_uri = std::string(c);
+  }
+  if (auto c = reinterpret_cast<char *>(endpoint_description.transportProfileUri.data)) {
+      m_transport_profile_uri = std::string(c);
   }
 }
 

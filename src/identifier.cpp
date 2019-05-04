@@ -2,23 +2,16 @@
 
 namespace open62541 {
 
-std::string to_std_string(UA_String const &str) {
-  if (str.data) {
-    char *arr = reinterpret_cast<char *>(str.data);
-    if (arr) {
-      return std::string(reinterpret_cast<char *>(str.data), str.length);
-    }
-  }
-  return std::string();
-}
-
 Identifier::Identifier() {}
 
 Identifier::Identifier(UA_UInt32 const &numeric)
     : m_numeric{numeric}, m_type{Type::Numeric} {}
 
-Identifier::Identifier(UA_String const &string)
-    : m_string{to_std_string(string)}, m_type{Type::String} {}
+Identifier::Identifier(UA_String const &string) {
+  if (auto c = reinterpret_cast<char *>(string.data)) {
+      m_string = std::string(c);
+  }
+}
 
 Identifier::Identifier(UA_Guid const &guid)
     : m_guid{guid}, m_type{Type::Guid} {}

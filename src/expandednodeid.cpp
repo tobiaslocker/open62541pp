@@ -2,20 +2,13 @@
 
 namespace open62541 {
 
-std::string to_std_string(UA_String const &str) {
-  if (str.data) {
-    char *arr = reinterpret_cast<char *>(str.data);
-    if (arr) {
-      return std::string(reinterpret_cast<char *>(str.data), str.length);
-    }
-  }
-  return std::string();
-}
-
 ExpandedNodeId::ExpandedNodeId(UA_ExpandedNodeId const &expanded_node_id)
     : m_node_id{expanded_node_id.nodeId},
-      m_namespace_uri{to_std_string(expanded_node_id.namespaceUri)},
-      m_server_index{expanded_node_id.serverIndex} {}
+      m_server_index{expanded_node_id.serverIndex} {
+  if (auto c = reinterpret_cast<char *>(expanded_node_id.namespaceUri.data)) {
+      m_namespace_uri = std::string(c);
+  }
+}
 
 ExpandedNodeId::ExpandedNodeId(NodeId const &node_id) : m_node_id{node_id} {}
 
@@ -33,11 +26,11 @@ NodeId ExpandedNodeId::node_id() const { return m_node_id; }
 u_int32_t ExpandedNodeId::server_index() const { return m_server_index; }
 
 json ExpandedNodeId::to_json() const {
-  json j;
-  j["NodeId"] = node_id().to_json();
-  j["NamespaceUri"] = namespace_uri();
-  j["SeverIndex"] = server_index();
-  return j;
+  json exp_node_id;
+  exp_node_id["NodeId"] = node_id().to_json();
+  exp_node_id["NamespaceUri"] = namespace_uri();
+  exp_node_id["SeverIndex"] = server_index();
+  return exp_node_id;
 }
 
 }  // namespace open62541

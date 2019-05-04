@@ -20,12 +20,12 @@ QualifiedName ReferenceDescription::browse_name() const {
 }
 
 json ReferenceDescription::to_json() const {
-  json j;
-  j["DisplayName"] = display_name().text();
-  j["BrowseName"] = browse_name().name();
-  j["NodeId"] = node_id().to_json();
-  j["TypeDefinition"] = type_definition().to_json();
-  return j;
+  json ref_description;
+  ref_description["DisplayName"] = display_name().text();
+  ref_description["BrowseName"] = browse_name().name();
+  ref_description["NodeId"] = node_id().to_json();
+  ref_description["TypeDefinition"] = type_definition().to_json();
+  return ref_description;
 }
 
 ExpandedNodeId ReferenceDescription::type_definition() const {
