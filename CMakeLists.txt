@@ -19,7 +19,23 @@ if(Boost_FOUND)
 endif()
 
 include_directories(include)
-set(SOURCES src/open62541.cpp src/log.cpp)
+
+set(
+    SOURCES
+    src/applicationdescription.cpp
+    src/certificate.cpp
+    src/client.cpp
+    src/endpointdescription.cpp
+    src/expandednodeid.cpp
+    src/identifier.cpp
+    src/localizedtext.cpp
+    src/node.cpp
+    src/nodeid.cpp
+    src/qualifiedname.cpp
+    src/referencedescription.cpp
+    src/usertokenpolicy.cpp
+    src/log.cpp
+)
 
 add_library(${PROJECT_NAME} SHARED ${SOURCES})
 

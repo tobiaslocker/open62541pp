@@ -1,3 +1,3 @@
 #!/bin/bash
-clang-format -i -style=file *.cpp
-clang-format -i -style=file *.hpp
+clang-format -verbose -i -style=file src/*.cpp
+clang-format -verbose -i -style=file include/*.hpp
