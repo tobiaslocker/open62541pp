@@ -9,7 +9,7 @@ Identifier::Identifier(UA_UInt32 const &numeric)
 
 Identifier::Identifier(UA_String const &string) {
   if (auto c = reinterpret_cast<char *>(string.data)) {
-      m_string = std::string(c);
+    m_string = std::string(c);
   }
 }
 

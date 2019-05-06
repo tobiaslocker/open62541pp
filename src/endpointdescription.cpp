@@ -25,14 +25,17 @@ EndpointDescription::EndpointDescription(
     auto policy = UserTokenPolicy(endpoint_description.userIdentityTokens[i]);
     m_user_identity_tokens.push_back(policy);
   }
-  if (auto c = reinterpret_cast<char *>(endpoint_description.endpointUrl.data)) {
-      m_endpoint_url = std::string(c);
+  if (auto c =
+          reinterpret_cast<char *>(endpoint_description.endpointUrl.data)) {
+    m_endpoint_url = std::string(c);
   }
-  if (auto c = reinterpret_cast<char *>(endpoint_description.securityPolicyUri.data)) {
-      m_security_policy_uri = std::string(c);
+  if (auto c = reinterpret_cast<char *>(
+          endpoint_description.securityPolicyUri.data)) {
+    m_security_policy_uri = std::string(c);
   }
-  if (auto c = reinterpret_cast<char *>(endpoint_description.transportProfileUri.data)) {
-      m_transport_profile_uri = std::string(c);
+  if (auto c = reinterpret_cast<char *>(
+          endpoint_description.transportProfileUri.data)) {
+    m_transport_profile_uri = std::string(c);
   }
 }
 

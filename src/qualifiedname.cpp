@@ -3,9 +3,9 @@
 namespace open62541 {
 
 QualifiedName::QualifiedName(UA_QualifiedName const &name)
-      : m_namespace_index{name.namespaceIndex} {
+    : m_namespace_index{name.namespaceIndex} {
   if (auto c = reinterpret_cast<char *>(name.name.data)) {
-      m_name = std::string(c);
+    m_name = std::string(c);
   }
 }
 

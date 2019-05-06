@@ -4,26 +4,62 @@ namespace open62541 {
 
 ApplicationDescription::ApplicationDescription(
     UA_ApplicationDescription const &application_description)
-    : m_application_name{
-          LocalizedText(application_description.applicationName)},
+    : m_application_name{LocalizedText(
+          application_description.applicationName)},
       m_application_type{
           ApplicationType(application_description.applicationType)} {
-  for (size_t i = 0; i < application_description.discoveryUrlsSize; ++i) {
-      if (auto c = reinterpret_cast<char *>(application_description.discoveryUrls[i].data)) {
-        m_discovery_urls.push_back(std::string(c));
+  if (application_description.discoveryUrls) {
+    for (size_t i = 0; i < application_description.discoveryUrlsSize; ++i) {
+      if (auto c = reinterpret_cast<char *>(
+              application_description.discoveryUrls[i].data)) {
+        m_discovery_urls.push_back(
+            std::string(c, application_description.discoveryUrls[i].length));
+        BOOST_LOG_CHANNEL_SEV(m_lg, m_channel, trace)
+            << "Appending discovery url "
+            << m_discovery_urls.at(m_discovery_urls.size() - 1);
+      } else {
+        BOOST_LOG_CHANNEL_SEV(m_lg, m_channel, trace) << "No discovery URL";
       }
+    }
+  } else {
+     BOOST_LOG_CHANNEL_SEV(m_lg, m_channel, trace) << "No discovery URLS";
   }
-  if (auto c = reinterpret_cast<char *>(application_description.applicationUri.data)) {
-      m_application_uri = std::string(c);
+
+  if (auto c = reinterpret_cast<char *>(
+          application_description.applicationUri.data)) {
+    m_application_uri =
+        std::string(c, application_description.applicationUri.length);
+    BOOST_LOG_CHANNEL_SEV(m_lg, m_channel, trace)
+        << "Application URI = " << m_application_uri;
+  } else {
+    BOOST_LOG_CHANNEL_SEV(m_lg, m_channel, trace) << "No application URI";
   }
-  if (auto c = reinterpret_cast<char *>(application_description.productUri.data)) {
-      m_product_uri = std::string(c);
+
+  if (auto c =
+          reinterpret_cast<char *>(application_description.productUri.data)) {
+    m_product_uri = std::string(c, application_description.productUri.length);
+    BOOST_LOG_CHANNEL_SEV(m_lg, m_channel, trace)
+        << "Product URI = " << m_product_uri;
+  } else {
+    BOOST_LOG_CHANNEL_SEV(m_lg, m_channel, trace) << "No product URI";
   }
-  if (auto c = reinterpret_cast<char *>(application_description.gatewayServerUri.data)) {
-      m_gateway_server_uri = std::string(c);
+  if (auto c = reinterpret_cast<char *>(
+          application_description.gatewayServerUri.data)) {
+    m_gateway_server_uri =
+        std::string(c, application_description.gatewayServerUri.length);
+    BOOST_LOG_CHANNEL_SEV(m_lg, m_channel, trace)
+        << "Gateway server URI " << m_gateway_server_uri;
+  } else {
+    BOOST_LOG_CHANNEL_SEV(m_lg, m_channel, trace) << "No gateway server URI";
   }
-  if (auto c = reinterpret_cast<char *>(application_description.discoveryProfileUri.data)) {
-      m_gateway_server_uri = std::string(c);
+  if (auto c = reinterpret_cast<char *>(
+          application_description.discoveryProfileUri.data)) {
+    m_discovery_profile_uri =
+        std::string(c, application_description.discoveryProfileUri.length);
+    BOOST_LOG_CHANNEL_SEV(m_lg, m_channel, trace)
+        << "Discovery profile URI " << m_discovery_profile_uri;
+  } else {
+    BOOST_LOG_CHANNEL_SEV(m_lg, m_channel, trace) << "No discovery profile URI";
   }
 }
 

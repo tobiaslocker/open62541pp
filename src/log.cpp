@@ -14,22 +14,22 @@ std::ostream &logger::operator<<(std::ostream &strm,
 
 void logger::init() {
   boost::shared_ptr<logging::core> core = logging::core::get();
-  auto log_level_env = std::string(std::getenv("LOG"));
-  if (log_level_env == "debug") {
-    core->set_filter(expr::attr<severity_level>("Severity") >= debug);
-  }
-  if (log_level_env == "info") {
-    core->set_filter(expr::attr<severity_level>("Severity") >= info);
-  }
-  if (log_level_env == "warning") {
-    core->set_filter(expr::attr<severity_level>("Severity") >= warning);
-  }
-  if (log_level_env == "error") {
-    core->set_filter(expr::attr<severity_level>("Severity") >= error);
-  }
-  if (log_level_env == "critical") {
-    core->set_filter(expr::attr<severity_level>("Severity") >= critical);
-  }
+  //  auto log_level_env = std::string(std::getenv("LOG"));
+  //  if (log_level_env == "debug") {
+  //    core->set_filter(expr::attr<severity_level>("Severity") >= debug);
+  //  }
+  //  if (log_level_env == "info") {
+  //    core->set_filter(expr::attr<severity_level>("Severity") >= info);
+  //  }
+  //  if (log_level_env == "warning") {
+  //    core->set_filter(expr::attr<severity_level>("Severity") >= warning);
+  //  }
+  //  if (log_level_env == "error") {
+  //    core->set_filter(expr::attr<severity_level>("Severity") >= error);
+  //  }
+  //  if (log_level_env == "critical") {
+  //    core->set_filter(expr::attr<severity_level>("Severity") >= critical);
+  //  }
 
   //  std::string timestamp = "%Y-%m-%d, %H:%M:%S.%f ";
   std::string timestamp = "%Y-%m-%d %H:%M:%S ";

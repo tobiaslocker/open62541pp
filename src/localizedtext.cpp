@@ -4,10 +4,10 @@ namespace open62541 {
 
 LocalizedText::LocalizedText(UA_LocalizedText const &display_name) {
   if (auto c = reinterpret_cast<char *>(display_name.text.data)) {
-      m_text = std::string(c);
+    m_text = std::string(c, display_name.text.length);
   }
   if (auto c = reinterpret_cast<char *>(display_name.locale.data)) {
-      m_locale = std::string(c);
+    m_locale = std::string(c, display_name.locale.length);
   }
 }
 

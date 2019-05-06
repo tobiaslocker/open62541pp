@@ -6,7 +6,7 @@ ExpandedNodeId::ExpandedNodeId(UA_ExpandedNodeId const &expanded_node_id)
     : m_node_id{expanded_node_id.nodeId},
       m_server_index{expanded_node_id.serverIndex} {
   if (auto c = reinterpret_cast<char *>(expanded_node_id.namespaceUri.data)) {
-      m_namespace_uri = std::string(c);
+    m_namespace_uri = std::string(c);
   }
 }
 

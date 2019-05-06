@@ -3,9 +3,8 @@
 namespace open62541 {
 
 Certificate::Certificate(UA_ByteString const &certificate) {
-
   if (auto c = reinterpret_cast<char *>(certificate.data)) {
-      m_certificate = std::string(c);
+    m_certificate = std::string(c);
   }
 }
 
