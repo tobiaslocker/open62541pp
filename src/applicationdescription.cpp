@@ -22,7 +22,7 @@ ApplicationDescription::ApplicationDescription(
       }
     }
   } else {
-     BOOST_LOG_CHANNEL_SEV(m_lg, m_channel, trace) << "No discovery URLS";
+    BOOST_LOG_CHANNEL_SEV(m_lg, m_channel, trace) << "No discovery URLS";
   }
 
   if (auto c = reinterpret_cast<char *>(
