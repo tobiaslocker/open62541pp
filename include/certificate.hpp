@@ -5,11 +5,13 @@
 
 // STL
 #include <string>
+#include <vector>
 
 namespace open62541 {
 
 class Certificate {
   std::string m_certificate;
+  std::vector<unsigned char> m_bytes;
 
  public:
   Certificate() {}

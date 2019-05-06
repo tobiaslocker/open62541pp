@@ -10,57 +10,27 @@ ApplicationDescription::ApplicationDescription(
           ApplicationType(application_description.applicationType)} {
   if (application_description.discoveryUrls) {
     for (size_t i = 0; i < application_description.discoveryUrlsSize; ++i) {
-      if (auto c = reinterpret_cast<char *>(
-              application_description.discoveryUrls[i].data)) {
-        m_discovery_urls.push_back(
-            std::string(c, application_description.discoveryUrls[i].length));
-        BOOST_LOG_CHANNEL_SEV(m_lg, m_channel, trace)
-            << "Appending discovery url "
-            << m_discovery_urls.at(m_discovery_urls.size() - 1);
-      } else {
-        BOOST_LOG_CHANNEL_SEV(m_lg, m_channel, trace) << "No discovery URL";
-      }
+      std::string s;
+      s.assign(application_description.discoveryUrls[i].data,
+               application_description.discoveryUrls[i].data +
+                   application_description.discoveryUrls[i].length);
+      m_discovery_urls.push_back(s);
     }
-  } else {
-    BOOST_LOG_CHANNEL_SEV(m_lg, m_channel, trace) << "No discovery URLS";
   }
-
-  if (auto c = reinterpret_cast<char *>(
-          application_description.applicationUri.data)) {
-    m_application_uri =
-        std::string(c, application_description.applicationUri.length);
-    BOOST_LOG_CHANNEL_SEV(m_lg, m_channel, trace)
-        << "Application URI = " << m_application_uri;
-  } else {
-    BOOST_LOG_CHANNEL_SEV(m_lg, m_channel, trace) << "No application URI";
-  }
-
-  if (auto c =
-          reinterpret_cast<char *>(application_description.productUri.data)) {
-    m_product_uri = std::string(c, application_description.productUri.length);
-    BOOST_LOG_CHANNEL_SEV(m_lg, m_channel, trace)
-        << "Product URI = " << m_product_uri;
-  } else {
-    BOOST_LOG_CHANNEL_SEV(m_lg, m_channel, trace) << "No product URI";
-  }
-  if (auto c = reinterpret_cast<char *>(
-          application_description.gatewayServerUri.data)) {
-    m_gateway_server_uri =
-        std::string(c, application_description.gatewayServerUri.length);
-    BOOST_LOG_CHANNEL_SEV(m_lg, m_channel, trace)
-        << "Gateway server URI " << m_gateway_server_uri;
-  } else {
-    BOOST_LOG_CHANNEL_SEV(m_lg, m_channel, trace) << "No gateway server URI";
-  }
-  if (auto c = reinterpret_cast<char *>(
-          application_description.discoveryProfileUri.data)) {
-    m_discovery_profile_uri =
-        std::string(c, application_description.discoveryProfileUri.length);
-    BOOST_LOG_CHANNEL_SEV(m_lg, m_channel, trace)
-        << "Discovery profile URI " << m_discovery_profile_uri;
-  } else {
-    BOOST_LOG_CHANNEL_SEV(m_lg, m_channel, trace) << "No discovery profile URI";
-  }
+  m_application_uri.assign(application_description.applicationUri.data,
+                           application_description.applicationUri.data +
+                               application_description.applicationUri.length);
+  m_product_uri.assign(application_description.productUri.data,
+                       application_description.productUri.data +
+                           application_description.productUri.length);
+  m_gateway_server_uri.assign(
+      application_description.gatewayServerUri.data,
+      application_description.gatewayServerUri.data +
+          application_description.gatewayServerUri.length);
+  m_discovery_profile_uri.assign(
+      application_description.discoveryProfileUri.data,
+      application_description.discoveryProfileUri.data +
+          application_description.discoveryProfileUri.length);
 }
 
 std::string ApplicationDescription::application_uri() const {
@@ -92,28 +62,28 @@ std::vector<std::string> ApplicationDescription::discovery_urls() const {
 }
 
 json ApplicationDescription::to_json() const {
-  json j;
-  j["ApplicationUri"] = m_application_uri;
-  j["ProductUri"] = m_product_uri;
-  j["ApplicationName"] = m_application_name.text();
+  json app_description;
+  app_description["ApplicationUri"] = m_application_uri;
+  app_description["ProductUri"] = m_product_uri;
+  app_description["ApplicationName"] = m_application_name.text();
   switch (m_application_type) {
     case ApplicationType::Server:
-      j["ApplicationType"] = "Server";
+      app_description["ApplicationType"] = "Server";
       break;
     case ApplicationType::Client:
-      j["ApplicationType"] = "Client";
+      app_description["ApplicationType"] = "Client";
       break;
     case ApplicationType::ClientAndServer:
-      j["ApplicationType"] = "ClientAndServer";
+      app_description["ApplicationType"] = "ClientAndServer";
       break;
     case ApplicationType::DiscoveryServer:
-      j["ApplicationType"] = "DiscoveryServer";
+      app_description["ApplicationType"] = "DiscoveryServer";
       break;
   }
-  j["GatewayServerUri"] = m_gateway_server_uri;
-  j["DiscoveryProfileUri"] = m_discovery_profile_uri;
-  j["DiscoveryUrls"] = m_discovery_urls;
-  return j;
+  app_description["GatewayServerUri"] = m_gateway_server_uri;
+  app_description["DiscoveryProfileUri"] = m_discovery_profile_uri;
+  app_description["DiscoveryUrls"] = m_discovery_urls;
+  return app_description;
 }
 
 }  // namespace open62541
