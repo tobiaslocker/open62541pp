@@ -11,11 +11,9 @@
 #include <nlohmann/json.hpp>
 
 #include "localizedtext.hpp"
-#include "log.hpp"
 
 namespace open62541 {
 using namespace nlohmann;
-using namespace logger;
 
 enum class ApplicationType : u_int32_t {
   Server = 0,
@@ -32,10 +30,6 @@ class ApplicationDescription {
   std::string m_gateway_server_uri;
   std::string m_discovery_profile_uri;
   std::vector<std::string> m_discovery_urls;
-
-  // Logger
-  src::severity_channel_logger<severity_level, std::string> m_lg;
-  std::string m_channel = "ua_app_desc";
 
  public:
   ApplicationDescription() {}
