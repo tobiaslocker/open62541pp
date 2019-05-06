@@ -4,8 +4,6 @@ set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g -Wall -std=c++14 -pthread -Wno-unknown-pragmas")
 
-find_package(open62541 REQUIRED COMPONENTS FullNamespace Discovery)
-
 set(Boost_USE_STATIC_LIBS ON)
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
@@ -37,30 +35,16 @@ set(
     src/referencedescription.cpp
     src/usertokenpolicy.cpp
     src/log.cpp
+    src/open62541.c
 )
 
 add_library(${PROJECT_NAME} SHARED ${SOURCES})
 set_property(TARGET ${PROJECT_NAME} PROPERTY POSITION_INDEPENDENT_CODE ON)
 
-
-# test main ------------------------------
-add_executable(test-bin main.cpp)
-
-target_link_libraries(
-    test-bin
-    ${PROJECT_NAME}
-    ${Boost_LIBRARIES}
-)
-# -----------------------------------------
-
-
-
-
-
 target_link_libraries(
     ${PROJECT_NAME}
     PUBLIC ${Boost_LIBRARIES}
-    open62541
+    #open62541
 )
 
 enable_testing()
