@@ -47,7 +47,6 @@ class EndpointDescription {
   Certificate server_certificate() const;
   MessageSecurityMode security_mode() const;
   std::string security_policy_uri() const;
-  size_t user_identity_tokens_size() const;
   std::vector<UserTokenPolicy> user_identity_tokens() const;
   std::string transport_profile_uri() const;
   unsigned char security_level() const;

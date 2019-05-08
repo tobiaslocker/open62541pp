@@ -44,22 +44,32 @@ set_property(TARGET ${PROJECT_NAME} PROPERTY POSITION_INDEPENDENT_CODE ON)
 target_link_libraries(
     ${PROJECT_NAME}
     PUBLIC ${Boost_LIBRARIES}
-    #open62541
 )
 
 enable_testing()
 
-add_executable(unit-tests test/tests.cpp)
+function (make_test TEST_NAME) 
+    add_executable(${TEST_NAME} test/${TEST_NAME}.cpp)
 
-target_link_libraries(
-    unit-tests
-    ${PROJECT_NAME}
-    ${Boost_LIBRARIES}
-)
+    target_link_libraries(
+        ${TEST_NAME}
+        ${PROJECT_NAME}
+        ${Boost_LIBRARIES}
+    )
 
-target_compile_definitions(
-    unit-tests
-    PRIVATE BOOST_TEST_DYN_LINK
-)
+    target_compile_definitions(
+        ${TEST_NAME}
+        PRIVATE BOOST_TEST_DYN_LINK
+    )
 
-add_test(all unit-tests)
+    add_test(${TEST_NAME} ${TEST_NAME})
+
+endfunction()
+
+
+make_test(applicationdescription_test)
+make_test(endpointdescription_test)
+
+
+
+

@@ -32,9 +32,9 @@ class Client : public std::enable_shared_from_this<Client> {
   void connect_to_endpoint(std::string const &url);
   void connect_to_endpoint(EndpointDescription const &endpoint);
   std::shared_ptr<Node> node(NodeId const &node_id);
+  LocalizedText read_display_name_attribute(NodeId const &node_id);
   std::shared_ptr<Client> client();
   static std::shared_ptr<Client> create();
-  LocalizedText read_display_name_attribute(NodeId const &node_id) const;
 
   friend class Node;
 };
