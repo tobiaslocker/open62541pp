@@ -19,8 +19,10 @@ enum class ApplicationType : u_int32_t {
   Server = 0,
   Client = 1,
   ClientAndServer = 2,
-  DiscoveryServer = 3
+  DiscoveryServer = 3,
 };
+
+std::ostream &operator<<(std::ostream &out, ApplicationType const &a);
 
 class ApplicationDescription {
   std::string m_application_uri;
@@ -45,6 +47,11 @@ class ApplicationDescription {
   std::vector<std::string> discovery_urls() const;
 
   json to_json() const;
+
+  bool operator==(ApplicationDescription const &rhs);
+  bool operator!=(ApplicationDescription const &rhs);
+  friend std::ostream &operator<<(
+      std::ostream &out, ApplicationDescription const &application_description);
 };
 
 }  // namespace open62541

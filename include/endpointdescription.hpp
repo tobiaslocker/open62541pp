@@ -50,7 +50,13 @@ class EndpointDescription {
   std::vector<UserTokenPolicy> user_identity_tokens() const;
   std::string transport_profile_uri() const;
   unsigned char security_level() const;
+
   json to_json() const;
+
+  bool operator==(EndpointDescription const &rhs);
+  bool operator!=(EndpointDescription const &rhs);
+  friend std::ostream &operator<<(
+      std::ostream &out, EndpointDescription const &endpoint_description);
 };
 
 }  // namespace open62541

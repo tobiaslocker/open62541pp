@@ -89,4 +89,27 @@ json EndpointDescription::to_json() const {
   return endpoint_desc;
 }
 
+bool EndpointDescription::operator==(const EndpointDescription &rhs) {
+  return endpoint_url() == rhs.endpoint_url() && server() == rhs.server() &&
+         server_certificate() == rhs.server_certificate() &&
+         security_mode() == rhs.security_mode() &&
+         security_policy_uri() == rhs.security_policy_uri() &&
+         user_identity_tokens() == rhs.user_identity_tokens() &&
+         transport_profile_uri() == rhs.transport_profile_uri() &&
+         security_level() == rhs.security_level();
+}
+
+bool EndpointDescription::operator!=(const EndpointDescription &rhs) {
+  return endpoint_url() != rhs.endpoint_url() && server() == rhs.server() &&
+         server_certificate() != rhs.server_certificate() &&
+         security_mode() != rhs.security_mode() &&
+         security_policy_uri() != rhs.security_policy_uri() &&
+         user_identity_tokens() != rhs.user_identity_tokens() &&
+         transport_profile_uri() != rhs.transport_profile_uri() &&
+         security_level() != rhs.security_level();
+}
+
+std::ostream &operator<<(std::ostream &out,
+                         const EndpointDescription &endpoint_description) {}
+
 }  // namespace open62541

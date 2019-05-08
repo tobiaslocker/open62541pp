@@ -19,4 +19,12 @@ std::string LocalizedText::locale() const { return m_locale; }
 
 bool LocalizedText::is_empty() const { return m_is_empty; }
 
+bool LocalizedText::operator==(const LocalizedText &rhs) {
+  return text() == rhs.text() && locale() == rhs.locale();
+}
+
+bool LocalizedText::operator!=(const LocalizedText &rhs) {
+  return text() != rhs.text() && locale() != rhs.locale();
+}
+
 }  // namespace open62541

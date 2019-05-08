@@ -86,4 +86,47 @@ json ApplicationDescription::to_json() const {
   return app_description;
 }
 
+bool ApplicationDescription::operator==(const ApplicationDescription &rhs) {
+  return product_uri() == rhs.product_uri() &&
+         discovery_urls() == rhs.discovery_urls() &&
+         application_uri() == rhs.application_uri() &&
+         application_name() == rhs.application_name() &&
+         application_type() == rhs.application_type() &&
+         gateway_server_uri() == rhs.gateway_server_uri();
+}
+
+bool ApplicationDescription::operator!=(const ApplicationDescription &rhs) {
+  return product_uri() != rhs.product_uri() &&
+         discovery_urls() != rhs.discovery_urls() &&
+         application_uri() != rhs.application_uri() &&
+         application_name() != rhs.application_name() &&
+         application_type() != rhs.application_type() &&
+         gateway_server_uri() != rhs.gateway_server_uri();
+}
+
+std::ostream &operator<<(
+    std::ostream &out, const ApplicationDescription &application_description) {
+  auto j = application_description.to_json();
+  out << j;
+  return out;
+}
+
+std::ostream &operator<<(std::ostream &out, const ApplicationType &a) {
+  switch (a) {
+    case ApplicationType::Server:
+      out << "Server";
+      break;
+    case ApplicationType::Client:
+      out << "Client";
+      break;
+    case ApplicationType::ClientAndServer:
+      out << "ClientAndServer";
+      break;
+    case ApplicationType::DiscoveryServer:
+      out << "DiscoveryServer";
+      break;
+  }
+  return out;
+}
+
 }  // namespace open62541

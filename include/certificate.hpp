@@ -17,6 +17,11 @@ class Certificate {
   Certificate() {}
   Certificate(UA_ByteString const &certificate);
   std::string to_string() const;
+
+  bool operator==(Certificate const &rhs);
+  bool operator!=(Certificate const &rhs);
+//  friend std::ostream &operator<<(
+//      std::ostream &out, Certificate const &endpoint_description);
 };
 
 }  // namespace open62541
