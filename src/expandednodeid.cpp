@@ -5,9 +5,9 @@ namespace open62541 {
 ExpandedNodeId::ExpandedNodeId(UA_ExpandedNodeId const &expanded_node_id)
     : m_node_id{expanded_node_id.nodeId},
       m_server_index{expanded_node_id.serverIndex} {
-  if (auto c = reinterpret_cast<char *>(expanded_node_id.namespaceUri.data)) {
-    m_namespace_uri = std::string(c);
-  }
+  m_namespace_uri.assign(expanded_node_id.namespaceUri.data,
+                         expanded_node_id.namespaceUri.data +
+                             expanded_node_id.namespaceUri.length);
 }
 
 ExpandedNodeId::ExpandedNodeId(NodeId const &node_id) : m_node_id{node_id} {}
@@ -31,6 +31,23 @@ json ExpandedNodeId::to_json() const {
   exp_node_id["NamespaceUri"] = namespace_uri();
   exp_node_id["SeverIndex"] = server_index();
   return exp_node_id;
+}
+
+bool ExpandedNodeId::operator==(const ExpandedNodeId &rhs) {
+  return namespace_uri() == rhs.namespace_uri() && node_id() == rhs.node_id() &&
+         server_index() == rhs.server_index();
+}
+
+bool ExpandedNodeId::operator!=(const ExpandedNodeId &rhs) {
+  return namespace_uri() != rhs.namespace_uri() && node_id() != rhs.node_id() &&
+         server_index() != rhs.server_index();
+}
+
+std::ostream &operator<<(std::ostream &out,
+                         const ExpandedNodeId &expanded_node_id) {
+  auto j = expanded_node_id.to_json();
+  out << j;
+  return out;
 }
 
 }  // namespace open62541

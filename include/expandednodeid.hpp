@@ -31,7 +31,14 @@ class ExpandedNodeId {
   std::string namespace_uri() const;
   NodeId node_id() const;
   u_int32_t server_index() const;
+
   json to_json() const;
+
+  bool operator==(ExpandedNodeId const &rhs);
+  bool operator!=(ExpandedNodeId const &rhs);
+  friend std::ostream &operator<<(std::ostream &out,
+                                  ExpandedNodeId const &expanded_node_id);
+
   friend class ReferenceDescription;
 };
 

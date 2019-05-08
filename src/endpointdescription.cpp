@@ -110,6 +110,10 @@ bool EndpointDescription::operator!=(const EndpointDescription &rhs) {
 }
 
 std::ostream &operator<<(std::ostream &out,
-                         const EndpointDescription &endpoint_description) {}
+                         const EndpointDescription &endpoint_description) {
+  auto j = endpoint_description.to_json();
+  out << j;
+  return out;
+}
 
 }  // namespace open62541

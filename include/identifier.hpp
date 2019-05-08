@@ -31,6 +31,7 @@ class Identifier {
   std::string to_string() const;
   std::string string() const;
   u_int32_t numeric() const;
+
   json::value_type to_json_value() const;
 
  private:
