@@ -10,7 +10,6 @@
 #include <nlohmann/json.hpp>
 
 namespace open62541 {
-
 using namespace nlohmann;
 
 enum class UserTokenType : u_int32_t {
@@ -28,14 +27,20 @@ class UserTokenPolicy {
   std::string m_security_policy_uri;
 
  public:
-  UserTokenPolicy(UA_UserTokenPolicy user_token_policy);
+  UserTokenPolicy(UA_UserTokenPolicy const &user_token_policy);
 
   std::string policy_id() const;
   UserTokenType token_type() const;
   std::string issued_token_type() const;
   std::string issuer_endpoint_url() const;
   std::string security_policy_uri() const;
+
   json to_json() const;
+
+  bool operator==(UserTokenPolicy const &rhs) const;
+  bool operator!=(UserTokenPolicy const &rhs) const;
+  friend std::ostream &operator<<(std::ostream &out,
+                                  UserTokenPolicy const &user_token_policy);
 };
 
 }  // namespace open62541

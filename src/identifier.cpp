@@ -68,21 +68,6 @@ std::string Identifier::type_to_string() const {
   return std::string();
 }
 
-std::string Identifier::to_string() const {
-  switch (type()) {
-    case Type::Numeric:
-      return std::to_string(numeric());
-    case Type::String:
-      return string();
-    case Type::ByteString:
-      // TODO
-    case Type::Guid:
-      // TODO
-      break;
-  }
-  return std::string();
-}
-
 json::value_type Identifier::to_json_value() const {
   switch (type()) {
     case Type::Numeric:

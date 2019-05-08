@@ -34,8 +34,8 @@ class ExpandedNodeId {
 
   json to_json() const;
 
-  bool operator==(ExpandedNodeId const &rhs);
-  bool operator!=(ExpandedNodeId const &rhs);
+  bool operator==(ExpandedNodeId const &rhs) const;
+  bool operator!=(ExpandedNodeId const &rhs) const;
   friend std::ostream &operator<<(std::ostream &out,
                                   ExpandedNodeId const &expanded_node_id);
 

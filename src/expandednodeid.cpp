@@ -33,12 +33,12 @@ json ExpandedNodeId::to_json() const {
   return exp_node_id;
 }
 
-bool ExpandedNodeId::operator==(const ExpandedNodeId &rhs) {
+bool ExpandedNodeId::operator==(const ExpandedNodeId &rhs) const {
   return namespace_uri() == rhs.namespace_uri() && node_id() == rhs.node_id() &&
          server_index() == rhs.server_index();
 }
 
-bool ExpandedNodeId::operator!=(const ExpandedNodeId &rhs) {
+bool ExpandedNodeId::operator!=(const ExpandedNodeId &rhs) const {
   return namespace_uri() != rhs.namespace_uri() && node_id() != rhs.node_id() &&
          server_index() != rhs.server_index();
 }

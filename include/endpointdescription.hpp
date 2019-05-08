@@ -53,8 +53,8 @@ class EndpointDescription {
 
   json to_json() const;
 
-  bool operator==(EndpointDescription const &rhs);
-  bool operator!=(EndpointDescription const &rhs);
+  bool operator==(EndpointDescription const &rhs) const;
+  bool operator!=(EndpointDescription const &rhs) const;
   friend std::ostream &operator<<(
       std::ostream &out, EndpointDescription const &endpoint_description);
 };

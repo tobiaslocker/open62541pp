@@ -86,7 +86,8 @@ json ApplicationDescription::to_json() const {
   return app_description;
 }
 
-bool ApplicationDescription::operator==(const ApplicationDescription &rhs) {
+bool ApplicationDescription::operator==(
+    const ApplicationDescription &rhs) const {
   return product_uri() == rhs.product_uri() &&
          discovery_urls() == rhs.discovery_urls() &&
          application_uri() == rhs.application_uri() &&
@@ -95,7 +96,8 @@ bool ApplicationDescription::operator==(const ApplicationDescription &rhs) {
          gateway_server_uri() == rhs.gateway_server_uri();
 }
 
-bool ApplicationDescription::operator!=(const ApplicationDescription &rhs) {
+bool ApplicationDescription::operator!=(
+    const ApplicationDescription &rhs) const {
   return product_uri() != rhs.product_uri() &&
          discovery_urls() != rhs.discovery_urls() &&
          application_uri() != rhs.application_uri() &&

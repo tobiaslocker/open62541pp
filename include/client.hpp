@@ -9,10 +9,8 @@
 #include <vector>
 
 #include "endpointdescription.hpp"
-//#include "node.hpp"
-#include "nodeid.hpp"
-//#include "localizedtext.hpp"
 #include "log.hpp"
+#include "nodeid.hpp"
 
 namespace open62541 {
 

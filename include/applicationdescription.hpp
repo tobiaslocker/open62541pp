@@ -48,8 +48,8 @@ class ApplicationDescription {
 
   json to_json() const;
 
-  bool operator==(ApplicationDescription const &rhs);
-  bool operator!=(ApplicationDescription const &rhs);
+  bool operator==(ApplicationDescription const &rhs) const;
+  bool operator!=(ApplicationDescription const &rhs) const;
   friend std::ostream &operator<<(
       std::ostream &out, ApplicationDescription const &application_description);
 };

@@ -8,15 +8,16 @@
 
 #include "identifier.hpp"
 #include "log.hpp"
-#include "nodeid.hpp"
 
 namespace open62541 {
-
 using namespace nlohmann;
 
 class NodeId {
+  Identifier m_id;
   u_int16_t m_namespace_index;
+
   explicit NodeId(UA_NodeId const &node_id);
+  UA_NodeId ua_node_id() const;
 
  public:
   explicit NodeId(json const &node_id);
@@ -24,12 +25,13 @@ class NodeId {
 
   Identifier indentifier() const;
   u_int16_t namespace_index() const;
+
   json to_json() const;
 
- private:
-  UA_NodeId ua_node_id() const;
+  bool operator==(NodeId const &rhs) const;
+  bool operator!=(NodeId const &rhs) const;
+  friend std::ostream &operator<<(std::ostream &out, NodeId const &node_id);
 
-  Identifier m_id;
   friend class ReferenceDescription;
   friend class ExpandedNodeId;
   friend class Node;

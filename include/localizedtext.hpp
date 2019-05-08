@@ -20,8 +20,8 @@ class LocalizedText {
   std::string locale() const;
   bool is_empty() const;
 
-  bool operator==(LocalizedText const &rhs);
-  bool operator!=(LocalizedText const &rhs);
+  bool operator==(LocalizedText const &rhs) const;
+  bool operator!=(LocalizedText const &rhs) const;
 };
 
 }  // namespace open62541

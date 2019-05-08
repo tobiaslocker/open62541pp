@@ -25,6 +25,22 @@ json NodeId::to_json() const {
   return node_id;
 }
 
+bool NodeId::operator==(const NodeId &rhs) const {
+  return indentifier() == rhs.indentifier() &&
+         namespace_index() == rhs.namespace_index();
+}
+
+bool NodeId::operator!=(const NodeId &rhs) const {
+  return indentifier() != rhs.indentifier() &&
+         namespace_index() != rhs.namespace_index();
+}
+
+std::ostream &operator<<(std::ostream &out, const NodeId &node_id) {
+  auto j = node_id.to_json();
+  out << j;
+  return out;
+}
+
 UA_NodeId NodeId::ua_node_id() const {
   UA_NodeId ua_node;
   switch (indentifier().type()) {

@@ -89,7 +89,7 @@ json EndpointDescription::to_json() const {
   return endpoint_desc;
 }
 
-bool EndpointDescription::operator==(const EndpointDescription &rhs) {
+bool EndpointDescription::operator==(const EndpointDescription &rhs) const {
   return endpoint_url() == rhs.endpoint_url() && server() == rhs.server() &&
          server_certificate() == rhs.server_certificate() &&
          security_mode() == rhs.security_mode() &&
@@ -99,7 +99,7 @@ bool EndpointDescription::operator==(const EndpointDescription &rhs) {
          security_level() == rhs.security_level();
 }
 
-bool EndpointDescription::operator!=(const EndpointDescription &rhs) {
+bool EndpointDescription::operator!=(const EndpointDescription &rhs) const {
   return endpoint_url() != rhs.endpoint_url() && server() == rhs.server() &&
          server_certificate() != rhs.server_certificate() &&
          security_mode() != rhs.security_mode() &&
