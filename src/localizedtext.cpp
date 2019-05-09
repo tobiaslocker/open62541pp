@@ -25,4 +25,11 @@ bool LocalizedText::operator!=(const LocalizedText &rhs) const {
   return text() != rhs.text() && locale() != rhs.locale();
 }
 
+std::ostream &operator<<(std::ostream &out,
+                         const LocalizedText &localized_text) {
+  std::string s = localized_text.text() + " " + localized_text.locale();
+  out << s;
+  return out;
+}
+
 }  // namespace open62541

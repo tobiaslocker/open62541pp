@@ -22,6 +22,8 @@ class LocalizedText {
 
   bool operator==(LocalizedText const &rhs) const;
   bool operator!=(LocalizedText const &rhs) const;
+  friend std::ostream &operator<<(std::ostream &out,
+                                  LocalizedText const &localized_text);
 };
 
 }  // namespace open62541

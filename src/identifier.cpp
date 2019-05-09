@@ -39,9 +39,7 @@ Guid Identifier::guid() const {
 
 u_int32_t Identifier::numeric() const { return m_numeric; }
 
-
 std::string Identifier::str() const {
-
   switch (m_type) {
     case IdentifierType::Guid:
       return guid().str();
@@ -105,6 +103,5 @@ std::string IdentifierType::str() const {
 }
 
 open62541::IdentifierType::operator u_int32_t() const { return m_value; }
-
 
 }  // namespace open62541
