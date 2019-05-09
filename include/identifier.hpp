@@ -43,7 +43,8 @@ class Identifier {
 
   bool operator==(Identifier const &rhs) const;
   bool operator!=(Identifier const &rhs) const;
-  friend std::ostream &operator<<(std::ostream &out, Identifier const &identifier);
+  friend std::ostream &operator<<(std::ostream &out,
+                                  Identifier const &identifier);
 
  private:
   Type m_type;

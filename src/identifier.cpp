@@ -83,6 +83,16 @@ json::value_type Identifier::to_json_value() const {
   return json::value_t::null;
 }
 
+bool Identifier::operator==(const Identifier &rhs) const { return false; }
+
+bool Identifier::operator!=(const Identifier &rhs) const { return false; }
+
+std::ostream &operator<<(std::ostream &out, const Identifier &identifier) {
+  auto j = identifier.to_json_value();
+  out << j;
+  return out;
+}
+
 std::string Identifier::string() const { return m_string; }
 
 u_int32_t Identifier::numeric() const { return m_numeric; }

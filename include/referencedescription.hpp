@@ -12,7 +12,6 @@
 #include <nlohmann/json.hpp>
 
 namespace open62541 {
-
 using namespace nlohmann;
 
 class ReferenceDescription {
@@ -27,8 +26,15 @@ class ReferenceDescription {
   NodeId node_id() const;
   LocalizedText display_name() const;
   QualifiedName browse_name() const;
-  json to_json() const;
   ExpandedNodeId type_definition() const;
+
+  json to_json() const;
+
+  bool operator==(ReferenceDescription const &rhs) const;
+  bool operator!=(ReferenceDescription const &rhs) const;
+  friend std::ostream &operator<<(std::ostream &out,
+                                  ReferenceDescription const &ref_description);
+
   friend class Node;
 };
 

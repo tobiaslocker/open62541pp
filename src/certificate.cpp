@@ -5,7 +5,8 @@
 namespace open62541 {
 
 Certificate::Certificate(UA_ByteString const &certificate) {
-  m_bytes.assign(certificate.data, certificate.data + certificate.length);
+//  m_bytes.assign(certificate.data, certificate.data + certificate.length);
+//  m_certificate.assign(certificate.data, certificate.data + certificate.length);
 }
 
 std::string Certificate::to_string() const { return m_certificate; }

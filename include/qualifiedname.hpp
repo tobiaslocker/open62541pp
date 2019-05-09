@@ -14,8 +14,12 @@ class QualifiedName {
 
  public:
   QualifiedName(UA_QualifiedName const &name);
-  std::string name();
-  u_int16_t namespace_index();
+  std::string name() const;
+  u_int16_t namespace_index() const;
+
+  bool operator==(QualifiedName const &rhs) const;
+  bool operator!=(QualifiedName const &rhs) const;
+  friend std::ostream &operator<<(std::ostream &out, QualifiedName const &name);
 };
 
 }  // namespace open62541

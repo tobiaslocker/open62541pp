@@ -28,6 +28,25 @@ json ReferenceDescription::to_json() const {
   return ref_description;
 }
 
+bool ReferenceDescription::operator==(const ReferenceDescription &rhs) const {
+  return node_id() == rhs.node_id() && display_name() == rhs.display_name() &&
+         browse_name() == rhs.browse_name() &&
+         type_definition() == rhs.type_definition();
+}
+
+bool ReferenceDescription::operator!=(const ReferenceDescription &rhs) const {
+  return node_id() != rhs.node_id() && display_name() != rhs.display_name() &&
+         browse_name() != rhs.browse_name() &&
+         type_definition() != rhs.type_definition();
+}
+
+std::ostream &operator<<(std::ostream &out,
+                         const ReferenceDescription &ref_description) {
+  auto j = ref_description.to_json();
+  out << j;
+  return out;
+}
+
 ExpandedNodeId ReferenceDescription::type_definition() const {
   return m_type_definition;
 }

@@ -13,8 +13,8 @@ namespace open62541 {
 using namespace nlohmann;
 
 class NodeId {
-  Identifier m_id;
   u_int16_t m_namespace_index;
+  Identifier m_id;
 
   explicit NodeId(UA_NodeId const &node_id);
   UA_NodeId ua_node_id() const;
@@ -23,8 +23,8 @@ class NodeId {
   explicit NodeId(json const &node_id);
   explicit NodeId(uint16_t namespace_index, Identifier const &identifier);
 
-  Identifier indentifier() const;
   u_int16_t namespace_index() const;
+  Identifier indentifier() const;
 
   json to_json() const;
 
