@@ -37,8 +37,20 @@ json NodeId::to_json() const {
   json node_id;
   node_id["NamespaceIndex"] = m_namespace_index;
   node_id["IdentifierType"] = m_identifier_type.to_string();
-  // node_id["Identifier"] = m_identifier.to_json_value();
-  node_id["Identifier"] = m_identifier.to_string();
+  switch (m_identifier_type) {
+    case IdentifierType::Guid:
+//      node_id["Identifier"] = m_identifier.guid();
+      break;
+    case IdentifierType::String:
+      node_id["Identifier"] = m_identifier.string();
+      break;
+    case IdentifierType::Numeric:
+      node_id["Identifier"] = m_identifier.numeric();
+      break;
+    case IdentifierType::ByteString:
+      node_id["Identifier"] = m_identifier.byte_string();
+      break;
+  }
   return node_id;
 }
 

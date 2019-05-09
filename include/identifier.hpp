@@ -3,6 +3,9 @@
 
 #include "open62541.h"
 
+// STL
+#include <any>
+
 // Dependencies
 #include <nlohmann/json.hpp>
 
@@ -10,7 +13,7 @@ namespace open62541 {
 using namespace nlohmann;
 
 class IdentifierType {
-  explicit IdentifierType(UA_NodeIdType const &id_type) {}
+  explicit IdentifierType(UA_NodeIdType const &id_type);
 
  public:
   enum Value : u_int32_t {
@@ -20,16 +23,12 @@ class IdentifierType {
     ByteString,
   };
   IdentifierType() = default;
-  constexpr IdentifierType(Value id_type) : m_value(id_type) {}
+  constexpr IdentifierType(Value id_type);
 
-  bool operator==(IdentifierType const &rhs) const {
-    return m_value == rhs.m_value;
-  }
-  bool operator!=(IdentifierType const &rhs) const {
-    return m_value != rhs.m_value;
-  }
-  std::string to_string() const { return "Hi"; }
-  operator u_int32_t() { return m_value; }
+  bool operator==(IdentifierType const &rhs) const;
+  bool operator!=(IdentifierType const &rhs) const;
+  std::string to_string() const;
+  operator u_int32_t() const;
 
  private:
   Value m_value;
@@ -39,6 +38,8 @@ class IdentifierType {
 
 std::ostream &operator<<(std::ostream &out,
                          IdentifierType const &identifier_type);
+
+struct Guid {};
 
 class Identifier {
   UA_UInt32 m_numeric = 0;
@@ -50,14 +51,14 @@ class Identifier {
   explicit Identifier(UA_UInt32 const &numeric);
   explicit Identifier(UA_String const &string);
   explicit Identifier(UA_Guid const &guid);
-  //  explicit Identifier(json::value_type const &json_value);
 
  public:
   std::string string() const;
+  std::string byte_string() const;
+  Guid guid() const;
   u_int32_t numeric() const;
 
-  std::string to_string() const { return "Hi"; }
-  //  json::value_type to_json_value() const;
+  std::string to_string() const;
 
   bool operator==(Identifier const &rhs) const;
   bool operator!=(Identifier const &rhs) const;
