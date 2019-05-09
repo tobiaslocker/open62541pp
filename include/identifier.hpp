@@ -39,7 +39,10 @@ class IdentifierType {
 std::ostream &operator<<(std::ostream &out,
                          IdentifierType const &identifier_type);
 
-struct Guid {};
+struct Guid {
+  Guid(UA_Guid const &guid) {}
+  std::string str() { return "Hi"; }
+};
 
 class Identifier {
   UA_UInt32 m_numeric = 0;

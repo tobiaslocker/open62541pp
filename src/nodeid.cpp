@@ -39,7 +39,7 @@ json NodeId::to_json() const {
   node_id["IdentifierType"] = m_identifier_type.to_string();
   switch (m_identifier_type) {
     case IdentifierType::Guid:
-//      node_id["Identifier"] = m_identifier.guid();
+      node_id["Identifier"] = m_identifier.guid().str();
       break;
     case IdentifierType::String:
       node_id["Identifier"] = m_identifier.string();
