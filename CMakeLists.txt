@@ -34,6 +34,7 @@ set(
     src/qualifiedname.cpp
     src/referencedescription.cpp
     src/usertokenpolicy.cpp
+    src/guid.cpp
     src/log.cpp
     src/open62541.c
 )

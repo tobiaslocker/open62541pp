@@ -3,11 +3,10 @@
 
 #include "open62541.h"
 
-// STL
-#include <any>
-
 // Dependencies
 #include <nlohmann/json.hpp>
+
+#include <guid.hpp>
 
 namespace open62541 {
 using namespace nlohmann;
@@ -38,12 +37,6 @@ class IdentifierType {
 
 std::ostream &operator<<(std::ostream &out,
                          IdentifierType const &identifier_type);
-
-struct Guid {
-  Guid() {}
-  Guid(UA_Guid const &guid) {}
-  std::string str() const { return "Hi"; }
-};
 
 class Identifier {
   UA_UInt32 m_numeric = 0;

@@ -39,33 +39,20 @@ Guid Identifier::guid() const {
 
 u_int32_t Identifier::numeric() const { return m_numeric; }
 
-// template< typename T>
-// T Identifier::value() const {
-//    switch (m_type) {
-//    case IdentifierType::Guid:
-//        return std::string();
-//    case IdentifierType::String:
-//        return string();
-//    case IdentifierType::Numeric:
-//        return numeric();
-//    case IdentifierType::ByteString:
-//        return string();
-//    }
-//    return std::string();
-//}
 
 std::string Identifier::str() const {
-  //    switch (m_type) {
-  //    case IdentifierType::Guid:
-  //        return "Not yet";
-  //    case IdentifierType::String:
-  //        return string();
-  //    case IdentifierType::Numeric:
-  //        return numeric();
 
-  //    }
-
-  return "Hi";
+  switch (m_type) {
+    case IdentifierType::Guid:
+      return guid().str();
+    case IdentifierType::String:
+      return string();
+    case IdentifierType::Numeric:
+      return std::to_string(numeric());
+    case IdentifierType::ByteString:
+      return byte_string();
+  }
+  return std::string();
 }
 
 std::ostream &operator<<(std::ostream &out,
@@ -118,5 +105,6 @@ std::string IdentifierType::str() const {
 }
 
 open62541::IdentifierType::operator u_int32_t() const { return m_value; }
+
 
 }  // namespace open62541
