@@ -14,7 +14,9 @@ using namespace nlohmann;
 
 class NodeId {
   u_int16_t m_namespace_index;
-  Identifier m_id;
+  Identifier m_identifier;
+  IdentifierType m_identifier_type;
+  UA_NodeId m_ua_node_id;
 
   explicit NodeId(UA_NodeId const &node_id);
   UA_NodeId ua_node_id() const;
