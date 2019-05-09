@@ -36,7 +36,7 @@ u_int16_t NodeId::namespace_index() const { return m_namespace_index; }
 json NodeId::to_json() const {
   json node_id;
   node_id["NamespaceIndex"] = m_namespace_index;
-  node_id["IdentifierType"] = m_identifier_type.to_string();
+  node_id["IdentifierType"] = m_identifier_type.str();
   switch (m_identifier_type) {
     case IdentifierType::Guid:
       node_id["Identifier"] = m_identifier.guid().str();

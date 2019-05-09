@@ -10,7 +10,7 @@ Certificate::Certificate(UA_ByteString const &certificate) {
   //  certificate.length);
 }
 
-std::string Certificate::to_string() const { return m_certificate; }
+std::string Certificate::str() const { return m_certificate; }
 
 bool Certificate::operator==(const Certificate &rhs) const { return true; }
 

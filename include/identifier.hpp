@@ -27,7 +27,7 @@ class IdentifierType {
 
   bool operator==(IdentifierType const &rhs) const;
   bool operator!=(IdentifierType const &rhs) const;
-  std::string to_string() const;
+  std::string str() const;
   operator u_int32_t() const;
 
  private:
@@ -40,14 +40,15 @@ std::ostream &operator<<(std::ostream &out,
                          IdentifierType const &identifier_type);
 
 struct Guid {
+  Guid() {}
   Guid(UA_Guid const &guid) {}
-  std::string str() { return "Hi"; }
+  std::string str() const { return "Hi"; }
 };
 
 class Identifier {
   UA_UInt32 m_numeric = 0;
   std::string m_string;
-  UA_Guid m_guid;
+  Guid m_guid;
   IdentifierType m_type;
 
   Identifier();
@@ -61,7 +62,7 @@ class Identifier {
   Guid guid() const;
   u_int32_t numeric() const;
 
-  std::string to_string() const;
+  std::string str() const;
 
   bool operator==(Identifier const &rhs) const;
   bool operator!=(Identifier const &rhs) const;

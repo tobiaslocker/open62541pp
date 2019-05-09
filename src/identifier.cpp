@@ -24,7 +24,7 @@ bool Identifier::operator!=(const Identifier &rhs) const {
 }
 
 std::ostream &operator<<(std::ostream &out, const Identifier &identifier) {
-  auto j = identifier.to_string();
+  auto j = identifier.str();
   out << j;
   return out;
 }
@@ -34,7 +34,7 @@ std::string Identifier::string() const { return m_string; }
 std::string Identifier::byte_string() const { return m_string; }
 
 Guid Identifier::guid() const {
-  return Guid();  // TODO
+  return m_guid;  // TODO
 }
 
 u_int32_t Identifier::numeric() const { return m_numeric; }
@@ -54,7 +54,7 @@ u_int32_t Identifier::numeric() const { return m_numeric; }
 //    return std::string();
 //}
 
-std::string Identifier::to_string() const {
+std::string Identifier::str() const {
   //    switch (m_type) {
   //    case IdentifierType::Guid:
   //        return "Not yet";
@@ -70,7 +70,7 @@ std::string Identifier::to_string() const {
 
 std::ostream &operator<<(std::ostream &out,
                          const IdentifierType &identifier_type) {
-  auto s = identifier_type.to_string();
+  auto s = identifier_type.str();
   out << s;
   return out;
 }
@@ -103,7 +103,7 @@ bool IdentifierType::operator!=(const IdentifierType &rhs) const {
   return m_value != rhs.m_value;
 }
 
-std::string IdentifierType::to_string() const {
+std::string IdentifierType::str() const {
   switch (m_value) {
     case Guid:
       return "Guid";

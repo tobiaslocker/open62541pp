@@ -16,7 +16,7 @@ class Certificate {
  public:
   Certificate() {}
   Certificate(UA_ByteString const &certificate);
-  std::string to_string() const;
+  std::string str() const;
 
   bool operator==(Certificate const &rhs) const;
   bool operator!=(Certificate const &rhs) const;
