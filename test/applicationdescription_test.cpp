@@ -3,12 +3,9 @@
 #include <boost/test/included/unit_test.hpp>
 
 #include <nlohmann/json.hpp>
-#include "open62541.hpp"
+#include "open62541.h"
 
 #include "applicationdescription.hpp"
-#include "endpointdescription.hpp"
-
-#include <iostream>
 
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdisabled-macro-expansion"

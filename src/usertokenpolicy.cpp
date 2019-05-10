@@ -4,21 +4,18 @@ namespace open62541 {
 
 UserTokenPolicy::UserTokenPolicy(const UA_UserTokenPolicy &user_token_policy)
     : m_token_type{UserTokenType(user_token_policy.tokenType)} {
-  if (auto c = reinterpret_cast<char *>(user_token_policy.policyId.data)) {
-    m_policy_id = std::string(c);
-  }
-  if (auto c =
-          reinterpret_cast<char *>(user_token_policy.issuedTokenType.data)) {
-    m_issued_token_type = std::string(c);
-  }
-  if (auto c =
-          reinterpret_cast<char *>(user_token_policy.issuerEndpointUrl.data)) {
-    m_issuer_endpoint_url = std::string(c);
-  }
-  if (auto c =
-          reinterpret_cast<char *>(user_token_policy.securityPolicyUri.data)) {
-    m_security_policy_uri = std::string(c);
-  }
+  m_policy_id.assign(
+      user_token_policy.policyId.data,
+      user_token_policy.policyId.data + user_token_policy.policyId.length);
+  m_issued_token_type.assign(user_token_policy.issuedTokenType.data,
+                             user_token_policy.issuedTokenType.data +
+                                 user_token_policy.issuedTokenType.length);
+  m_issuer_endpoint_url.assign(user_token_policy.issuerEndpointUrl.data,
+                               user_token_policy.issuerEndpointUrl.data +
+                                   user_token_policy.issuerEndpointUrl.length);
+  m_security_policy_uri.assign(user_token_policy.securityPolicyUri.data,
+                               user_token_policy.securityPolicyUri.data +
+                                   user_token_policy.securityPolicyUri.length);
 }
 
 std::string UserTokenPolicy::policy_id() const { return m_policy_id; }
