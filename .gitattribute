@@ -7,3 +7,13 @@ include/*.h linguist-vendored
 *.h linguist-detectable=false
 src/*.c linguist-detectable=false
 include/*.h linguist-detectable=false
+
+
+# Sources
+*.cc    text diff=cpp
+*.cxx   text diff=cpp
+*.cpp   text diff=cpp
+*.c++   text diff=cpp
+*.hpp   text diff=cpp
+*.h++   text diff=cpp
+*.hh    text diff=cpp
