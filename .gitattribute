@@ -1,2 +1,2 @@
-src/open62541.c
-include/open62541.h
+src/open62541.c linguist-vendored
+include/open62541.h linguist-vendored
