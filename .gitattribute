@@ -1,3 +1,0 @@
-src/* linguist-vendored
-include/* linguist-vendored
-src/*.cpp linguist-vendored=false
