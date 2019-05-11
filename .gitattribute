@@ -2,3 +2,8 @@
 *.h linguist-vendored
 src/*.c linguist-vendored
 include/*.h linguist-vendored
+
+*.c linguist-detectable=false
+*.h linguist-detectable=false
+src/*.c linguist-detectable=false
+include/*.h linguist-detectable=false
