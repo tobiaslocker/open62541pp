@@ -1,3 +1,2 @@
-src/* linguist-vendored
-include/* linguist-vendored
-src/*.cpp linguist-vendored=false
+src/open62541.c linguist-vendored
+include/open62541.h linguist-vendored
