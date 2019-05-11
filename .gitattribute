@@ -1,2 +1,4 @@
 *.c linguist-vendored
 *.h linguist-vendored
+src/*.c linguist-vendored
+include/*.h linguist-vendored
