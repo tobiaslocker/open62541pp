@@ -44,12 +44,11 @@ class Identifier {
   Guid m_guid;
   IdentifierType m_type;
 
+ public:
   Identifier();
   explicit Identifier(UA_UInt32 const &numeric);
   explicit Identifier(UA_String const &string);
   explicit Identifier(UA_Guid const &guid);
-
- public:
   std::string string() const;
   std::string byte_string() const;
   Guid guid() const;

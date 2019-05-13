@@ -7,13 +7,14 @@
 #include <memory>
 #include <vector>
 
-#include "client.hpp"
 #include "nodeid.hpp"
 #include "referencedescription.hpp"
 
 #include "log.hpp"
 
 namespace open62541 {
+
+class Client;
 
 using namespace logger;
 

@@ -1,4 +1,5 @@
 #include "node.hpp"
+#include "client.hpp"
 
 namespace open62541 {
 

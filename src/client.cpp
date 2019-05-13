@@ -1,7 +1,5 @@
 #include "client.hpp"
-#include "endpointdescription.hpp"
 #include "node.hpp"
-#include "nodeid.hpp"
 
 namespace open62541 {
 
