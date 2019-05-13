@@ -20,8 +20,8 @@ endif()
 find_package(open62541 0.3.0 REQUIRED COMPONENTS FullNamespace Discovery)
 
 
-include_directories(include)
-include_directories(externals/include)
+include_directories(include externals/include)
+#include_directories(externals/include)
 
 set(
     SOURCES

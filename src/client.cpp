@@ -74,6 +74,7 @@ LocalizedText Client::read_display_name_attribute(const NodeId &node_id) {
 std::shared_ptr<Client> Client::client() { return shared_from_this(); }
 
 std::shared_ptr<Client> Client::create() {
+  logger::init();
   return std::shared_ptr<Client>(new Client());
 }
 
