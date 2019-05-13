@@ -5,4 +5,5 @@ build
 externals/include/
 externals/lib/
 externals/share/
+externals/open62541/build
 
