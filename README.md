@@ -22,7 +22,7 @@ int main(int argc, char *argv[]) {
   auto root_node = NodeId(0, Identifier(UA_NS0ID_ROOTFOLDER));
   auto node = client->node(root_node);
 
-    // Get json representation of root node's nodeid
+  // Get json representation of root node's nodeid
   auto json = node->node_id().to_json();
   std::cerr << json << '\n';
 
