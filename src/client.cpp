@@ -34,7 +34,7 @@ std::vector<EndpointDescription> Client::get_endpoints(std::string const &url) {
   return result;
 }
 
-void Client::connect_to_endpoint(std::string const &url) {
+void Client::connect(std::string const &url) {
   auto status = UA_Client_connect(m_client.get(), url.c_str());
   if (status == UA_STATUSCODE_GOOD) {
     BOOST_LOG_CHANNEL_SEV(m_lg, m_channel, info) << "Connected to " << url;
@@ -44,7 +44,7 @@ void Client::connect_to_endpoint(std::string const &url) {
   }
 }
 
-void Client::connect_to_endpoint(EndpointDescription const &endpoint) {
+void Client::connect(EndpointDescription const &endpoint) {
   auto url = endpoint.to_json()["EndpointUrl"].get<std::string>();
   auto status = UA_Client_connect(m_client.get(), url.c_str());
   if (status == UA_STATUSCODE_GOOD) {

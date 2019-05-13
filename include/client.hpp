@@ -27,8 +27,8 @@ class Client : public std::enable_shared_from_this<Client> {
 
  public:
   std::vector<EndpointDescription> get_endpoints(std::string const &url);
-  void connect_to_endpoint(std::string const &url);
-  void connect_to_endpoint(EndpointDescription const &endpoint);
+  void connect(std::string const &url);
+  void connect(EndpointDescription const &endpoint);
   std::shared_ptr<Node> node(NodeId const &node_id);
   LocalizedText read_display_name_attribute(NodeId const &node_id);
   std::shared_ptr<Client> client();

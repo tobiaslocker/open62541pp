@@ -19,7 +19,7 @@ int main(int argc, char *argv[]) {
     std::string url = "opc.tcp://opcua.demo-this.com:51210/UA/SampleServer";
 
     auto client = Client::create();
-    client->connect_to_endpoint(url);
+    client->connect(url);
 
     auto root_node = NodeId(0, Identifier(UA_NS0ID_ROOTFOLDER));
     auto node = client->node(root_node);
