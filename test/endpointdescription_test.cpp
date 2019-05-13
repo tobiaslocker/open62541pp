@@ -70,8 +70,8 @@ BOOST_AUTO_TEST_CASE(test_endpoint_description) {
 
   auto test_tokens = std::vector<UserTokenPolicy>();
 
-  UA_UserTokenPolicy policy1;
-  test_tokens.push_back(UserTokenPolicy(policy1));
+//  UA_UserTokenPolicy policy1;
+//  test_tokens.push_back(UserTokenPolicy(policy1));
 
   auto a = ApplicationDescription(server_);
 

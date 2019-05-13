@@ -7,7 +7,6 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g -Wall -std=c++14 -pthread -Wno-unknow
 set(Boost_USE_STATIC_LIBS ON)
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
-
 # BOOST libs
 set(BOOST_LIBRARYDIR /home/me/Projects/boost/boost_1_69_0/libs)
 set (BOOST_ROOT /home/me/Projects/boost/boost_1_69_0)
@@ -18,7 +17,11 @@ if(Boost_FOUND)
   link_directories(${Boost_LIBRARY_DIRS})
 endif()
 
+find_package(open62541 0.3.0 REQUIRED COMPONENTS FullNamespace Discovery)
+
+
 include_directories(include)
+include_directories(externals/include)
 
 set(
     SOURCES
@@ -36,7 +39,6 @@ set(
     src/usertokenpolicy.cpp
     src/guid.cpp
     src/log.cpp
-    src/open62541.c
 )
 
 add_library(${PROJECT_NAME} SHARED ${SOURCES})
@@ -45,6 +47,8 @@ set_property(TARGET ${PROJECT_NAME} PROPERTY POSITION_INDEPENDENT_CODE ON)
 target_link_libraries(
     ${PROJECT_NAME}
     PUBLIC ${Boost_LIBRARIES}
+    open62541
+    
 )
 
 enable_testing()
@@ -70,7 +74,3 @@ endfunction()
 
 make_test(applicationdescription_test)
 make_test(endpointdescription_test)
-
-
-
-
