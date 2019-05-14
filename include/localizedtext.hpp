@@ -12,18 +12,20 @@ class LocalizedText {
   std::string m_text;
   std::string m_locale;
   bool m_is_empty;
+  explicit LocalizedText(UA_LocalizedText const &display_name);
 
  public:
-  explicit LocalizedText(UA_LocalizedText const &display_name);
   LocalizedText();
   std::string text() const;
   std::string locale() const;
   bool is_empty() const;
-
   bool operator==(LocalizedText const &rhs) const;
   bool operator!=(LocalizedText const &rhs) const;
   friend std::ostream &operator<<(std::ostream &out,
                                   LocalizedText const &localized_text);
+  friend class ApplicationDescription;
+  friend class ReferenceDescription;
+  friend class Client;
 };
 
 }  // namespace open62541

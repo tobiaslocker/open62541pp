@@ -4,8 +4,17 @@ namespace open62541 {
 
 Identifier::Identifier() {}
 
-Identifier::Identifier(UA_UInt32 const &numeric)
+Identifier::Identifier(u_int32_t const &numeric)
     : m_numeric{numeric}, m_type{IdentifierType::Numeric} {}
+
+Identifier::Identifier(std::string const &string)
+    : m_string{string}, m_type{IdentifierType::String} {}
+
+Identifier::Identifier(Guid const &guid)
+    : m_guid{guid}, m_type{IdentifierType::Guid} {}
+
+Identifier::Identifier(ByteString const &byte_string)
+    : m_byte_string{byte_string}, m_type{IdentifierType::ByteString} {}
 
 Identifier::Identifier(UA_String const &string)
     : m_type{IdentifierType::String} {
@@ -15,15 +24,15 @@ Identifier::Identifier(UA_String const &string)
 Identifier::Identifier(UA_Guid const &guid)
     : m_guid{guid}, m_type{IdentifierType::Guid} {}
 
-bool Identifier::operator==(const Identifier &rhs) const {
+bool Identifier::operator==(Identifier const &rhs) const {
   return string() == rhs.string() && numeric() == rhs.numeric();
 }
 
-bool Identifier::operator!=(const Identifier &rhs) const {
+bool Identifier::operator!=(Identifier const &rhs) const {
   return string() != rhs.string() && numeric() != rhs.numeric();
 }
 
-std::ostream &operator<<(std::ostream &out, const Identifier &identifier) {
+std::ostream &operator<<(std::ostream &out, Identifier const &identifier) {
   auto j = identifier.str();
   out << j;
   return out;
@@ -54,13 +63,13 @@ std::string Identifier::str() const {
 }
 
 std::ostream &operator<<(std::ostream &out,
-                         const IdentifierType &identifier_type) {
+                         IdentifierType const &identifier_type) {
   auto s = identifier_type.str();
   out << s;
   return out;
 }
 
-IdentifierType::IdentifierType(const UA_NodeIdType &id_type) {
+IdentifierType::IdentifierType(UA_NodeIdType const &id_type) {
   switch (id_type) {
     case UA_NODEIDTYPE_GUID:
       m_value = Guid;
@@ -80,11 +89,11 @@ IdentifierType::IdentifierType(const UA_NodeIdType &id_type) {
 constexpr IdentifierType::IdentifierType(IdentifierType::Value id_type)
     : m_value(id_type) {}
 
-bool IdentifierType::operator==(const IdentifierType &rhs) const {
+bool IdentifierType::operator==(IdentifierType const &rhs) const {
   return m_value == rhs.m_value;
 }
 
-bool IdentifierType::operator!=(const IdentifierType &rhs) const {
+bool IdentifierType::operator!=(IdentifierType const &rhs) const {
   return m_value != rhs.m_value;
 }
 

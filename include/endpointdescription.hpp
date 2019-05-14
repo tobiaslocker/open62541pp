@@ -38,10 +38,10 @@ class EndpointDescription {
   std::vector<UserTokenPolicy> m_user_identity_tokens;
   std::string m_transport_profile_uri;
   unsigned char m_security_level;
+  explicit EndpointDescription(UA_EndpointDescription const &url);
 
  public:
   EndpointDescription();
-  explicit EndpointDescription(UA_EndpointDescription const &url);
   std::string endpoint_url() const;
   ApplicationDescription server() const;
   Certificate server_certificate() const;
@@ -57,6 +57,8 @@ class EndpointDescription {
   bool operator!=(EndpointDescription const &rhs) const;
   friend std::ostream &operator<<(
       std::ostream &out, EndpointDescription const &endpoint_description);
+
+  friend class Client;
 };
 
 }  // namespace open62541

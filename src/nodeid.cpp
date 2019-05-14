@@ -22,9 +22,42 @@ NodeId::NodeId(UA_NodeId const &node_id)
   }
 }
 
-NodeId::NodeId(json const &node_id)
-    : m_namespace_index{node_id["NamespaceIndex"]},
-      m_identifier{Identifier(node_id["Identifier"])} {}
+NodeId::NodeId(json const &node_id) : m_namespace_index{node_id["Namespace"]} {
+  /*
+   * The IdentifierType encoded as a JSON number.
+   * Allowed values are:
+   * 0 - UInt32 Identifier encoded as a JSON number.
+   * 1 - A String Identifier encoded as a JSON string.
+   * 2 - A Guid Identifier encoded as described in 5.4.2.7.
+   * 3 - A ByteString Identifier encoded as described in 5.4.2.8.
+   * This field is omitted for UInt32 identifiers.
+   */
+
+  if (node_id["IdType"].is_number()) {
+    auto id = node_id["Id"];
+    auto id_type = node_id["IdType"].get<int>();
+    switch (id_type) {
+      case 0:
+        m_identifier = Identifier(id.get<u_int32_t>());
+        break;
+      case 1:
+        m_identifier = Identifier(id.get<std::string>());
+        break;
+      case 2:
+        m_identifier = Identifier(Guid(id.get<std::string>()));
+        break;
+      case 3:
+        m_identifier =
+            Identifier(ByteString::from_base_64(id.get<std::string>()));
+        break;
+      default:
+        // TODO: handle error case
+        break;
+    }
+
+  } else {
+  }
+}
 
 NodeId::NodeId(uint16_t namespace_index, Identifier const &identifier)
     : m_namespace_index{namespace_index}, m_identifier{identifier} {}

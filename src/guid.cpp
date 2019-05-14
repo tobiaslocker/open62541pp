@@ -4,6 +4,8 @@ namespace open62541 {
 
 Guid::Guid() {}
 
+Guid::Guid(const std::string &string) : m_string(string) {}
+
 Guid::Guid(const UA_Guid &guid)
     : m_data1{guid.data1}, m_data2{guid.data2}, m_data3{guid.data3} {
   m_data4 = guid.data4[0] | guid.data4[1] << 1 | guid.data4[2] << 2 |

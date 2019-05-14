@@ -32,11 +32,12 @@ class ApplicationDescription {
   std::string m_gateway_server_uri;
   std::string m_discovery_profile_uri;
   std::vector<std::string> m_discovery_urls;
+  json m_json;
+  ApplicationDescription(
+      UA_ApplicationDescription const &application_description);
 
  public:
   ApplicationDescription() {}
-  ApplicationDescription(
-      UA_ApplicationDescription const &application_description);
 
   std::string application_uri() const;
   std::string product_uri() const;
@@ -52,6 +53,8 @@ class ApplicationDescription {
   bool operator!=(ApplicationDescription const &rhs) const;
   friend std::ostream &operator<<(
       std::ostream &out, ApplicationDescription const &application_description);
+
+  friend class EndpointDescription;
 };
 
 }  // namespace open62541
