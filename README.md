@@ -24,12 +24,12 @@ int main(int argc, char *argv[]) {
 
   // Get json representation of root node's nodeid
   auto json = node->node_id().to_json();
-  std::cerr << json << '\n';
+  std::cout << json << '\n';
 
   auto endpoints = client->get_endpoints(url);
   std::for_each(
       endpoints.begin(), endpoints.end(), [&](EndpointDescription const &endpoint) {
-          std::cerr << endpoint.to_json() << '\n';
+          std::cout << endpoint.to_json() << '\n';
       });
 }
 ```
