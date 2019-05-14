@@ -3,9 +3,12 @@
 
 namespace open62541 {
 
+class ClientPrivate {};
+
 Client::Client()
     : m_client{std::shared_ptr<UA_Client>(
-          UA_Client_new(UA_ClientConfig_default), UA_Client_delete)} {
+          UA_Client_new(UA_ClientConfig_default), UA_Client_delete)},
+      d_ptr{std::make_unique<ClientPrivate>()} {
   BOOST_LOG_CHANNEL_SEV(m_lg, m_channel, debug) << "Creating client";
 }
 
@@ -78,4 +81,5 @@ std::shared_ptr<Client> Client::create() {
   return std::shared_ptr<Client>(new Client());
 }
 
+Client::~Client() {}
 }  // namespace open62541

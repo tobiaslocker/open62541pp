@@ -27,14 +27,11 @@ class ReferenceDescription {
   LocalizedText display_name() const;
   QualifiedName browse_name() const;
   ExpandedNodeId type_definition() const;
-
   json to_json() const;
-
   bool operator==(ReferenceDescription const &rhs) const;
   bool operator!=(ReferenceDescription const &rhs) const;
   friend std::ostream &operator<<(std::ostream &out,
                                   ReferenceDescription const &ref_description);
-
   friend class Node;
 };
 

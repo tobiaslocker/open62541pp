@@ -28,15 +28,12 @@ class UserTokenPolicy {
 
  public:
   UserTokenPolicy(UA_UserTokenPolicy const &user_token_policy);
-
   std::string policy_id() const;
   UserTokenType token_type() const;
   std::string issued_token_type() const;
   std::string issuer_endpoint_url() const;
   std::string security_policy_uri() const;
-
   json to_json() const;
-
   bool operator==(UserTokenPolicy const &rhs) const;
   bool operator!=(UserTokenPolicy const &rhs) const;
   friend std::ostream &operator<<(std::ostream &out,

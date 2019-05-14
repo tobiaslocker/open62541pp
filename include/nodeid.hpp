@@ -17,23 +17,18 @@ class NodeId {
   Identifier m_identifier;
   IdentifierType m_identifier_type;
   UA_NodeId m_ua_node_id;
-
   explicit NodeId(UA_NodeId const &node_id);
   UA_NodeId ua_node_id() const;
 
  public:
   explicit NodeId(json const &node_id);
   explicit NodeId(uint16_t namespace_index, Identifier const &identifier);
-
   u_int16_t namespace_index() const;
   Identifier indentifier() const;
-
   json to_json() const;
-
   bool operator==(NodeId const &rhs) const;
   bool operator!=(NodeId const &rhs) const;
   friend std::ostream &operator<<(std::ostream &out, NodeId const &node_id);
-
   friend class ReferenceDescription;
   friend class ExpandedNodeId;
   friend class Node;
