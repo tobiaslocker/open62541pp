@@ -3,12 +3,9 @@
 
 namespace open62541 {
 
-class ClientPrivate {};
-
 Client::Client()
     : m_client{std::shared_ptr<UA_Client>(
-          UA_Client_new(UA_ClientConfig_default), UA_Client_delete)},
-      d_ptr{std::make_unique<ClientPrivate>()} {
+          UA_Client_new(UA_ClientConfig_default), UA_Client_delete)} {
   BOOST_LOG_CHANNEL_SEV(m_lg, m_channel, debug) << "Creating client";
 }
 
@@ -77,9 +74,7 @@ LocalizedText Client::read_display_name_attribute(const NodeId &node_id) {
 std::shared_ptr<Client> Client::client() { return shared_from_this(); }
 
 std::shared_ptr<Client> Client::create() {
-  logger::init();
   return std::shared_ptr<Client>(new Client());
 }
 
-Client::~Client() {}
 }  // namespace open62541
