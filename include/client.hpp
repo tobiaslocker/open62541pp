@@ -17,12 +17,9 @@ namespace open62541 {
 class Node;
 using namespace logger;
 
+class ClientPrivate;
+
 class Client : public std::enable_shared_from_this<Client> {
-  src::severity_channel_logger<severity_level, std::string> m_lg;
-  std::string m_channel = "ua_client";
-  std::shared_ptr<UA_Client> m_client;
-  Client();
-  UA_BrowseResponse browse(UA_BrowseRequest const &request);
 
  public:
   std::vector<EndpointDescription> get_endpoints(std::string const &url);
@@ -32,8 +29,14 @@ class Client : public std::enable_shared_from_this<Client> {
   LocalizedText read_display_name_attribute(NodeId const &node_id);
   std::shared_ptr<Client> client();
   static std::shared_ptr<Client> create();
-
   friend class Node;
+  friend class ClientPrivate;
+  ~Client();
+
+private:
+  UA_BrowseResponse browse(UA_BrowseRequest const &request);
+  Client();
+  std::unique_ptr<ClientPrivate> d_ptr;
 };
 
 }  // namespace open62541

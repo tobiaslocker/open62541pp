@@ -12,9 +12,9 @@ class LocalizedText {
   std::string m_text;
   std::string m_locale;
   bool m_is_empty;
-  explicit LocalizedText(UA_LocalizedText const &display_name);
 
  public:
+  explicit LocalizedText(UA_LocalizedText const &display_name);
   LocalizedText();
   std::string text() const;
   std::string locale() const;
@@ -25,7 +25,7 @@ class LocalizedText {
                                   LocalizedText const &localized_text);
   friend class ApplicationDescription;
   friend class ReferenceDescription;
-  friend class Client;
+  friend class ClientPrivate;
 };
 
 }  // namespace open62541
