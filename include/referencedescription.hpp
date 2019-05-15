@@ -33,6 +33,7 @@ class ReferenceDescription {
   friend std::ostream &operator<<(std::ostream &out,
                                   ReferenceDescription const &ref_description);
   friend class Node;
+  friend class ClientPrivate;
 };
 
 }  // namespace open62541

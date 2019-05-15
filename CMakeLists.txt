@@ -32,7 +32,6 @@ set(
     src/expandednodeid.cpp
     src/identifier.cpp
     src/localizedtext.cpp
-    src/node.cpp
     src/nodeid.cpp
     src/qualifiedname.cpp
     src/referencedescription.cpp
