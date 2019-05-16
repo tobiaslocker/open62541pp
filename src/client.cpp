@@ -69,6 +69,52 @@ class ClientPrivate {
     }
   }
 
+  UA_BrowseRequest browse_request(UA_BrowseDescription *bd,
+                                  UA_NodeId const &node_id,
+                                  UA_BrowseResultMask br_mask,
+                                  UA_NodeId const &rt_id) {
+    UA_BrowseRequest browse_req;
+    UA_BrowseRequest_init(&browse_req);
+    browse_req.requestedMaxReferencesPerNode = 0;
+    browse_req.nodesToBrowse = bd;
+    browse_req.nodesToBrowseSize = 1;
+    browse_req.nodesToBrowse[0].nodeId = node_id;
+    browse_req.nodesToBrowse[0].resultMask = br_mask;
+    browse_req.nodesToBrowse[0].referenceTypeId = rt_id;
+    browse_req.nodesToBrowse[0].includeSubtypes = true;
+    return browse_req;
+  }
+
+  std::vector<ReferenceDescription> get_child_references(
+      ReferenceDescription const &reference,
+      BrowseResultMask br_mask,
+      NodeClassMask node_class_mask,
+      ReferenceTypeIdentifier id) {
+    BOOST_LOG_CHANNEL_SEV(m_lg, m_channel, debug) << "Browsing children";
+    std::vector<ReferenceDescription> children;
+    std::shared_ptr<UA_BrowseDescription> browse_desc(new UA_BrowseDescription);
+    UA_BrowseDescription_init(browse_desc.get());
+    browse_desc->nodeClassMask = node_class_mask;
+
+    auto node_id = reference.node_id().ua_node_id();
+    auto browse_req =
+        browse_request(browse_desc.get(),
+                       node_id,
+                       static_cast<UA_BrowseResultMask>(br_mask),
+                       UA_NODEID_NUMERIC(0, static_cast<u_int32_t>(id)));
+
+    UA_BrowseResponse browse_response = browse(browse_req);
+    for (size_t i = 0; i < browse_response.resultsSize; ++i) {
+      for (size_t j = 0; j < browse_response.results[i].referencesSize; ++j) {
+        auto ref =
+            ReferenceDescription(browse_response.results[i].references[j]);
+        children.push_back(ref);
+      }
+    }
+    UA_BrowseResponse_deleteMembers(&browse_response);
+    return children;
+  }
+
   std::vector<ReferenceDescription> browse_children(
       NodeId const &node_id,
       BrowseResultMask mask,
@@ -112,12 +158,6 @@ class ClientPrivate {
         << "Read display name failed. Error code = " << status;
     return LocalizedText();
   }
-
-  std::shared_ptr<Client> client() { return q_ptr; }
-
-  std::shared_ptr<Client> create() {
-    return std::shared_ptr<Client>(new Client());
-  }
 };
 
 Client::Client() : d_ptr{new ClientPrivate} {}
@@ -132,22 +172,16 @@ void Client::connect(EndpointDescription const &endpoint) {
   d_ptr->connect(endpoint);
 }
 
-LocalizedText Client::read_display_name_attribute(const NodeId &node_id) {
+LocalizedText Client::read_display_name_attribute(NodeId const &node_id) {
   return d_ptr->read_display_name_attribute(node_id);
 }
 
-std::shared_ptr<Client> Client::client() { return d_ptr->client(); }
-
-std::shared_ptr<Client> Client::create() {
-  return std::shared_ptr<Client>(new Client());
-}
-
-std::vector<ReferenceDescription> Client::browse_children(
-    NodeId const &node_id,
-    BrowseResultMask mask,
-    NodeClassMask node_class_mask,
+std::vector<ReferenceDescription> Client::get_child_references(
+    ReferenceDescription const &reference,
+    BrowseResultMask br_mask,
+    NodeClassMask nc_mask,
     ReferenceTypeIdentifier id) {
-  return d_ptr->browse_children(node_id, mask, node_class_mask, id);
+  return d_ptr->get_child_references(reference, br_mask, nc_mask, id);
 }
 
 Client::~Client() = default;

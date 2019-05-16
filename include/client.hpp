@@ -80,29 +80,23 @@ struct NodeClassMask {
   operator u_int32_t() const { return m_node_class_mask; }
 };
 
-
 class ClientPrivate;
 
-class Client : public std::enable_shared_from_this<Client> {
+class Client {
  public:
+  Client();
+  ~Client();
   std::vector<EndpointDescription> get_endpoints(std::string const &url);
   void connect(std::string const &url);
   void connect(EndpointDescription const &endpoint);
   LocalizedText read_display_name_attribute(NodeId const &node_id);
-  std::shared_ptr<Client> client();
-  static std::shared_ptr<Client> create();
-  friend class Node;
-  friend class ClientPrivate;
-  ~Client();
-  std::vector<ReferenceDescription> browse_children(
-      NodeId const &node_id,
-      BrowseResultMask mask,
-      NodeClassMask node_class_mask,
+  std::vector<ReferenceDescription> get_child_references(
+      ReferenceDescription const &reference,
+      BrowseResultMask br_mask,
+      NodeClassMask nc_mask,
       ReferenceTypeIdentifier id);
 
  private:
-  //  UA_BrowseResponse browse(UA_BrowseRequest const &request);
-  Client();
   std::unique_ptr<ClientPrivate> d_ptr;
 };
 
