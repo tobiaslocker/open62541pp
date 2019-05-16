@@ -8,24 +8,22 @@ namespace open62541 {
 
 using namespace logger;
 
-class ClientPrivate {
+class Client::impl {
   src::severity_channel_logger<severity_level, std::string> m_lg;
   std::string m_channel = "ua_client";
   std::shared_ptr<UA_Client> m_client;
-  std::shared_ptr<Client> q_ptr;
-
- public:
-  ClientPrivate(Client *client) : q_ptr(client) {}
-  ClientPrivate()
-      : m_client{std::shared_ptr<UA_Client>(
-            UA_Client_new(UA_ClientConfig_default), UA_Client_delete)} {
-    logger::init();
-  }
 
   UA_BrowseResponse browse(const UA_BrowseRequest &request) {
     UA_BrowseResponse browse_response =
         UA_Client_Service_browse(m_client.get(), request);
     return browse_response;
+  }
+
+ public:
+  impl()
+      : m_client{std::shared_ptr<UA_Client>(
+            UA_Client_new(UA_ClientConfig_default), UA_Client_delete)} {
+    logger::init();
   }
 
   std::vector<EndpointDescription> get_endpoints(std::string const &url) {
@@ -160,7 +158,7 @@ class ClientPrivate {
   }
 };
 
-Client::Client() : d_ptr{new ClientPrivate} {}
+Client::Client() : d_ptr{std::make_unique<impl>()} {}
 
 std::vector<EndpointDescription> Client::get_endpoints(std::string const &url) {
   return d_ptr->get_endpoints(url);
@@ -185,5 +183,7 @@ std::vector<ReferenceDescription> Client::get_child_references(
 }
 
 Client::~Client() = default;
+
+Client &Client::operator=(Client &&) = default;
 
 }  // namespace open62541

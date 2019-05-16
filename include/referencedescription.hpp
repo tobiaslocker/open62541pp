@@ -32,8 +32,7 @@ class ReferenceDescription {
   bool operator!=(ReferenceDescription const &rhs) const;
   friend std::ostream &operator<<(std::ostream &out,
                                   ReferenceDescription const &ref_description);
-  friend class Node;
-  friend class ClientPrivate;
+  friend class Client;
 };
 
 }  // namespace open62541
