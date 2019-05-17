@@ -11,12 +11,14 @@ class BrowseDescription {
   std::unique_ptr<impl> d_ptr;
 
  public:
-//  BrowseDescription();
-//  ~BrowseDescription();
-//  BrowseDescription(BrowseDescription &&) = default;
-//  BrowseDescription(BrowseDescription const &) = delete;
-//  BrowseDescription &operator=(BrowseDescription &&);
-//  BrowseDescription &operator=(BrowseDescription const &) = delete;
+  BrowseDescription();
+  ~BrowseDescription();
+
+  BrowseDescription(BrowseDescription &&) noexcept;
+  BrowseDescription &operator=(BrowseDescription &&) noexcept;
+
+  BrowseDescription(BrowseDescription const &);
+  BrowseDescription &operator=(BrowseDescription const &);
 };
 
 }  // namespace open62541

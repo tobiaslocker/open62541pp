@@ -19,6 +19,13 @@ class BrowseResult {
   BrowseResult &operator=(BrowseResult const &) = delete;
 };
 
+class BrowseResult::impl {
+  impl() {}
+};
+
+BrowseResult::BrowseResult() : d_ptr{std::make_unique<impl>()} {}
+BrowseResult::~BrowseResult() = default;
+BrowseResult &BrowseResult::operator=(BrowseResult &&) = default;
 }  // namespace open62541
 
 #endif  // OPEN62541_CPP_WRAPPER_BROWSE_RESULT_H

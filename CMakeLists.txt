@@ -37,6 +37,7 @@ set(
     src/usertokenpolicy.cpp
     src/guid.cpp
     src/browserequest.cpp
+    src/browsedescription.cpp
     src/log.cpp
 )
 

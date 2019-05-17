@@ -16,11 +16,14 @@ class BrowseRequest {
  public:
   BrowseRequest();
   ~BrowseRequest();
+
   BrowseRequest(BrowseRequest &&) = default;
-  BrowseRequest(BrowseRequest const &) = delete;
   BrowseRequest &operator=(BrowseRequest &&);
+
+  BrowseRequest(BrowseRequest const &) = delete;
   BrowseRequest &operator=(BrowseRequest const &) = delete;
-//  std::vector<BrowseDescription> nodes_to_browse();
+
+  std::vector<BrowseDescription> nodes_to_browse();
   u_int32_t max_references();
 };
 
