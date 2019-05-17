@@ -12,7 +12,7 @@
 namespace open62541 {
 using namespace nlohmann;
 
-enum class UserTokenType : u_int32_t {
+enum class UserTokenType : uint32_t {
   Anonymous = 0,
   UserName = 1,
   Certificate = 2,

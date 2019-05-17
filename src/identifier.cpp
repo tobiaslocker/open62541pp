@@ -4,7 +4,7 @@ namespace open62541 {
 
 Identifier::Identifier() {}
 
-Identifier::Identifier(u_int32_t const &numeric)
+Identifier::Identifier(uint32_t const &numeric)
     : m_numeric{numeric}, m_type{IdentifierType::Numeric} {}
 
 Identifier::Identifier(std::string const &string)
@@ -46,7 +46,7 @@ Guid Identifier::guid() const {
   return m_guid;  // TODO
 }
 
-u_int32_t Identifier::numeric() const { return m_numeric; }
+uint32_t Identifier::numeric() const { return m_numeric; }
 
 std::string Identifier::str() const {
   switch (m_type) {
@@ -111,6 +111,6 @@ std::string IdentifierType::str() const {
   return std::string();
 }
 
-open62541::IdentifierType::operator u_int32_t() const { return m_value; }
+open62541::IdentifierType::operator uint32_t() const { return m_value; }
 
 }  // namespace open62541

@@ -99,7 +99,7 @@ class Client::impl {
         browse_request(browse_desc.get(),
                        node_id,
                        static_cast<UA_BrowseResultMask>(br_mask),
-                       UA_NODEID_NUMERIC(0, static_cast<u_int32_t>(id)));
+                       UA_NODEID_NUMERIC(0, static_cast<uint32_t>(id)));
 
     UA_BrowseResponse browse_response = browse(browse_req);
     for (size_t i = 0; i < browse_response.resultsSize; ++i) {
@@ -129,9 +129,9 @@ class Client::impl {
     browse_req.nodesToBrowse = browse_desc.get();
     browse_req.nodesToBrowseSize = 1;
     browse_req.nodesToBrowse[0].nodeId = node_id.ua_node_id();
-    browse_req.nodesToBrowse[0].resultMask = static_cast<u_int32_t>(mask);
+    browse_req.nodesToBrowse[0].resultMask = static_cast<uint32_t>(mask);
     browse_req.nodesToBrowse[0].referenceTypeId =
-        UA_NODEID_NUMERIC(0, static_cast<u_int32_t>(id));
+        UA_NODEID_NUMERIC(0, static_cast<uint32_t>(id));
     browse_req.nodesToBrowse[0].includeSubtypes = true;
     UA_BrowseResponse browse_response = browse(browse_req);
     for (size_t i = 0; i < browse_response.resultsSize; ++i) {

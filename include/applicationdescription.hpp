@@ -15,15 +15,6 @@
 namespace open62541 {
 using namespace nlohmann;
 
-enum class ApplicationType : u_int32_t {
-  Server = 0,
-  Client = 1,
-  ClientAndServer = 2,
-  DiscoveryServer = 3,
-};
-
-std::ostream &operator<<(std::ostream &out, ApplicationType const &a);
-
 class ApplicationDescription {
   std::string m_application_uri;
   std::string m_product_uri;

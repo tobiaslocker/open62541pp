@@ -27,9 +27,7 @@ class Client {
   Client(Client const &) = delete;
   Client &operator=(Client &&);
   Client &operator=(Client const &) = delete;
-
   BrowseResponse browse(BrowseRequest const &request);
-
   std::vector<EndpointDescription> get_endpoints(std::string const &url);
   void connect(std::string const &url);
   void connect(EndpointDescription const &endpoint);

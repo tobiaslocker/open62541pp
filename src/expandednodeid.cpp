@@ -14,7 +14,7 @@ ExpandedNodeId::ExpandedNodeId(NodeId const &node_id) : m_node_id{node_id} {}
 
 ExpandedNodeId::ExpandedNodeId(NodeId const &node_id,
                                std::string const &namespace_uri,
-                               u_int32_t server_index)
+                               uint32_t server_index)
     : m_node_id{node_id},
       m_namespace_uri{namespace_uri},
       m_server_index{server_index} {}
@@ -23,7 +23,7 @@ std::string ExpandedNodeId::namespace_uri() const { return m_namespace_uri; }
 
 NodeId ExpandedNodeId::node_id() const { return m_node_id; }
 
-u_int32_t ExpandedNodeId::server_index() const { return m_server_index; }
+uint32_t ExpandedNodeId::server_index() const { return m_server_index; }
 
 json ExpandedNodeId::to_json() const {
   json exp_node_id;

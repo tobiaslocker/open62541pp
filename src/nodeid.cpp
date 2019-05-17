@@ -38,7 +38,7 @@ NodeId::NodeId(json const &node_id) : m_namespace_index{node_id["Namespace"]} {
     auto id_type = node_id["IdType"].get<int>();
     switch (id_type) {
       case 0:
-        m_identifier = Identifier(id.get<u_int32_t>());
+        m_identifier = Identifier(id.get<uint32_t>());
         break;
       case 1:
         m_identifier = Identifier(id.get<std::string>());
@@ -64,7 +64,7 @@ NodeId::NodeId(uint16_t namespace_index, Identifier const &identifier)
 
 Identifier NodeId::indentifier() const { return m_identifier; }
 
-u_int16_t NodeId::namespace_index() const { return m_namespace_index; }
+uint16_t NodeId::namespace_index() const { return m_namespace_index; }
 
 json NodeId::to_json() const {
   json node_id;

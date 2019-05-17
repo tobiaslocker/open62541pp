@@ -13,10 +13,8 @@ class BrowseDescription {
  public:
   BrowseDescription();
   ~BrowseDescription();
-
   BrowseDescription(BrowseDescription &&) noexcept;
   BrowseDescription &operator=(BrowseDescription &&) noexcept;
-
   BrowseDescription(BrowseDescription const &);
   BrowseDescription &operator=(BrowseDescription const &);
 };

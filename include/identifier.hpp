@@ -15,7 +15,7 @@ class IdentifierType {
   explicit IdentifierType(UA_NodeIdType const &id_type);
 
  public:
-  enum Value : u_int32_t {
+  enum Value : uint32_t {
     Numeric,
     String,
     Guid,
@@ -26,7 +26,7 @@ class IdentifierType {
   bool operator==(IdentifierType const &rhs) const;
   bool operator!=(IdentifierType const &rhs) const;
   std::string str() const;
-  operator u_int32_t() const;
+  operator uint32_t() const;
 
  private:
   Value m_value;
@@ -46,7 +46,7 @@ class ByteString {
 };
 
 class Identifier {
-  u_int32_t m_numeric = 0;
+  uint32_t m_numeric = 0;
   std::string m_string;
   Guid m_guid;
   ByteString m_byte_string;
@@ -55,7 +55,7 @@ class Identifier {
   explicit Identifier(UA_Guid const &guid);
 
  public:
-  explicit Identifier(u_int32_t const &numeric);
+  explicit Identifier(uint32_t const &numeric);
   explicit Identifier(std::string const &string);
   explicit Identifier(Guid const &guid);
   explicit Identifier(ByteString const &byte_string);
@@ -63,7 +63,7 @@ class Identifier {
   std::string string() const;
   std::string byte_string() const;
   Guid guid() const;
-  u_int32_t numeric() const;
+  uint32_t numeric() const;
   std::string str() const;
   bool operator==(Identifier const &rhs) const;
   bool operator!=(Identifier const &rhs) const;

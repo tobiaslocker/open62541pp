@@ -9,7 +9,7 @@ QualifiedName::QualifiedName(UA_QualifiedName const &name)
 
 std::string QualifiedName::name() const { return m_name; }
 
-u_int16_t QualifiedName::namespace_index() const { return m_namespace_index; }
+uint16_t QualifiedName::namespace_index() const { return m_namespace_index; }
 
 bool QualifiedName::operator==(QualifiedName const &rhs) const {
   return name() == rhs.name() && namespace_index() == rhs.namespace_index();
