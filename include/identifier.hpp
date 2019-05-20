@@ -41,7 +41,10 @@ class ByteString {
   ByteString() {}
   ByteString(std::string const &data) {}
 
-  static ByteString from_base_64(std::string const &data) {}
+  static ByteString from_base_64(std::string const &data) {
+    ByteString b;
+    return b;
+  }
   // TODO: implement. If done, remove certificate class?
 };
 

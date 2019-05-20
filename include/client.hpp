@@ -12,7 +12,7 @@
 #include "nodeid.hpp"
 #include "referencedescription.hpp"
 
-#include "enums.h"
+#include "enums.hpp"
 
 namespace open62541 {
 
