@@ -6,6 +6,7 @@
 // Dependencies
 #include <nlohmann/json.hpp>
 
+#include "enums.hpp"
 #include "identifier.hpp"
 #include "log.hpp"
 

@@ -9,19 +9,40 @@
 
 namespace open62541 {
 
+class RequestHeader {
+  // TODO
+};
+
+class ViewDescription {
+  // TODO
+};
+
 class BrowseRequest {
   class impl;
   std::unique_ptr<impl> d_ptr;
 
  public:
   BrowseRequest();
+
+  BrowseRequest(RequestHeader const &request_header,
+                ViewDescription const &view,
+                uint32_t const &max_references,
+                std::vector<BrowseDescription> const &nodes_to_browse);
+
   ~BrowseRequest();
   BrowseRequest(BrowseRequest &&) = default;
   BrowseRequest &operator=(BrowseRequest &&);
   BrowseRequest(BrowseRequest const &) = delete;
   BrowseRequest &operator=(BrowseRequest const &) = delete;
-  std::vector<BrowseDescription> nodes_to_browse();
-  uint32_t max_references();
+
+  RequestHeader request_header() const;
+  ViewDescription view() const;
+  uint32_t max_references() const;
+  std::vector<BrowseDescription> nodes_to_browse() const;
+  BrowseRequest(RequestHeader request_header,
+                ViewDescription view,
+                uint32_t max_references,
+                std::vector<BrowseDescription> nodes_to_browse);
 };
 
 }  // namespace open62541

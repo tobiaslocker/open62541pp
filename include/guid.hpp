@@ -16,14 +16,12 @@ class Guid {
   uint16_t m_data2 = 0;
   uint16_t m_data3 = 0;
   int64_t m_data4 = 0;
-
-  std::string m_string;
-
-  Guid(UA_Guid const &guid);
+  //  std::string m_string;
 
  public:
   Guid();
-  Guid(std::string const &string);
+  //  Guid(std::string const &string);
+  Guid(uint32_t data1, uint16_t data2, uint16_t data3, int64_t data4);
   std::string str() const;
   bool operator==(Guid const &rhs) const;
   bool operator!=(Guid const &rhs) const;

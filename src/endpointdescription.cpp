@@ -53,7 +53,7 @@ unsigned char EndpointDescription::security_level() const {
 json EndpointDescription::to_json() const {
   json endpoint_desc;
   endpoint_desc["EndpointUrl"] = m_endpoint_url;
-  endpoint_desc["Server"] = m_server.to_json();
+//  endpoint_desc["Server"] = m_server.to_json();
   //  endpoint_desc["Certificate"] = m_server_certificate.str();
 
   switch (m_security_mode) {

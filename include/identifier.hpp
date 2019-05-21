@@ -6,35 +6,11 @@
 // Dependencies
 #include <nlohmann/json.hpp>
 
+#include "enums.hpp"
 #include "guid.hpp"
 
 namespace open62541 {
 using namespace nlohmann;
-
-class IdentifierType {
-  explicit IdentifierType(UA_NodeIdType const &id_type);
-
- public:
-  enum Value : uint32_t {
-    Numeric,
-    String,
-    Guid,
-    ByteString,
-  };
-  IdentifierType() = default;
-  constexpr IdentifierType(Value id_type);
-  bool operator==(IdentifierType const &rhs) const;
-  bool operator!=(IdentifierType const &rhs) const;
-  std::string str() const;
-  operator uint32_t() const;
-
- private:
-  Value m_value;
-  friend class NodeId;
-};
-
-std::ostream &operator<<(std::ostream &out,
-                         IdentifierType const &identifier_type);
 
 class ByteString {
  public:
@@ -53,9 +29,6 @@ class Identifier {
   std::string m_string;
   Guid m_guid;
   ByteString m_byte_string;
-  IdentifierType m_type;
-  explicit Identifier(UA_String const &string);
-  explicit Identifier(UA_Guid const &guid);
 
  public:
   explicit Identifier(uint32_t const &numeric);

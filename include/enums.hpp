@@ -6,6 +6,11 @@
 
 namespace open62541 {
 
+enum class IdentifierType : uint32_t { Numeric, String, Guid, ByteString };
+
+// std::ostream &operator<<(std::ostream &out,
+//                         IdentifierType const &identifier_type);
+
 enum class MessageSecurityMode : uint32_t {
   Invalid = 0,
   None = 1,

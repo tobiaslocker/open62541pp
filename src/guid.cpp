@@ -4,14 +4,10 @@ namespace open62541 {
 
 Guid::Guid() {}
 
-Guid::Guid(const std::string &string) : m_string(string) {}
+Guid::Guid(uint32_t data1, uint16_t data2, uint16_t data3, int64_t data4)
+    : m_data1{data1}, m_data2{data2}, m_data3{data3}, m_data4{data4} {}
 
-Guid::Guid(const UA_Guid &guid)
-    : m_data1{guid.data1}, m_data2{guid.data2}, m_data3{guid.data3} {
-  m_data4 = guid.data4[0] | guid.data4[1] << 1 | guid.data4[2] << 2 |
-            guid.data4[3] << 3 | guid.data4[4] << 4 | guid.data4[5] << 5 |
-            guid.data4[6] << 6 | guid.data4[7] << 7;
-}
+// Guid::Guid(const std::string &string) : m_string(string) {}
 
 std::string Guid::str() const {
   std::stringstream stream;

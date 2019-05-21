@@ -93,7 +93,7 @@ class Client::impl {
     browse_desc->nodeClassMask = node_class_mask;
     auto browse_req =
         browse_request(browse_desc.get(),
-                       parser::to_open62541(reference.node_id()),
+                       parser::to_open62541(reference.node_id().node_id()),
                        static_cast<UA_BrowseResultMask>(br_mask),
                        UA_NODEID_NUMERIC(0, static_cast<uint32_t>(id)));
     UA_BrowseResponse browse_response = browse(browse_req);

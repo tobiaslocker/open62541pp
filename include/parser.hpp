@@ -51,7 +51,14 @@ EndpointDescription from_open62541(UA_EndpointDescription const &ed) {
                              ed.securityLevel};
 }
 
-Guid from_open62541(UA_Guid const &g) {}
+Guid from_open62541(UA_Guid const &g) {
+  return Guid{g.data1,
+              g.data2,
+              g.data3,
+              g.data4[0] | g.data4[1] << 1 | g.data4[2] << 2 | g.data4[3] << 3 |
+                  g.data4[4] << 4 | g.data4[5] << 5 | g.data4[6] << 6 |
+                  g.data4[7] << 7};
+}
 
 NodeId from_open62541(UA_NodeId const &ni) {
   switch (ni.identifierType) {
@@ -93,6 +100,51 @@ ReferenceDescription from_open62541(UA_ReferenceDescription const &rd) {
 }
 
 UA_NodeId to_open62541(NodeId const &ni) {}
+
+UA_ExpandedNodeId to_open62541(ExpandedNodeId const &ni) {}
+
+template <typename T>
+T from_json(json const &j);
+
+template <>
+NodeId from_json<NodeId>(json const &j) {}
+
+// NodeId::NodeId(json const &node_id) : m_namespace_index{node_id["Namespace"]}
+// {
+//  /*
+//   * The IdentifierType encoded as a JSON number.
+//   * Allowed values are:
+//   * 0 - UInt32 Identifier encoded as a JSON number.
+//   * 1 - A String Identifier encoded as a JSON string.
+//   * 2 - A Guid Identifier encoded as described in 5.4.2.7.
+//   * 3 - A ByteString Identifier encoded as described in 5.4.2.8.
+//   * This field is omitted for UInt32 identifiers.
+//   */
+
+////  if (node_id["IdType"].is_number()) {
+////    auto id = node_id["Id"];
+////    auto id_type = node_id["IdType"].get<int>();
+////    switch (id_type) {
+////      case 0:
+////        m_identifier = Identifier(id.get<uint32_t>());
+////        break;
+////      case 1:
+////        m_identifier = Identifier(id.get<std::string>());
+////        break;
+////      case 2:
+////        m_identifier = Identifier(Guid(id.get<std::string>()));
+////        break;
+////      case 3:
+////        m_identifier =
+////            Identifier(ByteString::from_base_64(id.get<std::string>()));
+////        break;
+////      default:
+////        // TODO: handle error case
+////        break;
+////    }
+////  } else {
+////  }
+//}
 
 };  // namespace parser
 

@@ -31,6 +31,7 @@ class Client {
   std::vector<EndpointDescription> get_endpoints(std::string const &url);
   void connect(std::string const &url);
   void connect(EndpointDescription const &endpoint);
+
   LocalizedText read_display_name_attribute(NodeId const &node_id);
   std::vector<ReferenceDescription> get_child_references(
       ReferenceDescription const &reference,
