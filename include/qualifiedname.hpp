@@ -13,7 +13,7 @@ class QualifiedName {
   uint16_t m_namespace_index;
 
  public:
-  QualifiedName(UA_QualifiedName const &name);
+  QualifiedName(std::string const &name, uint16_t namespace_index);
   std::string name() const;
   uint16_t namespace_index() const;
   bool operator==(QualifiedName const &rhs) const;

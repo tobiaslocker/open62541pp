@@ -2,10 +2,8 @@
 
 namespace open62541 {
 
-QualifiedName::QualifiedName(UA_QualifiedName const &name)
-    : m_namespace_index{name.namespaceIndex} {
-  m_name.assign(name.name.data, name.name.data + name.name.length);
-}
+QualifiedName::QualifiedName(std::string const &name, uint16_t namespace_index)
+    : m_name{name}, m_namespace_index{namespace_index} {}
 
 std::string QualifiedName::name() const { return m_name; }
 

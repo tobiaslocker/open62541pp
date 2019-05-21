@@ -1,8 +1,8 @@
 #include "open62541.h"
 
 #include "client.hpp"
-
 #include "log.hpp"
+#include "parser.hpp"
 
 namespace open62541 {
 
@@ -28,10 +28,10 @@ class Client::impl {
 
   std::vector<EndpointDescription> get_endpoints(std::string const &url) {
     std::vector<EndpointDescription> result;
-    UA_EndpointDescription *arr = nullptr;
+    UA_EndpointDescription *endpoints = nullptr;
     size_t len = 0;
     auto status =
-        UA_Client_getEndpoints(m_client.get(), url.c_str(), &len, &arr);
+        UA_Client_getEndpoints(m_client.get(), url.c_str(), &len, &endpoints);
     if (status == UA_STATUSCODE_GOOD) {
       BOOST_LOG_CHANNEL_SEV(m_lg, m_channel, info)
           << "Got endpoints from " << url;
@@ -40,9 +40,9 @@ class Client::impl {
           << "Getting endpoints failed. Status code = " << status;
     }
     for (size_t i = 0; i < len; i++) {
-      result.push_back(EndpointDescription(arr[i]));
+      result.push_back(parser::from_open62541(endpoints[i]));
     }
-    UA_Array_delete(arr, len, &UA_TYPES[UA_TYPES_ENDPOINTDESCRIPTION]);
+    UA_Array_delete(endpoints, len, &UA_TYPES[UA_TYPES_ENDPOINTDESCRIPTION]);
     return result;
   }
 
@@ -66,7 +66,6 @@ class Client::impl {
           << "Connect failed. Status code = " << status;
     }
   }
-
   UA_BrowseRequest browse_request(UA_BrowseDescription *bd,
                                   UA_NodeId const &node_id,
                                   UA_BrowseResultMask br_mask,
@@ -82,31 +81,26 @@ class Client::impl {
     browse_req.nodesToBrowse[0].includeSubtypes = true;
     return browse_req;
   }
-
   std::vector<ReferenceDescription> get_child_references(
       ReferenceDescription const &reference,
       BrowseResultMask br_mask,
       NodeClassMask node_class_mask,
       ReferenceTypeIdentifier id) {
-    BOOST_LOG_CHANNEL_SEV(m_lg, m_channel, debug) << "Browsing children";
+    BOOST_LOG_CHANNEL_SEV(m_lg, m_channel, debug) << "Getting child references";
     std::vector<ReferenceDescription> children;
     std::shared_ptr<UA_BrowseDescription> browse_desc(new UA_BrowseDescription);
     UA_BrowseDescription_init(browse_desc.get());
     browse_desc->nodeClassMask = node_class_mask;
-
-    auto node_id = reference.node_id().ua_node_id();
     auto browse_req =
         browse_request(browse_desc.get(),
-                       node_id,
+                       parser::to_open62541(reference.node_id()),
                        static_cast<UA_BrowseResultMask>(br_mask),
                        UA_NODEID_NUMERIC(0, static_cast<uint32_t>(id)));
-
     UA_BrowseResponse browse_response = browse(browse_req);
     for (size_t i = 0; i < browse_response.resultsSize; ++i) {
       for (size_t j = 0; j < browse_response.results[i].referencesSize; ++j) {
-        auto ref =
-            ReferenceDescription(browse_response.results[i].references[j]);
-        children.push_back(ref);
+        children.push_back(
+            parser::from_open62541(browse_response.results[i].references[j]));
       }
     }
     UA_BrowseResponse_deleteMembers(&browse_response);
@@ -128,7 +122,7 @@ class Client::impl {
     browse_req.requestedMaxReferencesPerNode = 0;
     browse_req.nodesToBrowse = browse_desc.get();
     browse_req.nodesToBrowseSize = 1;
-    browse_req.nodesToBrowse[0].nodeId = node_id.ua_node_id();
+    browse_req.nodesToBrowse[0].nodeId = parser::to_open62541(node_id);
     browse_req.nodesToBrowse[0].resultMask = static_cast<uint32_t>(mask);
     browse_req.nodesToBrowse[0].referenceTypeId =
         UA_NODEID_NUMERIC(0, static_cast<uint32_t>(id));
@@ -136,9 +130,8 @@ class Client::impl {
     UA_BrowseResponse browse_response = browse(browse_req);
     for (size_t i = 0; i < browse_response.resultsSize; ++i) {
       for (size_t j = 0; j < browse_response.results[i].referencesSize; ++j) {
-        auto ref =
-            ReferenceDescription(browse_response.results[i].references[j]);
-        children.push_back(ref);
+        children.push_back(
+            parser::from_open62541(browse_response.results[i].references[j]));
       }
     }
     UA_BrowseResponse_deleteMembers(&browse_response);
@@ -148,9 +141,9 @@ class Client::impl {
   LocalizedText read_display_name_attribute(const NodeId &node_id) {
     UA_LocalizedText out;
     auto status = UA_Client_readDisplayNameAttribute(
-        m_client.get(), node_id.ua_node_id(), &out);
+        m_client.get(), parser::to_open62541(node_id), &out);
     if (status == UA_STATUSCODE_GOOD) {
-      return LocalizedText(out);
+      return LocalizedText(parser::from_open62541(out));
     }
     BOOST_LOG_CHANNEL_SEV(m_lg, m_channel, error)
         << "Read display name failed. Error code = " << status;

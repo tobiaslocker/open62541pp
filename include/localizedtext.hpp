@@ -14,7 +14,8 @@ class LocalizedText {
   bool m_is_empty;
 
  public:
-  explicit LocalizedText(UA_LocalizedText const &display_name);
+  explicit LocalizedText(std::string const &text, std::string const &locale);
+
   LocalizedText();
   std::string text() const;
   std::string locale() const;

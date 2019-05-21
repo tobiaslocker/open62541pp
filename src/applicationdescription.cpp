@@ -10,40 +10,24 @@ class ApplicationDescription::impl {
   std::string m_gateway_server_uri;
   std::string m_discovery_profile_uri;
   std::vector<std::string> m_discovery_urls;
-  json m_json;
 
  public:
   impl() {}
 
-  impl(UA_ApplicationDescription const &application_description)
-      : m_application_name{LocalizedText(
-            application_description.applicationName)},
-        m_application_type{
-            ApplicationType(application_description.applicationType)} {
-    if (application_description.discoveryUrls) {
-      for (size_t i = 0; i < application_description.discoveryUrlsSize; ++i) {
-        std::string s;
-        s.assign(application_description.discoveryUrls[i].data,
-                 application_description.discoveryUrls[i].data +
-                     application_description.discoveryUrls[i].length);
-        m_discovery_urls.push_back(s);
-      }
-    }
-    m_application_uri.assign(application_description.applicationUri.data,
-                             application_description.applicationUri.data +
-                                 application_description.applicationUri.length);
-    m_product_uri.assign(application_description.productUri.data,
-                         application_description.productUri.data +
-                             application_description.productUri.length);
-    m_gateway_server_uri.assign(
-        application_description.gatewayServerUri.data,
-        application_description.gatewayServerUri.data +
-            application_description.gatewayServerUri.length);
-    m_discovery_profile_uri.assign(
-        application_description.discoveryProfileUri.data,
-        application_description.discoveryProfileUri.data +
-            application_description.discoveryProfileUri.length);
-  }
+  impl(std::string application_uri,
+       std::string product_uri,
+       LocalizedText application_name,
+       ApplicationType application_type,
+       std::string gateway_server_uri,
+       std::string discovery_profile_uri,
+       std::vector<std::string> discovery_urls)
+      : m_application_uri{application_uri},
+        m_product_uri{product_uri},
+        m_application_name{application_name},
+        m_application_type{application_type},
+        m_gateway_server_uri{gateway_server_uri},
+        m_discovery_profile_uri{discovery_profile_uri},
+        m_discovery_urls{discovery_urls} {}
 
   std::string application_uri() const { return m_application_uri; }
 
@@ -111,12 +95,24 @@ std::ostream &operator<<(
   return out;
 }
 
+ApplicationDescription::ApplicationDescription(
+    const std::string &application_uri,
+    const std::string &product_uri,
+    const LocalizedText &application_name,
+    const ApplicationType &application_type,
+    const std::string &gateway_server_uri,
+    const std::string &discovery_profile_uri,
+    const std::vector<std::string> &discovery_urls)
+    : d_ptr{std::make_unique<impl>(application_uri,
+                                   product_uri,
+                                   application_name,
+                                   application_type,
+                                   gateway_server_uri,
+                                   discovery_profile_uri,
+                                   discovery_urls)} {}
+
 ApplicationDescription::ApplicationDescription()
     : d_ptr{std::make_unique<impl>()} {}
-
-ApplicationDescription::ApplicationDescription(
-    UA_ApplicationDescription const &a)
-    : d_ptr{std::make_unique<impl>(a)} {}
 
 ApplicationDescription::ApplicationDescription(ApplicationDescription const &op)
     : d_ptr(new impl(*op.d_ptr)) {}

@@ -2,30 +2,25 @@
 
 namespace open62541 {
 
-EndpointDescription::EndpointDescription() {}
-
 EndpointDescription::EndpointDescription(
-    const UA_EndpointDescription &endpoint_description)
-    : m_server{endpoint_description.server},
-      m_server_certificate{endpoint_description.serverCertificate},
-      m_security_mode{MessageSecurityMode(endpoint_description.securityMode)},
-      m_security_level{endpoint_description.securityLevel} {
-  for (size_t i = 0; i < endpoint_description.userIdentityTokensSize; ++i) {
-    auto policy = UserTokenPolicy(endpoint_description.userIdentityTokens[i]);
-    m_user_identity_tokens.push_back(policy);
-  }
-  m_endpoint_url.assign(endpoint_description.endpointUrl.data,
-                        endpoint_description.endpointUrl.data +
-                            endpoint_description.endpointUrl.length);
-  m_security_policy_uri.assign(
-      endpoint_description.securityPolicyUri.data,
-      endpoint_description.securityPolicyUri.data +
-          endpoint_description.securityPolicyUri.length);
-  m_transport_profile_uri.assign(
-      endpoint_description.transportProfileUri.data,
-      endpoint_description.transportProfileUri.data +
-          endpoint_description.transportProfileUri.length);
-}
+    std::string const &endpoint_url,
+    ApplicationDescription const &server,
+    Certificate const &server_certificate,
+    MessageSecurityMode const &security_mode,
+    std::string const &security_policy_uri,
+    std::vector<UserTokenPolicy> const &user_identity_tokens,
+    std::string const &transport_profile_uri,
+    unsigned char security_level)
+    : m_endpoint_url{endpoint_url},
+      m_server{server},
+      m_server_certificate{server_certificate},
+      m_security_mode{security_mode},
+      m_security_policy_uri{security_policy_uri},
+      m_user_identity_tokens{user_identity_tokens},
+      m_transport_profile_uri{transport_profile_uri},
+      m_security_level{security_level} {}
+
+EndpointDescription::EndpointDescription() {}
 
 std::string EndpointDescription::endpoint_url() const { return m_endpoint_url; }
 

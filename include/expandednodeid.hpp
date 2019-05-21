@@ -21,10 +21,9 @@ class ExpandedNodeId {
   NodeId m_node_id;
   std::string m_namespace_uri;
   uint32_t m_server_index = 0;
-  explicit ExpandedNodeId(UA_ExpandedNodeId const &expanded_node_id);
 
  public:
-  explicit ExpandedNodeId(NodeId const &node_id);
+  //  explicit ExpandedNodeId(NodeId const &node_id);
   explicit ExpandedNodeId(NodeId const &node_id,
                           std::string const &namespace_uri,
                           uint32_t server_index = 0);

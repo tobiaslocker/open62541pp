@@ -2,18 +2,35 @@
 
 namespace open62541 {
 
-ReferenceDescription::ReferenceDescription(UA_ReferenceDescription const &ref)
-    : m_ref{ref},
-      m_node_id{NodeId(ref.nodeId.nodeId)},
-      m_display_name{LocalizedText(ref.displayName)},
-      m_browse_name{QualifiedName(ref.browseName)},
-      m_type_definition{ExpandedNodeId(ref.typeDefinition)} {}
+ReferenceDescription::ReferenceDescription(
+    const NodeId &reference_type_id,
+    bool is_forward,
+    const ExpandedNodeId &node_id,
+    QualifiedName const &browse_name,
+    LocalizedText const &display_name,
+    const NodeClass &node_class,
+    ExpandedNodeId const &type_definition)
+    : m_reference_type_id{reference_type_id},
+      m_is_forward{is_forward},
+      m_node_id{node_id},
+      m_browse_name{browse_name},
+      m_display_name{display_name},
+      m_node_class{node_class},
+      m_type_definition{type_definition} {}
 
-NodeId ReferenceDescription::node_id() const { return m_node_id; }
+NodeId ReferenceDescription::reference_type_id() const {
+  return m_reference_type_id;
+}
+
+bool ReferenceDescription::is_forward() const { return m_is_forward; }
+
+ExpandedNodeId ReferenceDescription::node_id() const { return m_node_id; }
 
 LocalizedText ReferenceDescription::display_name() const {
   return m_display_name;
 }
+
+NodeClass ReferenceDescription::node_class() const { return m_node_class; }
 
 QualifiedName ReferenceDescription::browse_name() const {
   return m_browse_name;

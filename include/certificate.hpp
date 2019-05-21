@@ -11,11 +11,12 @@ namespace open62541 {
 
 class Certificate {
   std::string m_certificate;
-  std::vector<unsigned char> m_bytes;
+  //  std::vector<unsigned char> m_bytes;
 
  public:
   Certificate() {}
-  Certificate(UA_ByteString const &certificate);
+  //  Certificate(UA_ByteString const &certificate);
+  Certificate(std::string const &certificate);
   std::string str() const;
 
   bool operator==(Certificate const &rhs) const;

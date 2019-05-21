@@ -19,11 +19,18 @@ using namespace nlohmann;
 class ApplicationDescription {
   class impl;
   std::unique_ptr<impl> d_ptr;
-  ApplicationDescription(const UA_ApplicationDescription &a);
   friend std::ostream &operator<<(std::ostream &out,
                                   impl const &application_description);
+
  public:
-  //  ApplicationDescription() {}
+  ApplicationDescription(std::string const &application_uri,
+                         std::string const &product_uri,
+                         LocalizedText const &application_name,
+                         ApplicationType const &application_type,
+                         std::string const &gateway_server_uri,
+                         std::string const &discovery_profile_uri,
+                         std::vector<std::string> const &discovery_urls);
+
   ApplicationDescription();
   ~ApplicationDescription();
   ApplicationDescription(ApplicationDescription &&) noexcept;
@@ -47,8 +54,6 @@ class ApplicationDescription {
       std::ostream &out, ApplicationDescription const &application_description);
 
   friend class EndpointDescription;
-
- private:
 };
 
 }  // namespace open62541

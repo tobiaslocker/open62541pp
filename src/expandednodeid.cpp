@@ -2,15 +2,7 @@
 
 namespace open62541 {
 
-ExpandedNodeId::ExpandedNodeId(UA_ExpandedNodeId const &expanded_node_id)
-    : m_node_id{expanded_node_id.nodeId},
-      m_server_index{expanded_node_id.serverIndex} {
-  m_namespace_uri.assign(expanded_node_id.namespaceUri.data,
-                         expanded_node_id.namespaceUri.data +
-                             expanded_node_id.namespaceUri.length);
-}
-
-ExpandedNodeId::ExpandedNodeId(NodeId const &node_id) : m_node_id{node_id} {}
+// ExpandedNodeId::ExpandedNodeId(NodeId const &node_id) : m_node_id{node_id} {}
 
 ExpandedNodeId::ExpandedNodeId(NodeId const &node_id,
                                std::string const &namespace_uri,

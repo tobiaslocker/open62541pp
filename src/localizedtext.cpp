@@ -2,12 +2,8 @@
 
 namespace open62541 {
 
-LocalizedText::LocalizedText(UA_LocalizedText const &display_name) {
-  m_text.assign(display_name.text.data,
-                display_name.text.data + display_name.text.length);
-  m_locale.assign(display_name.locale.data,
-                  display_name.locale.data + display_name.locale.length);
-}
+LocalizedText::LocalizedText(std::string const &text, std::string const &locale)
+    : m_text{text}, m_locale{locale} {}
 
 LocalizedText::LocalizedText() : m_is_empty{true} {}
 
@@ -17,16 +13,16 @@ std::string LocalizedText::locale() const { return m_locale; }
 
 bool LocalizedText::is_empty() const { return m_is_empty; }
 
-bool LocalizedText::operator==(const LocalizedText &rhs) const {
+bool LocalizedText::operator==(LocalizedText const &rhs) const {
   return text() == rhs.text() && locale() == rhs.locale();
 }
 
-bool LocalizedText::operator!=(const LocalizedText &rhs) const {
+bool LocalizedText::operator!=(LocalizedText const &rhs) const {
   return text() != rhs.text() && locale() != rhs.locale();
 }
 
 std::ostream &operator<<(std::ostream &out,
-                         const LocalizedText &localized_text) {
+                         LocalizedText const &localized_text) {
   std::string s = localized_text.text() + " " + localized_text.locale();
   out << s;
   return out;

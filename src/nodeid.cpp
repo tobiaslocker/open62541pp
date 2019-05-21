@@ -2,26 +2,6 @@
 
 namespace open62541 {
 
-NodeId::NodeId(UA_NodeId const &node_id)
-    : m_namespace_index{node_id.namespaceIndex},
-      m_identifier_type{node_id.identifierType},
-      m_ua_node_id{node_id} {
-  switch (m_identifier_type) {
-    case IdentifierType::Guid:
-      m_identifier = Identifier(node_id.identifier.guid);
-      break;
-    case IdentifierType::Numeric:
-      m_identifier = Identifier(node_id.identifier.numeric);
-      break;
-    case IdentifierType::String:
-      m_identifier = Identifier(node_id.identifier.string);
-      break;
-    case IdentifierType::ByteString:
-      m_identifier = Identifier(node_id.identifier.string);
-      break;
-  }
-}
-
 NodeId::NodeId(json const &node_id) : m_namespace_index{node_id["Namespace"]} {
   /*
    * The IdentifierType encoded as a JSON number.
