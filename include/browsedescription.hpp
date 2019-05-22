@@ -14,13 +14,13 @@ class BrowseDescription {
 
  public:
   BrowseDescription();
+  ~BrowseDescription();
   BrowseDescription(NodeId node_id,
                     BrowseDirection browse_direction,
                     NodeId reference_type_id,
                     bool include_subtypes,
                     uint32_t node_class_mask,
                     uint32_t result_mask);
-  ~BrowseDescription();
   BrowseDescription(BrowseDescription &&) noexcept;
   BrowseDescription &operator=(BrowseDescription &&) noexcept;
   BrowseDescription(BrowseDescription const &);

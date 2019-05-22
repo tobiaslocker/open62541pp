@@ -1,4 +1,5 @@
 #include "applicationdescription.hpp"
+#include "parser.hpp"
 
 namespace open62541 {
 
@@ -43,31 +44,6 @@ class ApplicationDescription::impl {
 
   std::vector<std::string> discovery_urls() const { return m_discovery_urls; }
 
-//  json to_json() const {
-//    json app_description;
-//    app_description["ApplicationUri"] = m_application_uri;
-//    app_description["ProductUri"] = m_product_uri;
-//    app_description["ApplicationName"] = m_application_name.text();
-//    switch (m_application_type) {
-//      case ApplicationType::Server:
-//        app_description["ApplicationType"] = "Server";
-//        break;
-//      case ApplicationType::Client:
-//        app_description["ApplicationType"] = "Client";
-//        break;
-//      case ApplicationType::ClientAndServer:
-//        app_description["ApplicationType"] = "ClientAndServer";
-//        break;
-//      case ApplicationType::DiscoveryServer:
-//        app_description["ApplicationType"] = "DiscoveryServer";
-//        break;
-//    }
-//    app_description["GatewayServerUri"] = m_gateway_server_uri;
-//    app_description["DiscoveryProfileUri"] = m_discovery_profile_uri;
-//    app_description["DiscoveryUrls"] = m_discovery_urls;
-//    return app_description;
-//  }
-
   bool operator==(const impl &rhs) const {
     return product_uri() == rhs.product_uri() &&
            discovery_urls() == rhs.discovery_urls() &&
@@ -86,14 +62,6 @@ class ApplicationDescription::impl {
            gateway_server_uri() != rhs.gateway_server_uri();
   }
 };
-
-std::ostream &operator<<(
-    std::ostream &out,
-    const ApplicationDescription::impl &application_description) {
-//  auto j = application_description.to_json();
-//  out << j;
-  return out;
-}
 
 ApplicationDescription::ApplicationDescription(
     const std::string &application_uri,
@@ -153,8 +121,6 @@ std::vector<std::string> ApplicationDescription::discovery_urls() const {
   return d_ptr->discovery_urls();
 }
 
-//json ApplicationDescription::to_json() const { return d_ptr->to_json(); }
-
 bool ApplicationDescription::operator==(
     const ApplicationDescription &rhs) const {
   return *d_ptr == *rhs.d_ptr;
@@ -165,9 +131,9 @@ bool ApplicationDescription::operator!=(
   return *d_ptr != *rhs.d_ptr;
 }
 
-std::ostream &operator<<(
-    std::ostream &out, const ApplicationDescription &application_description) {
-  out << *application_description.d_ptr;
+std::ostream &operator<<(std::ostream &out, const ApplicationDescription &ad) {
+  auto j = parser::to_json(ad);
+  out << j;
   return out;
 }
 

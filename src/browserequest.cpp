@@ -10,10 +10,10 @@ class BrowseRequest::impl {
 
  public:
   impl() {}
-  impl(RequestHeader request_header,
-       ViewDescription view,
+  impl(RequestHeader const &request_header,
+       ViewDescription const &view,
        uint32_t max_references,
-       std::vector<BrowseDescription> nodes_to_browse)
+       std::vector<BrowseDescription> const &nodes_to_browse)
       : m_request_header{request_header},
         m_view{view},
         m_max_references{max_references},
@@ -46,10 +46,11 @@ std::vector<BrowseDescription> BrowseRequest::nodes_to_browse() const {
 
 BrowseRequest::BrowseRequest() : d_ptr{std::make_unique<impl>()} {}
 
-BrowseRequest::BrowseRequest(RequestHeader request_header,
-                             ViewDescription view,
-                             uint32_t max_references,
-                             std::vector<BrowseDescription> nodes_to_browse)
+BrowseRequest::BrowseRequest(
+    const RequestHeader &request_header,
+    const ViewDescription &view,
+    uint32_t max_references,
+    const std::vector<BrowseDescription> &nodes_to_browse)
     : d_ptr{std::make_unique<impl>(
           request_header, view, max_references, nodes_to_browse)} {}
 

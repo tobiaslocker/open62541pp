@@ -17,13 +17,13 @@ NodeId ExpandedNodeId::node_id() const { return m_node_id; }
 
 uint32_t ExpandedNodeId::server_index() const { return m_server_index; }
 
-json ExpandedNodeId::to_json() const {
-  json exp_node_id;
-  exp_node_id["NodeId"] = node_id().to_json();
-  exp_node_id["NamespaceUri"] = namespace_uri();
-  exp_node_id["SeverIndex"] = server_index();
-  return exp_node_id;
-}
+//json ExpandedNodeId::to_json() const {
+//  json exp_node_id;
+//  exp_node_id["NodeId"] = node_id().to_json();
+//  exp_node_id["NamespaceUri"] = namespace_uri();
+//  exp_node_id["SeverIndex"] = server_index();
+//  return exp_node_id;
+//}
 
 bool ExpandedNodeId::operator==(const ExpandedNodeId &rhs) const {
   return namespace_uri() == rhs.namespace_uri() && node_id() == rhs.node_id() &&
@@ -37,8 +37,8 @@ bool ExpandedNodeId::operator!=(const ExpandedNodeId &rhs) const {
 
 std::ostream &operator<<(std::ostream &out,
                          const ExpandedNodeId &expanded_node_id) {
-  auto j = expanded_node_id.to_json();
-  out << j;
+//  auto j = expanded_node_id.to_json();
+//  out << j;
   return out;
 }
 

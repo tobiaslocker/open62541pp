@@ -1,14 +1,8 @@
 #ifndef OPEN62541_CPP_WRAPPER_NODE_ID_H
 #define OPEN62541_CPP_WRAPPER_NODE_ID_H
 
-#include "open62541.h"
-
-// Dependencies
-#include <nlohmann/json.hpp>
-
 #include "enums.hpp"
 #include "identifier.hpp"
-#include "log.hpp"
 
 namespace open62541 {
 using namespace nlohmann;
@@ -20,12 +14,13 @@ class NodeId {
 
  public:
   NodeId() = default;
-  explicit NodeId(json const &node_id);
-  explicit NodeId(uint16_t namespace_index, Identifier const &identifier);
+  explicit NodeId(uint16_t namespace_index,
+                  Identifier const &identifier,
+                  IdentifierType type);
 
   uint16_t namespace_index() const;
-  Identifier indentifier() const;
-  json to_json() const;
+  Identifier identifier() const;
+  IdentifierType identifier_type() const;
 
   bool operator==(NodeId const &rhs) const;
   bool operator!=(NodeId const &rhs) const;

@@ -8,8 +8,23 @@ namespace open62541 {
 
 enum class IdentifierType : uint32_t { Numeric, String, Guid, ByteString };
 
-// std::ostream &operator<<(std::ostream &out,
-//                         IdentifierType const &identifier_type);
+inline std::ostream &operator<<(std::ostream &out, IdentifierType const &i) {
+  switch (i) {
+    case IdentifierType::Numeric:
+      out << "Numeric";
+      break;
+    case IdentifierType::String:
+      out << "String";
+      break;
+    case IdentifierType::Guid:
+      out << "Guid";
+      break;
+    case IdentifierType::ByteString:
+      out << "ByteString";
+      break;
+  }
+  return out;
+}
 
 enum class MessageSecurityMode : uint32_t {
   Invalid = 0,

@@ -36,14 +36,14 @@ QualifiedName ReferenceDescription::browse_name() const {
   return m_browse_name;
 }
 
-json ReferenceDescription::to_json() const {
-  json ref_description;
-  ref_description["DisplayName"] = display_name().text();
-  ref_description["BrowseName"] = browse_name().name();
-  ref_description["NodeId"] = node_id().to_json();
-  ref_description["TypeDefinition"] = type_definition().to_json();
-  return ref_description;
-}
+//json ReferenceDescription::to_json() const {
+//  json ref_description;
+//  ref_description["DisplayName"] = display_name().text();
+//  ref_description["BrowseName"] = browse_name().name();
+//  ref_description["NodeId"] = node_id().to_json();
+//  ref_description["TypeDefinition"] = type_definition().to_json();
+//  return ref_description;
+//}
 
 bool ReferenceDescription::operator==(const ReferenceDescription &rhs) const {
   return node_id() == rhs.node_id() && display_name() == rhs.display_name() &&
@@ -59,8 +59,8 @@ bool ReferenceDescription::operator!=(const ReferenceDescription &rhs) const {
 
 std::ostream &operator<<(std::ostream &out,
                          const ReferenceDescription &ref_description) {
-  auto j = ref_description.to_json();
-  out << j;
+//  auto j = ref_description.to_json();
+//  out << j;
   return out;
 }
 

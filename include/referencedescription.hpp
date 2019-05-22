@@ -40,7 +40,7 @@ class ReferenceDescription {
   LocalizedText display_name() const;
   NodeClass node_class() const;
   ExpandedNodeId type_definition() const;
-  json to_json() const;
+//  json to_json() const;
 
   bool operator==(ReferenceDescription const &rhs) const;
   bool operator!=(ReferenceDescription const &rhs) const;

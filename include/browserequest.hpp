@@ -26,7 +26,7 @@ class BrowseRequest {
 
   BrowseRequest(RequestHeader const &request_header,
                 ViewDescription const &view,
-                uint32_t const &max_references,
+                uint32_t max_references,
                 std::vector<BrowseDescription> const &nodes_to_browse);
 
   ~BrowseRequest();
@@ -39,10 +39,6 @@ class BrowseRequest {
   ViewDescription view() const;
   uint32_t max_references() const;
   std::vector<BrowseDescription> nodes_to_browse() const;
-  BrowseRequest(RequestHeader request_header,
-                ViewDescription view,
-                uint32_t max_references,
-                std::vector<BrowseDescription> nodes_to_browse);
 };
 
 }  // namespace open62541

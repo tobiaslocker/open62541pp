@@ -39,6 +39,7 @@ set(
     src/browserequest.cpp
     src/browsedescription.cpp
     src/log.cpp
+    src/browseresponse.cpp
 )
 
 add_library(${PROJECT_NAME} SHARED ${SOURCES})

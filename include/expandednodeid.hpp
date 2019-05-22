@@ -31,7 +31,7 @@ class ExpandedNodeId {
   NodeId node_id() const;
   uint32_t server_index() const;
 
-  json to_json() const;
+//  json to_json() const;
 
   bool operator==(ExpandedNodeId const &rhs) const;
   bool operator!=(ExpandedNodeId const &rhs) const;

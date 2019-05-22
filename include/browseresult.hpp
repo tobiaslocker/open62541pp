@@ -3,8 +3,16 @@
 
 // STL
 #include <memory>
+#include <vector>
+
+//#include "bytestring.hpp"
+#include "referencedescription.hpp"
 
 namespace open62541 {
+
+class StatusCode {
+  // TODO
+};
 
 class BrowseResult {
   class impl;
@@ -13,19 +21,20 @@ class BrowseResult {
  public:
   BrowseResult();
   ~BrowseResult();
-  BrowseResult(BrowseResult &&) = default;
-  BrowseResult(BrowseResult const &) = delete;
-  BrowseResult &operator=(BrowseResult &&);
-  BrowseResult &operator=(BrowseResult const &) = delete;
+  BrowseResult(StatusCode status_code,
+               ByteString const &continuation_point,
+               std::vector<ReferenceDescription> const &references);
+  BrowseResult(BrowseResult &&) noexcept;
+  BrowseResult &operator=(BrowseResult &&) noexcept;
+
+  BrowseResult(BrowseResult const &);
+  BrowseResult &operator=(BrowseResult const &);
+
+  StatusCode status_code() const;
+  ByteString continuation_point() const;
+  std::vector<ReferenceDescription> references() const;
 };
 
-class BrowseResult::impl {
-  impl() {}
-};
-
-BrowseResult::BrowseResult() : d_ptr{std::make_unique<impl>()} {}
-BrowseResult::~BrowseResult() = default;
-BrowseResult &BrowseResult::operator=(BrowseResult &&) = default;
 }  // namespace open62541
 
 #endif  // OPEN62541_CPP_WRAPPER_BROWSE_RESULT_H

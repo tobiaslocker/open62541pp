@@ -11,15 +11,16 @@ namespace open62541 {
 
 namespace parser {
 
-std::string from_open62541(UA_String const &str) {
+inline std::string from_open62541(UA_String const &str) {
   return std::string(str.data, str.data + str.length);
 }
 
-LocalizedText from_open62541(UA_LocalizedText const &lt) {
+inline LocalizedText from_open62541(UA_LocalizedText const &lt) {
   return LocalizedText(from_open62541(lt.text), from_open62541(lt.locale));
 }
 
-ApplicationDescription from_open62541(UA_ApplicationDescription const &ad) {
+inline ApplicationDescription from_open62541(
+    UA_ApplicationDescription const &ad) {
   std::vector<std::string> discovery_urls;
   if (ad.discoveryUrls) {
     for (size_t i = 0; i < ad.discoveryUrlsSize; ++i) {
@@ -35,7 +36,7 @@ ApplicationDescription from_open62541(UA_ApplicationDescription const &ad) {
                                 discovery_urls};
 }
 
-EndpointDescription from_open62541(UA_EndpointDescription const &ed) {
+inline EndpointDescription from_open62541(UA_EndpointDescription const &ed) {
   std::vector<UserTokenPolicy> user_identity_tokens;
   for (size_t i = 0; i < ed.userIdentityTokensSize; ++i) {
     auto policy = UserTokenPolicy(ed.userIdentityTokens[i]);
@@ -51,7 +52,7 @@ EndpointDescription from_open62541(UA_EndpointDescription const &ed) {
                              ed.securityLevel};
 }
 
-Guid from_open62541(UA_Guid const &g) {
+inline Guid from_open62541(UA_Guid const &g) {
   return Guid{g.data1,
               g.data2,
               g.data3,
@@ -60,34 +61,39 @@ Guid from_open62541(UA_Guid const &g) {
                   g.data4[7] << 7};
 }
 
-NodeId from_open62541(UA_NodeId const &ni) {
+inline NodeId from_open62541(UA_NodeId const &ni) {
   switch (ni.identifierType) {
     case UA_NODEIDTYPE_NUMERIC:
-      return NodeId(ni.namespaceIndex, Identifier(ni.identifier.numeric));
+      return NodeId(ni.namespaceIndex,
+                    Identifier(ni.identifier.numeric),
+                    IdentifierType{ni.identifierType});
     case UA_NODEIDTYPE_STRING:
       return NodeId(ni.namespaceIndex,
-                    Identifier(from_open62541(ni.identifier.string)));
+                    Identifier(from_open62541(ni.identifier.string)),
+                    IdentifierType{ni.identifierType});
     case UA_NODEIDTYPE_GUID:
       return NodeId(ni.namespaceIndex,
-                    Identifier(from_open62541(ni.identifier.guid)));
+                    Identifier(from_open62541(ni.identifier.guid)),
+                    IdentifierType{ni.identifierType});
     case UA_NODEIDTYPE_BYTESTRING:
       return NodeId(ni.namespaceIndex,
-                    Identifier(from_open62541(ni.identifier.byteString)));
+                    Identifier(from_open62541(ni.identifier.byteString)),
+                    IdentifierType{ni.identifierType});
   }
   return NodeId();
 }
 
-QualifiedName from_open62541(UA_QualifiedName const &qn) {
+inline QualifiedName from_open62541(UA_QualifiedName const &qn) {
   return QualifiedName{from_open62541(qn.name), qn.namespaceIndex};
 }
 
-ExpandedNodeId from_open62541(UA_ExpandedNodeId const &en) {
+inline ExpandedNodeId from_open62541(UA_ExpandedNodeId const &en) {
   return ExpandedNodeId{from_open62541(en.nodeId),
                         from_open62541(en.namespaceUri),
                         en.serverIndex};
 }
 
-ReferenceDescription from_open62541(UA_ReferenceDescription const &rd) {
+inline ReferenceDescription from_open62541(UA_ReferenceDescription const &rd) {
   return ReferenceDescription{from_open62541(rd.referenceTypeId),
                               rd.isForward,
                               from_open62541(rd.nodeId),
@@ -99,54 +105,93 @@ ReferenceDescription from_open62541(UA_ReferenceDescription const &rd) {
   };
 }
 
-UA_NodeId to_open62541(NodeId const &ni) {}
+inline UA_NodeId to_open62541(NodeId const &ni) {}
 
-UA_ExpandedNodeId to_open62541(ExpandedNodeId const &ni) {}
+inline UA_ExpandedNodeId to_open62541(ExpandedNodeId const &ni) {}
 
 template <typename T>
-T from_json(json const &j);
+inline T from_json(json const &j);
 
 template <>
-NodeId from_json<NodeId>(json const &j) {}
+inline NodeId from_json<NodeId>(json const &j) {
+  /*
+   * The IdentifierType encoded as a JSON number.
+   * Allowed values are:
+   * 0 - UInt32 Identifier encoded as a JSON number.
+   * 1 - A String Identifier encoded as a JSON string.
+   * 2 - A Guid Identifier encoded as described in 5.4.2.7.
+   * 3 - A ByteString Identifier encoded as described in 5.4.2.8.
+   * This field is omitted for UInt32 identifiers.
+   */
 
-// NodeId::NodeId(json const &node_id) : m_namespace_index{node_id["Namespace"]}
-// {
-//  /*
-//   * The IdentifierType encoded as a JSON number.
-//   * Allowed values are:
-//   * 0 - UInt32 Identifier encoded as a JSON number.
-//   * 1 - A String Identifier encoded as a JSON string.
-//   * 2 - A Guid Identifier encoded as described in 5.4.2.7.
-//   * 3 - A ByteString Identifier encoded as described in 5.4.2.8.
-//   * This field is omitted for UInt32 identifiers.
-//   */
+  auto id = j["Id"];
+  auto id_type = j["IdType"].get<int>();
+  switch (id_type) {
+    case 0:
+      return NodeId(j["Namespace"],
+                    Identifier(id.get<uint32_t>()),
+                    IdentifierType::Numeric);
+    case 1:
+      return NodeId(j["Namespace"],
+                    Identifier(id.get<std::string>()),
+                    IdentifierType::String);
+    case 2:
+      return NodeId(j["Namespace"],
+                    Identifier(Guid(id.get<std::string>())),
+                    IdentifierType::Guid);
+    case 3:
+      return NodeId(j["Namespace"],
+                    Identifier(ByteString::from_base_64(id.get<std::string>())),
+                    IdentifierType::ByteString);
+  }
+  return NodeId();
+}
 
-////  if (node_id["IdType"].is_number()) {
-////    auto id = node_id["Id"];
-////    auto id_type = node_id["IdType"].get<int>();
-////    switch (id_type) {
-////      case 0:
-////        m_identifier = Identifier(id.get<uint32_t>());
-////        break;
-////      case 1:
-////        m_identifier = Identifier(id.get<std::string>());
-////        break;
-////      case 2:
-////        m_identifier = Identifier(Guid(id.get<std::string>()));
-////        break;
-////      case 3:
-////        m_identifier =
-////            Identifier(ByteString::from_base_64(id.get<std::string>()));
-////        break;
-////      default:
-////        // TODO: handle error case
-////        break;
-////    }
-////  } else {
-////  }
-//}
-
-};  // namespace parser
+inline json to_json(NodeId const &ni) {
+  json j;
+  j["Namespace"] = ni.namespace_index();
+  j["IdType"] = ni.identifier_type();
+  switch (ni.identifier_type()) {
+    case IdentifierType::Guid:
+      j["Identifier"] = ni.identifier().guid().str();
+      break;
+    case IdentifierType::String:
+      j["Identifier"] = ni.identifier().string();
+      break;
+    case IdentifierType::Numeric:
+      j["Identifier"] = ni.identifier().numeric();
+      break;
+    case IdentifierType::ByteString:
+      j["Identifier"] = ni.identifier().byte_string();
+      break;
+  }
+  return j;
+}
+inline json to_json(ApplicationDescription const &ad) {
+  json app_description;
+  app_description["ApplicationUri"] = ad.application_uri();
+  app_description["ProductUri"] = ad.product_uri();
+  app_description["ApplicationName"] = ad.application_name().text();
+  switch (ad.application_type()) {
+    case ApplicationType::Server:
+      app_description["ApplicationType"] = "Server";
+      break;
+    case ApplicationType::Client:
+      app_description["ApplicationType"] = "Client";
+      break;
+    case ApplicationType::ClientAndServer:
+      app_description["ApplicationType"] = "ClientAndServer";
+      break;
+    case ApplicationType::DiscoveryServer:
+      app_description["ApplicationType"] = "DiscoveryServer";
+      break;
+  }
+  app_description["GatewayServerUri"] = ad.gateway_server_uri();
+  app_description["DiscoveryProfileUri"] = ad.discovery_profile_uri();
+  app_description["DiscoveryUrls"] = ad.discovery_urls();
+  return app_description;
+}
+}  // namespace parser
 
 }  // namespace open62541
 
