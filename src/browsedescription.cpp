@@ -36,7 +36,6 @@ class BrowseDescription::impl {
 
 BrowseDescription::BrowseDescription() : d_ptr{std::make_unique<impl>()} {}
 
-BrowseDescription::~BrowseDescription() = default;
 
 BrowseDescription::BrowseDescription(NodeId node_id,
                                      BrowseDirection browse_direction,
@@ -50,6 +49,8 @@ BrowseDescription::BrowseDescription(NodeId node_id,
                                    include_subtypes,
                                    node_class_mask,
                                    result_mask)} {}
+
+BrowseDescription::~BrowseDescription() = default;
 
 BrowseDescription::BrowseDescription(BrowseDescription const &op)
     : d_ptr(new impl(*op.d_ptr)) {}

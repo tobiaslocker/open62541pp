@@ -99,8 +99,9 @@ class Client::impl {
     UA_BrowseResponse browse_response = browse(browse_req);
     for (size_t i = 0; i < browse_response.resultsSize; ++i) {
       for (size_t j = 0; j < browse_response.results[i].referencesSize; ++j) {
-        children.push_back(
-            parser::from_open62541(browse_response.results[i].references[j]));
+        auto ep =
+            parser::from_open62541(browse_response.results[i].references[j]);
+        children.push_back(ep);
       }
     }
     UA_BrowseResponse_deleteMembers(&browse_response);
@@ -130,8 +131,9 @@ class Client::impl {
     UA_BrowseResponse browse_response = browse(browse_req);
     for (size_t i = 0; i < browse_response.resultsSize; ++i) {
       for (size_t j = 0; j < browse_response.results[i].referencesSize; ++j) {
-        children.push_back(
-            parser::from_open62541(browse_response.results[i].references[j]));
+        auto ep =
+            parser::from_open62541(browse_response.results[i].references[j]);
+        children.push_back(ep);
       }
     }
     UA_BrowseResponse_deleteMembers(&browse_response);

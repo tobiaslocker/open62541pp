@@ -225,6 +225,15 @@ inline json to_json(EndpointDescription const &ed) {
   endpoint_desc["UserIdentityTokens"] = policies;
   return endpoint_desc;
 }
+
+json to_json(ExpandedNodeId const &en) {
+  json exp_node_id;
+  exp_node_id["NodeId"] = to_json(en.node_id());
+  exp_node_id["NamespaceUri"] = en.namespace_uri();
+  exp_node_id["SeverIndex"] = en.server_index();
+  return exp_node_id;
+}
+
 }  // namespace parser
 
 }  // namespace open62541

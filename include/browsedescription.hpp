@@ -35,8 +35,6 @@ class BrowseDescription {
 
   //  bool operator==(BrowseDescription const &rhs) const;
   //  bool operator!=(BrowseDescription const &rhs) const;
-  //  friend std::ostream &operator<<(
-  //      std::ostream &out, BrowseDescription const &b);
 };
 
 }  // namespace open62541
