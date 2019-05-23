@@ -6,16 +6,10 @@
 #include <vector>
 
 #include "browsedescription.hpp"
+#include "requestheader.hpp"
+#include "viewdescription.hpp"
 
 namespace open62541 {
-
-class RequestHeader {
-  // TODO
-};
-
-class ViewDescription {
-  // TODO
-};
 
 class BrowseRequest {
   class impl;
@@ -23,17 +17,17 @@ class BrowseRequest {
 
  public:
   BrowseRequest();
+  ~BrowseRequest();
+
+  BrowseRequest(BrowseRequest &&) = default;
+  BrowseRequest &operator=(BrowseRequest &&);
+  BrowseRequest(BrowseRequest const &) = delete;
+  BrowseRequest &operator=(BrowseRequest const &) = delete;
 
   BrowseRequest(RequestHeader const &request_header,
                 ViewDescription const &view,
                 uint32_t max_references,
                 std::vector<BrowseDescription> const &nodes_to_browse);
-
-  ~BrowseRequest();
-  BrowseRequest(BrowseRequest &&) = default;
-  BrowseRequest &operator=(BrowseRequest &&);
-  BrowseRequest(BrowseRequest const &) = delete;
-  BrowseRequest &operator=(BrowseRequest const &) = delete;
 
   RequestHeader request_header() const;
   ViewDescription view() const;

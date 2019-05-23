@@ -5,7 +5,6 @@
 #include "identifier.hpp"
 
 namespace open62541 {
-using namespace nlohmann;
 
 class NodeId {
   uint16_t m_namespace_index;

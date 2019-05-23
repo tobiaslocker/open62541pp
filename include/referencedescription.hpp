@@ -25,13 +25,13 @@ class ReferenceDescription {
   ExpandedNodeId m_type_definition;
 
  public:
-  explicit ReferenceDescription(NodeId const &reference_type_id,
-                                bool is_forward,
-                                ExpandedNodeId const &node_id,
-                                QualifiedName const &browse_name,
-                                LocalizedText const &display_name,
-                                NodeClass const &node_class,
-                                ExpandedNodeId const &type_definition);
+  ReferenceDescription(NodeId const &reference_type_id,
+                       bool is_forward,
+                       ExpandedNodeId const &node_id,
+                       QualifiedName const &browse_name,
+                       LocalizedText const &display_name,
+                       NodeClass const &node_class,
+                       ExpandedNodeId const &type_definition);
 
   NodeId reference_type_id() const;
   bool is_forward() const;
@@ -40,7 +40,6 @@ class ReferenceDescription {
   LocalizedText display_name() const;
   NodeClass node_class() const;
   ExpandedNodeId type_definition() const;
-  //  json to_json() const;
 
   bool operator==(ReferenceDescription const &rhs) const;
   bool operator!=(ReferenceDescription const &rhs) const;

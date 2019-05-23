@@ -18,7 +18,7 @@ class Guid::impl {
     m_string = stream.str();
   }
 
-  impl(std::string const &data) : m_string{data}{}
+  impl(std::string const &data) : m_string{data} {}
 
   std::string str() const { return m_string; }
 
@@ -36,8 +36,7 @@ Guid::Guid(std::string const &data) : d_ptr{std::make_unique<impl>(data)} {}
 
 Guid::~Guid() = default;
 
-Guid::Guid(Guid const &op)
-    : d_ptr(new impl(*op.d_ptr)) {}
+Guid::Guid(Guid const &op) : d_ptr(new impl(*op.d_ptr)) {}
 
 Guid &Guid::operator=(Guid const &op) {
   if (this != &op) {
@@ -48,13 +47,9 @@ Guid &Guid::operator=(Guid const &op) {
 
 std::string Guid::str() const { return d_ptr->str(); }
 
-bool Guid::operator==(Guid const &rhs) const {
-  return *d_ptr == *rhs.d_ptr;
-}
+bool Guid::operator==(Guid const &rhs) const { return *d_ptr == *rhs.d_ptr; }
 
-bool Guid::operator!=(Guid const &rhs) const {
-  return *d_ptr == *rhs.d_ptr;
-}
+bool Guid::operator!=(Guid const &rhs) const { return *d_ptr == *rhs.d_ptr; }
 
 std::ostream &operator<<(std::ostream &out, Guid const &guid) {
   auto s = guid.str();

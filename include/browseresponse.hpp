@@ -6,16 +6,10 @@
 #include <vector>
 
 #include "browseresult.hpp"
+#include "diagnosticinfo.hpp"
+#include "responseheader.hpp"
 
 namespace open62541 {
-
-class ResponseHeader {
-  // TODO
-};
-
-class DiagnosticInfo {
-  // TODO
-};
 
 class BrowseResponse {
   class impl;
@@ -24,6 +18,7 @@ class BrowseResponse {
  public:
   BrowseResponse();
   ~BrowseResponse();
+
   BrowseResponse(BrowseResponse &&) = default;
   BrowseResponse(BrowseResponse const &) = delete;
   BrowseResponse &operator=(BrowseResponse &&);

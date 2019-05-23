@@ -6,6 +6,10 @@
 
 namespace open62541 {
 
+enum class StatusCode : uint32_t {
+  // TODO
+};
+
 enum class IdentifierType : uint32_t { Numeric, String, Guid, ByteString };
 
 inline std::ostream &operator<<(std::ostream &out, IdentifierType const &i) {

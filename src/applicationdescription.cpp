@@ -131,10 +131,4 @@ bool ApplicationDescription::operator!=(
   return *d_ptr != *rhs.d_ptr;
 }
 
-std::ostream &operator<<(std::ostream &out, const ApplicationDescription &ad) {
-  auto j = parser::to_json(ad);
-  out << j;
-  return out;
-}
-
 }  // namespace open62541

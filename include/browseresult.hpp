@@ -5,14 +5,11 @@
 #include <memory>
 #include <vector>
 
-//#include "bytestring.hpp"
+#include "bytestring.hpp"
+#include "enums.hpp"
 #include "referencedescription.hpp"
 
 namespace open62541 {
-
-class StatusCode {
-  // TODO
-};
 
 class BrowseResult {
   class impl;
@@ -21,14 +18,15 @@ class BrowseResult {
  public:
   BrowseResult();
   ~BrowseResult();
+
+  BrowseResult(BrowseResult &&) noexcept;
+  BrowseResult &operator=(BrowseResult &&) noexcept;
+  BrowseResult(BrowseResult const &);
+  BrowseResult &operator=(BrowseResult const &);
+
   BrowseResult(StatusCode status_code,
                ByteString const &continuation_point,
                std::vector<ReferenceDescription> const &references);
-  BrowseResult(BrowseResult &&) noexcept;
-  BrowseResult &operator=(BrowseResult &&) noexcept;
-
-  BrowseResult(BrowseResult const &);
-  BrowseResult &operator=(BrowseResult const &);
 
   StatusCode status_code() const;
   ByteString continuation_point() const;

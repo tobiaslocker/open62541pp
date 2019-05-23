@@ -15,16 +15,18 @@ class BrowseDescription {
  public:
   BrowseDescription();
   ~BrowseDescription();
+
+  BrowseDescription(BrowseDescription &&) noexcept;
+  BrowseDescription &operator=(BrowseDescription &&) noexcept;
+  BrowseDescription(BrowseDescription const &);
+  BrowseDescription &operator=(BrowseDescription const &);
+
   BrowseDescription(NodeId node_id,
                     BrowseDirection browse_direction,
                     NodeId reference_type_id,
                     bool include_subtypes,
                     uint32_t node_class_mask,
                     uint32_t result_mask);
-  BrowseDescription(BrowseDescription &&) noexcept;
-  BrowseDescription &operator=(BrowseDescription &&) noexcept;
-  BrowseDescription(BrowseDescription const &);
-  BrowseDescription &operator=(BrowseDescription const &);
 
   NodeId node_id() const;
   BrowseDirection browse_direction() const;
