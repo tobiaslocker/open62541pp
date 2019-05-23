@@ -36,7 +36,6 @@ class BrowseDescription::impl {
 
 BrowseDescription::BrowseDescription() : d_ptr{std::make_unique<impl>()} {}
 
-
 BrowseDescription::BrowseDescription(NodeId node_id,
                                      BrowseDirection browse_direction,
                                      NodeId reference_type_id,

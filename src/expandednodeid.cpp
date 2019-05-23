@@ -41,8 +41,6 @@ ExpandedNodeId::ExpandedNodeId(NodeId const &node_id,
 
 ExpandedNodeId::ExpandedNodeId() : d_ptr{std::make_unique<impl>()} {}
 
-
-
 ExpandedNodeId::~ExpandedNodeId() = default;
 
 ExpandedNodeId::ExpandedNodeId(ExpandedNodeId const &op)
@@ -55,14 +53,6 @@ ExpandedNodeId &ExpandedNodeId::operator=(ExpandedNodeId const &op) {
   return *this;
 }
 
-
-
-
-
-//ExpandedNodeId::~ExpandedNodeId() = default;
-
-//ExpandedNodeId &ExpandedNodeId::operator=(ExpandedNodeId &&) = default;
-
 std::string ExpandedNodeId::namespace_uri() const {
   return d_ptr->namespace_uri();
 }
@@ -71,11 +61,11 @@ NodeId ExpandedNodeId::node_id() const { return d_ptr->node_id(); }
 
 uint32_t ExpandedNodeId::server_index() const { return d_ptr->server_index(); }
 
-bool ExpandedNodeId::operator==(const ExpandedNodeId &rhs) const {
+bool ExpandedNodeId::operator==(ExpandedNodeId const &rhs) const {
   return *d_ptr == *rhs.d_ptr;
 }
 
-bool ExpandedNodeId::operator!=(const ExpandedNodeId &rhs) const {
+bool ExpandedNodeId::operator!=(ExpandedNodeId const &rhs) const {
   return *d_ptr != *rhs.d_ptr;
 }
 

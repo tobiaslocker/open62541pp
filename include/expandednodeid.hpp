@@ -19,10 +19,10 @@ class ExpandedNodeId {
   ExpandedNodeId &operator=(ExpandedNodeId &&) noexcept;
   ExpandedNodeId(ExpandedNodeId const &);
   ExpandedNodeId &operator=(ExpandedNodeId const &);
-//  ExpandedNodeId(ExpandedNodeId &&) = default;
-//  ExpandedNodeId &operator=(ExpandedNodeId &&);
-//  ExpandedNodeId(ExpandedNodeId const &) = delete;
-//  ExpandedNodeId &operator=(ExpandedNodeId const &) = delete;
+  //  ExpandedNodeId(ExpandedNodeId &&) = default;
+  //  ExpandedNodeId &operator=(ExpandedNodeId &&);
+  //  ExpandedNodeId(ExpandedNodeId const &) = delete;
+  //  ExpandedNodeId &operator=(ExpandedNodeId const &) = delete;
 
   explicit ExpandedNodeId(NodeId const &node_id,
                           std::string const &namespace_uri,

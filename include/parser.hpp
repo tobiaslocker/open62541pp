@@ -226,7 +226,7 @@ inline json to_json(EndpointDescription const &ed) {
   return endpoint_desc;
 }
 
-json to_json(ExpandedNodeId const &en) {
+inline json to_json(ExpandedNodeId const &en) {
   json exp_node_id;
   exp_node_id["NodeId"] = to_json(en.node_id());
   exp_node_id["NamespaceUri"] = en.namespace_uri();

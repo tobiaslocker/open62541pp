@@ -23,14 +23,15 @@ class BrowseResponse {
 
  public:
   BrowseResponse();
-  BrowseResponse(ResponseHeader const &response_header,
-                 std::vector<BrowseResult> const &results,
-                 std::vector<DiagnosticInfo> const &diagnostic_infos);
   ~BrowseResponse();
   BrowseResponse(BrowseResponse &&) = default;
   BrowseResponse(BrowseResponse const &) = delete;
   BrowseResponse &operator=(BrowseResponse &&);
   BrowseResponse &operator=(BrowseResponse const &) = delete;
+
+  BrowseResponse(ResponseHeader const &response_header,
+                 std::vector<BrowseResult> const &results,
+                 std::vector<DiagnosticInfo> const &diagnostic_infos);
 
   ResponseHeader response_header() const;
   std::vector<BrowseResult> results() const;
