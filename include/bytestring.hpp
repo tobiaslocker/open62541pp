@@ -6,8 +6,8 @@
 namespace open62541 {
 
 class ByteString {
-public:
-    static ByteString from_base_64(std::string const &data){}
+ public:
+  static ByteString from_base_64(std::string const &data) {}
 };
 
 }  // namespace open62541

@@ -9,7 +9,7 @@ class Identifier::impl {
   ByteString m_byte_string;
 
  public:
-  impl(){}
+  impl() {}
 
   impl(uint32_t const &numeric) : m_numeric{numeric} {}
 
