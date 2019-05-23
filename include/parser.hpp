@@ -191,6 +191,40 @@ inline json to_json(ApplicationDescription const &ad) {
   app_description["DiscoveryUrls"] = ad.discovery_urls();
   return app_description;
 }
+
+inline json to_json(EndpointDescription const &ed) {
+  json endpoint_desc;
+  endpoint_desc["EndpointUrl"] = ed.endpoint_url();
+  //  endpoint_desc["Server"] = ed.server.to_json();
+  //  endpoint_desc["Certificate"] = ed.server_certificate.str();
+
+  switch (ed.security_mode()) {
+    case MessageSecurityMode::Invalid:
+      endpoint_desc["SecurityMode"] = "Invalid";
+      break;
+    case MessageSecurityMode::None:
+      endpoint_desc["SecurityMode"] = "None";
+      break;
+    case MessageSecurityMode::Sign:
+      endpoint_desc["SecurityMode"] = "Sign";
+      break;
+    case MessageSecurityMode::SignAndEncrypt:
+      endpoint_desc["SecurityMode"] = "SignAndEncrypt";
+      break;
+  }
+
+  endpoint_desc["SecurityPolicyUri"] = ed.security_policy_uri();
+  endpoint_desc["TransportProfileUri"] = ed.transport_profile_uri();
+  endpoint_desc["SecurityLevel"] = ed.security_level();
+
+  json policies;
+  std::for_each(
+      ed.user_identity_tokens().begin(),
+      ed.user_identity_tokens().end(),
+      [&](UserTokenPolicy const &p) { policies.push_back(p.to_json()); });
+  endpoint_desc["UserIdentityTokens"] = policies;
+  return endpoint_desc;
+}
 }  // namespace parser
 
 }  // namespace open62541

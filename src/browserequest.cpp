@@ -47,10 +47,10 @@ std::vector<BrowseDescription> BrowseRequest::nodes_to_browse() const {
 BrowseRequest::BrowseRequest() : d_ptr{std::make_unique<impl>()} {}
 
 BrowseRequest::BrowseRequest(
-    const RequestHeader &request_header,
-    const ViewDescription &view,
+    RequestHeader const &request_header,
+    ViewDescription const &view,
     uint32_t max_references,
-    const std::vector<BrowseDescription> &nodes_to_browse)
+    std::vector<BrowseDescription> const &nodes_to_browse)
     : d_ptr{std::make_unique<impl>(
           request_header, view, max_references, nodes_to_browse)} {}
 

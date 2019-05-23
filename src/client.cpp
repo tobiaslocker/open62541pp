@@ -57,7 +57,7 @@ class Client::impl {
   }
 
   void connect(EndpointDescription const &endpoint) {
-    auto url = endpoint.to_json()["EndpointUrl"].get<std::string>();
+    auto url = endpoint.endpoint_url();
     auto status = UA_Client_connect(m_client.get(), url.c_str());
     if (status == UA_STATUSCODE_GOOD) {
       BOOST_LOG_CHANNEL_SEV(m_lg, m_channel, info) << "Connected to " << url;
