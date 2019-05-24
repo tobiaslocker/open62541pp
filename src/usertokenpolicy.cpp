@@ -2,80 +2,79 @@
 
 namespace open62541 {
 
-UserTokenPolicy::UserTokenPolicy(const UA_UserTokenPolicy &user_token_policy)
-    : m_token_type{UserTokenType(user_token_policy.tokenType)} {
-  m_policy_id.assign(
-      user_token_policy.policyId.data,
-      user_token_policy.policyId.data + user_token_policy.policyId.length);
-  m_issued_token_type.assign(user_token_policy.issuedTokenType.data,
-                             user_token_policy.issuedTokenType.data +
-                                 user_token_policy.issuedTokenType.length);
-  m_issuer_endpoint_url.assign(user_token_policy.issuerEndpointUrl.data,
-                               user_token_policy.issuerEndpointUrl.data +
-                                   user_token_policy.issuerEndpointUrl.length);
-  m_security_policy_uri.assign(user_token_policy.securityPolicyUri.data,
-                               user_token_policy.securityPolicyUri.data +
-                                   user_token_policy.securityPolicyUri.length);
+class UserTokenPolicy::impl {
+  std::string m_policy_id;
+  UserTokenType m_token_type;
+  std::string m_issued_token_type;
+  std::string m_issuer_endpoint_url;
+  std::string m_security_policy_uri;
+
+ public:
+  impl() {}
+
+  std::string policy_id() const { return m_policy_id; }
+
+  UserTokenType token_type() const { return m_token_type; }
+
+  std::string issued_token_type() const { return m_issued_token_type; }
+
+  std::string issuer_endpoint_url() const { return m_issuer_endpoint_url; }
+
+  std::string security_policy_uri() const { return m_security_policy_uri; }
+
+  bool operator==(const impl &rhs) const {
+    return policy_id() == rhs.policy_id() && token_type() == rhs.token_type() &&
+           issued_token_type() == rhs.issued_token_type() &&
+           issuer_endpoint_url() == rhs.issuer_endpoint_url() &&
+           security_policy_uri() == rhs.security_policy_uri();
+  }
+
+  bool operator!=(const impl &rhs) const {
+    return policy_id() != rhs.policy_id() && token_type() != rhs.token_type() &&
+           issued_token_type() != rhs.issued_token_type() &&
+           issuer_endpoint_url() != rhs.issuer_endpoint_url() &&
+           security_policy_uri() != rhs.security_policy_uri();
+  }
+};
+
+UserTokenPolicy::UserTokenPolicy() : d_ptr{std::make_unique<impl>()} {}
+
+UserTokenPolicy::~UserTokenPolicy() = default;
+
+UserTokenPolicy::UserTokenPolicy(UserTokenPolicy const &op)
+    : d_ptr(new impl(*op.d_ptr)) {}
+
+UserTokenPolicy &UserTokenPolicy::operator=(UserTokenPolicy const &op) {
+  if (this != &op) {
+    d_ptr.reset(new impl(*op.d_ptr));
+  }
+  return *this;
 }
 
-std::string UserTokenPolicy::policy_id() const { return m_policy_id; }
+std::string UserTokenPolicy::policy_id() const { return d_ptr->policy_id(); }
 
-UserTokenType UserTokenPolicy::token_type() const { return m_token_type; }
+UserTokenType UserTokenPolicy::token_type() const {
+  return d_ptr->token_type();
+}
 
 std::string UserTokenPolicy::issued_token_type() const {
-  return m_issued_token_type;
+  return d_ptr->issued_token_type();
 }
 
 std::string UserTokenPolicy::issuer_endpoint_url() const {
-  return m_issuer_endpoint_url;
+  return d_ptr->issuer_endpoint_url();
 }
 
 std::string UserTokenPolicy::security_policy_uri() const {
-  return m_security_policy_uri;
+  return d_ptr->security_policy_uri();
 }
 
-json UserTokenPolicy::to_json() const {
-  json policy;
-  policy["PolicyId"] = m_policy_id;
-  policy["IssuedTokenType"] = m_issued_token_type;
-  policy["IssuerEndpointUrl"] = m_policy_id;
-  policy["SecurityPolicyUri"] = m_policy_id;
-  switch (m_token_type) {
-    case UserTokenType::Anonymous:
-      policy["UserTokenType"] = "Anonymous";
-      break;
-    case UserTokenType::UserName:
-      policy["UserTokenType"] = "UserName";
-      break;
-    case UserTokenType::Certificate:
-      policy["UserTokenType"] = "Certificate";
-      break;
-    case UserTokenType::IssuedToken:
-      policy["UserTokenType"] = "IssuedToken";
-      break;
-  }
-  return policy;
+bool UserTokenPolicy::operator==(UserTokenPolicy const &rhs) const {
+  return *d_ptr == *rhs.d_ptr;
 }
 
-bool UserTokenPolicy::operator==(const UserTokenPolicy &rhs) const {
-  return policy_id() == rhs.policy_id() && token_type() == rhs.token_type() &&
-         issued_token_type() == rhs.issued_token_type() &&
-         issuer_endpoint_url() == rhs.issuer_endpoint_url() &&
-         security_policy_uri() == rhs.security_policy_uri();
-}
-
-bool UserTokenPolicy::operator!=(const UserTokenPolicy &rhs) const {
-  return policy_id() != rhs.policy_id() && token_type() != rhs.token_type() &&
-         issued_token_type() != rhs.issued_token_type() &&
-         issuer_endpoint_url() != rhs.issuer_endpoint_url() &&
-         security_policy_uri() != rhs.security_policy_uri();
-}
-
-std::ostream &operator<<(std::ostream &out,
-                         const UserTokenPolicy &user_token_policy) {
-  auto j = user_token_policy.to_json();
-  out << j;
-  return out;
+bool UserTokenPolicy::operator!=(UserTokenPolicy const &rhs) const {
+  return *d_ptr != *rhs.d_ptr;
 }
 
 }  // namespace open62541

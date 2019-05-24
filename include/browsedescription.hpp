@@ -35,8 +35,8 @@ class BrowseDescription {
   uint32_t node_class_mask() const;
   uint32_t result_mask() const;
 
-  //  bool operator==(BrowseDescription const &rhs) const;
-  //  bool operator!=(BrowseDescription const &rhs) const;
+  bool operator==(BrowseDescription const &rhs) const;
+  bool operator!=(BrowseDescription const &rhs) const;
 };
 
 }  // namespace open62541

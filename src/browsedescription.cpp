@@ -27,11 +27,34 @@ class BrowseDescription::impl {
         m_result_mask{result_mask} {}
 
   NodeId node_id() const { return m_node_id; }
+
   BrowseDirection browse_direction() const { return m_browse_direction; }
+
   NodeId reference_type_id() const { return m_reference_type_id; }
+
   bool include_subtypes() const { return m_include_subtypes; }
+
   uint32_t node_class_mask() const { return m_node_class_mask; }
+
   uint32_t result_mask() const { return m_result_mask; }
+
+  bool operator==(impl const &rhs) const {
+    return node_id() == rhs.node_id() &&
+           browse_direction() == rhs.browse_direction() &&
+           reference_type_id() == rhs.reference_type_id() &&
+           include_subtypes() == rhs.include_subtypes() &&
+           node_class_mask() == rhs.node_class_mask() &&
+           result_mask() == rhs.result_mask();
+  }
+
+  bool operator!=(impl const &rhs) const {
+    return node_id() != rhs.node_id() &&
+           browse_direction() != rhs.browse_direction() &&
+           reference_type_id() != rhs.reference_type_id() &&
+           include_subtypes() != rhs.include_subtypes() &&
+           node_class_mask() != rhs.node_class_mask() &&
+           result_mask() != rhs.result_mask();
+  }
 };
 
 BrowseDescription::BrowseDescription() : d_ptr{std::make_unique<impl>()} {}
@@ -80,5 +103,13 @@ uint32_t BrowseDescription::node_class_mask() const {
 }
 
 uint32_t BrowseDescription::result_mask() const { return d_ptr->result_mask(); }
+
+bool BrowseDescription::operator==(BrowseDescription const &rhs) const {
+  return *d_ptr == *rhs.d_ptr;
+}
+
+bool BrowseDescription::operator!=(BrowseDescription const &rhs) const {
+  return *d_ptr != *rhs.d_ptr;
+}
 
 }  // namespace open62541

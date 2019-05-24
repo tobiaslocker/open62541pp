@@ -38,8 +38,8 @@ set(
     src/guid.cpp
     src/browserequest.cpp
     src/browsedescription.cpp
+    src/browseresult.cpp
     src/log.cpp
-    src/browseresponse.cpp
 )
 
 add_library(${PROJECT_NAME} SHARED ${SOURCES})

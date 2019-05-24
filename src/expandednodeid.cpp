@@ -41,6 +41,8 @@ ExpandedNodeId::ExpandedNodeId(NodeId const &node_id,
 
 ExpandedNodeId::ExpandedNodeId() : d_ptr{std::make_unique<impl>()} {}
 
+ExpandedNodeId::ExpandedNodeId(ExpandedNodeId &&) noexcept = default;
+
 ExpandedNodeId::~ExpandedNodeId() = default;
 
 ExpandedNodeId::ExpandedNodeId(ExpandedNodeId const &op)

@@ -1,30 +1,27 @@
 #ifndef OPEN62541_CPP_WRAPPER_REFERENCE_DESCRIPTION_H
 #define OPEN62541_CPP_WRAPPER_REFERENCE_DESCRIPTION_H
 
-#include "open62541.h"
-
 #include "enums.hpp"
 #include "expandednodeid.hpp"
 #include "localizedtext.hpp"
 #include "nodeid.hpp"
 #include "qualifiedname.hpp"
 
-// Dependencies
-#include <nlohmann/json.hpp>
-
 namespace open62541 {
-using namespace nlohmann;
 
 class ReferenceDescription {
-  NodeId m_reference_type_id;
-  bool m_is_forward;
-  ExpandedNodeId m_node_id;
-  QualifiedName m_browse_name;
-  LocalizedText m_display_name;
-  NodeClass m_node_class;
-  ExpandedNodeId m_type_definition;
+  class impl;
+  std::unique_ptr<impl> d_ptr;
 
  public:
+  ReferenceDescription();
+  ~ReferenceDescription();
+
+  ReferenceDescription(ReferenceDescription &&) noexcept;
+  ReferenceDescription &operator=(ReferenceDescription &&) noexcept;
+  ReferenceDescription(ReferenceDescription const &);
+  ReferenceDescription &operator=(ReferenceDescription const &);
+
   ReferenceDescription(NodeId const &reference_type_id,
                        bool is_forward,
                        ExpandedNodeId const &node_id,
@@ -43,8 +40,6 @@ class ReferenceDescription {
 
   bool operator==(ReferenceDescription const &rhs) const;
   bool operator!=(ReferenceDescription const &rhs) const;
-  friend std::ostream &operator<<(std::ostream &out,
-                                  ReferenceDescription const &ref_description);
 };
 
 }  // namespace open62541

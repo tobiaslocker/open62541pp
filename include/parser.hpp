@@ -7,9 +7,12 @@
 #include "endpointdescription.hpp"
 #include "referencedescription.hpp"
 
+#include <nlohmann/json.hpp>
+
 namespace open62541 {
 
 namespace parser {
+using namespace nlohmann;
 
 inline std::string from_open62541(UA_String const &str) {
   return std::string(str.data, str.data + str.length);
@@ -36,10 +39,30 @@ inline ApplicationDescription from_open62541(
                                 discovery_urls};
 }
 
+// UserTokenPolicy::UserTokenPolicy(const UA_UserTokenPolicy &user_token_policy)
+//    : m_token_type{UserTokenType(user_token_policy.tokenType)} {
+//  m_policy_id.assign(
+//      user_token_policy.policyId.data,
+//      user_token_policy.policyId.data + user_token_policy.policyId.length);
+//  m_issued_token_type.assign(user_token_policy.issuedTokenType.data,
+//                             user_token_policy.issuedTokenType.data +
+//                                 user_token_policy.issuedTokenType.length);
+//  m_issuer_endpoint_url.assign(user_token_policy.issuerEndpointUrl.data,
+//                               user_token_policy.issuerEndpointUrl.data +
+//                                   user_token_policy.issuerEndpointUrl.length);
+//  m_security_policy_uri.assign(user_token_policy.securityPolicyUri.data,
+//                               user_token_policy.securityPolicyUri.data +
+//                                   user_token_policy.securityPolicyUri.length);
+//}
+
+inline UserTokenPolicy from_open62541(UA_UserTokenPolicy const &up) {
+
+}
+
 inline EndpointDescription from_open62541(UA_EndpointDescription const &ed) {
   std::vector<UserTokenPolicy> user_identity_tokens;
   for (size_t i = 0; i < ed.userIdentityTokensSize; ++i) {
-    auto policy = UserTokenPolicy(ed.userIdentityTokens[i]);
+    auto policy = from_open62541(ed.userIdentityTokens[i]);
     user_identity_tokens.push_back(policy);
   }
   return EndpointDescription{from_open62541(ed.endpointUrl),
@@ -192,6 +215,10 @@ inline json to_json(ApplicationDescription const &ad) {
   return app_description;
 }
 
+inline json to_json(UserTokenPolicy const &up) {
+
+}
+
 inline json to_json(EndpointDescription const &ed) {
   json endpoint_desc;
   endpoint_desc["EndpointUrl"] = ed.endpoint_url();
@@ -221,7 +248,7 @@ inline json to_json(EndpointDescription const &ed) {
   std::for_each(
       ed.user_identity_tokens().begin(),
       ed.user_identity_tokens().end(),
-      [&](UserTokenPolicy const &p) { policies.push_back(p.to_json()); });
+      [&](UserTokenPolicy const &p) { policies.push_back(to_json(p)); });
   endpoint_desc["UserIdentityTokens"] = policies;
   return endpoint_desc;
 }
@@ -233,6 +260,29 @@ inline json to_json(ExpandedNodeId const &en) {
   exp_node_id["SeverIndex"] = en.server_index();
   return exp_node_id;
 }
+
+// json UserTokenPolicy::to_json() const {
+//  json policy;
+//  policy["PolicyId"] = m_policy_id;
+//  policy["IssuedTokenType"] = m_issued_token_type;
+//  policy["IssuerEndpointUrl"] = m_policy_id;
+//  policy["SecurityPolicyUri"] = m_policy_id;
+//  switch (m_token_type) {
+//    case UserTokenType::Anonymous:
+//      policy["UserTokenType"] = "Anonymous";
+//      break;
+//    case UserTokenType::UserName:
+//      policy["UserTokenType"] = "UserName";
+//      break;
+//    case UserTokenType::Certificate:
+//      policy["UserTokenType"] = "Certificate";
+//      break;
+//    case UserTokenType::IssuedToken:
+//      policy["UserTokenType"] = "IssuedToken";
+//      break;
+//  }
+//  return policy;
+//}
 
 }  // namespace parser
 

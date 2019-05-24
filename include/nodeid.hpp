@@ -7,12 +7,18 @@
 namespace open62541 {
 
 class NodeId {
-  uint16_t m_namespace_index;
-  Identifier m_identifier;
-  IdentifierType m_identifier_type;
+  class impl;
+  std::unique_ptr<impl> d_ptr;
 
  public:
-  NodeId() = default;
+  NodeId();
+  ~NodeId();
+
+  NodeId(NodeId &&) noexcept;
+  NodeId &operator=(NodeId &&) noexcept;
+  NodeId(NodeId const &);
+  NodeId &operator=(NodeId const &);
+
   explicit NodeId(uint16_t namespace_index,
                   Identifier const &identifier,
                   IdentifierType type);
@@ -23,7 +29,6 @@ class NodeId {
 
   bool operator==(NodeId const &rhs) const;
   bool operator!=(NodeId const &rhs) const;
-  friend std::ostream &operator<<(std::ostream &out, NodeId const &node_id);
 };
 
 }  // namespace open62541

@@ -6,6 +6,13 @@
 
 namespace open62541 {
 
+enum class UserTokenType : uint32_t {
+  Anonymous = 0,
+  UserName = 1,
+  Certificate = 2,
+  IssuedToken = 3
+};
+
 enum class StatusCode : uint32_t {
   // TODO
 };
