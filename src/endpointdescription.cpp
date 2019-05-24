@@ -5,7 +5,7 @@ namespace open62541 {
 class EndpointDescription::impl {
   std::string m_endpoint_url;
   ApplicationDescription m_server;
-  Certificate m_server_certificate;
+  ByteString m_server_certificate;
   MessageSecurityMode m_security_mode;
   std::string m_security_policy_uri;
   std::vector<UserTokenPolicy> m_user_identity_tokens;
@@ -15,7 +15,7 @@ class EndpointDescription::impl {
  public:
   impl(std::string const &endpoint_url,
        ApplicationDescription const &server,
-       Certificate const &server_certificate,
+       ByteString const &server_certificate,
        MessageSecurityMode const &security_mode,
        std::string const &security_policy_uri,
        std::vector<UserTokenPolicy> const &user_identity_tokens,
@@ -34,7 +34,7 @@ class EndpointDescription::impl {
 
   ApplicationDescription server() const { return m_server; }
 
-  Certificate server_certificate() const { return m_server_certificate; }
+  ByteString server_certificate() const { return m_server_certificate; }
 
   MessageSecurityMode security_mode() const { return m_security_mode; }
 
@@ -72,7 +72,7 @@ class EndpointDescription::impl {
 EndpointDescription::EndpointDescription(
     std::string const &endpoint_url,
     ApplicationDescription const &server,
-    Certificate const &server_certificate,
+    ByteString const &server_certificate,
     MessageSecurityMode const &security_mode,
     std::string const &security_policy_uri,
     std::vector<UserTokenPolicy> const &user_identity_tokens,
@@ -97,7 +97,7 @@ ApplicationDescription EndpointDescription::server() const {
   return d_ptr->server();
 }
 
-Certificate EndpointDescription::server_certificate() const {
+ByteString EndpointDescription::server_certificate() const {
   return d_ptr->server_certificate();
 }
 

@@ -6,7 +6,7 @@
 #include <vector>
 
 #include "applicationdescription.hpp"
-#include "certificate.hpp"
+#include "bytestring.hpp"
 #include "enums.hpp"
 #include "localizedtext.hpp"
 #include "usertokenpolicy.hpp"
@@ -28,7 +28,7 @@ class EndpointDescription {
   explicit EndpointDescription(
       std::string const &endpoint_url,
       ApplicationDescription const &server,
-      Certificate const &server_certificate,
+      ByteString const &server_certificate,
       MessageSecurityMode const &security_mode,
       std::string const &security_policy_uri,
       std::vector<UserTokenPolicy> const &user_identity_tokens,
@@ -37,7 +37,7 @@ class EndpointDescription {
 
   std::string endpoint_url() const;
   ApplicationDescription server() const;
-  Certificate server_certificate() const;
+  ByteString server_certificate() const;
   MessageSecurityMode security_mode() const;
   std::string security_policy_uri() const;
   std::vector<UserTokenPolicy> user_identity_tokens() const;

@@ -70,11 +70,11 @@ BrowseRequest::~BrowseRequest() = default;
 
 BrowseRequest &BrowseRequest::operator=(BrowseRequest &&) = default;
 
-bool BrowseRequest::operator==(const BrowseRequest &rhs) const {
+bool BrowseRequest::operator==(BrowseRequest const &rhs) const {
   return *d_ptr == *rhs.d_ptr;
 }
 
-bool BrowseRequest::operator!=(const BrowseRequest &rhs) const {
+bool BrowseRequest::operator!=(BrowseRequest const &rhs) const {
   return *d_ptr != *rhs.d_ptr;
 }
 

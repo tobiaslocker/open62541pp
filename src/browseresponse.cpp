@@ -9,6 +9,7 @@ class BrowseResponse::impl {
 
  public:
   impl() {}
+
   impl(const ResponseHeader &response_header,
        const std::vector<BrowseResult> &results,
        const std::vector<DiagnosticInfo> &diagnostic_infos)
@@ -17,9 +18,23 @@ class BrowseResponse::impl {
         m_diagnostic_infos{diagnostic_infos} {}
 
   ResponseHeader response_header() const { return m_response_header; }
+
   std::vector<BrowseResult> results() const { return m_results; }
+
   std::vector<DiagnosticInfo> diagnostic_infos() const {
     return m_diagnostic_infos;
+  }
+
+  bool operator==(impl const &rhs) const {
+    return response_header() == rhs.response_header() &&
+           results() == rhs.results() &&
+           diagnostic_infos() == rhs.diagnostic_infos();
+  }
+
+  bool operator!=(impl const &rhs) const {
+    return response_header() != rhs.response_header() &&
+           results() != rhs.results() &&
+           diagnostic_infos() != rhs.diagnostic_infos();
   }
 };
 
@@ -35,5 +50,13 @@ BrowseResponse::BrowseResponse(
     std::vector<DiagnosticInfo> const &diagnostic_infos)
     : d_ptr{
           std::make_unique<impl>(response_header, results, diagnostic_infos)} {}
+
+bool BrowseResponse::operator==(BrowseResponse const &rhs) const {
+  return *d_ptr == *rhs.d_ptr;
+}
+
+bool BrowseResponse::operator!=(BrowseResponse const &rhs) const {
+  return *d_ptr != *rhs.d_ptr;
+}
 
 }  // namespace open62541

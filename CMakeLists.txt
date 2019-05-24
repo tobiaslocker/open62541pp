@@ -25,7 +25,6 @@ include_directories(include externals/include)
 set(
     SOURCES
     src/applicationdescription.cpp
-    src/certificate.cpp
     src/client.cpp
     src/endpointdescription.cpp
     src/expandednodeid.cpp
@@ -39,6 +38,7 @@ set(
     src/browserequest.cpp
     src/browsedescription.cpp
     src/browseresult.cpp
+    src/browseresponse.cpp
     src/log.cpp
 )
 
