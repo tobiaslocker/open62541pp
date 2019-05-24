@@ -1,38 +1,57 @@
+#include <sstream>
+
 #include "guid.hpp"
 
 namespace open62541 {
 
-Guid::Guid() {}
+class Guid::impl {
+  std::string m_string;
 
-Guid::Guid(const std::string &string) : m_string(string) {}
+ public:
+  impl() {}
+  impl(uint32_t data1, uint16_t data2, uint16_t data3, int64_t data4) {
+    std::stringstream stream;
+    stream << std::hex << data1 << "-";
+    stream << std::hex << data2 << "-";
+    stream << std::hex << data3 << "-";
+    stream << std::hex << data4;
+    m_string = stream.str();
+  }
 
-Guid::Guid(const UA_Guid &guid)
-    : m_data1{guid.data1}, m_data2{guid.data2}, m_data3{guid.data3} {
-  m_data4 = guid.data4[0] | guid.data4[1] << 1 | guid.data4[2] << 2 |
-            guid.data4[3] << 3 | guid.data4[4] << 4 | guid.data4[5] << 5 |
-            guid.data4[6] << 6 | guid.data4[7] << 7;
+  impl(std::string const &data) : m_string{data} {}
+
+  std::string str() const { return m_string; }
+
+  bool operator==(impl const &rhs) const { return m_string == rhs.m_string; }
+
+  bool operator!=(impl const &rhs) const { return m_string != rhs.m_string; }
+};
+
+Guid::Guid() : d_ptr{std::make_unique<impl>()} {}
+
+Guid::Guid(uint32_t data1, uint16_t data2, uint16_t data3, int64_t data4)
+    : d_ptr{std::make_unique<impl>(data1, data2, data3, data4)} {}
+
+Guid::Guid(std::string const &data) : d_ptr{std::make_unique<impl>(data)} {}
+
+Guid::~Guid() = default;
+
+Guid::Guid(Guid const &op) : d_ptr(new impl(*op.d_ptr)) {}
+
+Guid &Guid::operator=(Guid const &op) {
+  if (this != &op) {
+    d_ptr.reset(new impl(*op.d_ptr));
+  }
+  return *this;
 }
 
-std::string Guid::str() const {
-  std::stringstream stream;
-  stream << std::hex << m_data1 << "-";
-  stream << std::hex << m_data2 << "-";
-  stream << std::hex << m_data3 << "-";
-  stream << std::hex << m_data4;
-  return stream.str();
-}
+std::string Guid::str() const { return d_ptr->str(); }
 
-bool Guid::operator==(const Guid &rhs) const {
-  return m_data1 == rhs.m_data1 && m_data2 == rhs.m_data2 &&
-         m_data3 == rhs.m_data3 && m_data4 == rhs.m_data4;
-}
+bool Guid::operator==(Guid const &rhs) const { return *d_ptr == *rhs.d_ptr; }
 
-bool Guid::operator!=(const Guid &rhs) const {
-  return m_data1 != rhs.m_data1 && m_data2 != rhs.m_data2 &&
-         m_data3 != rhs.m_data3 && m_data4 != rhs.m_data4;
-}
+bool Guid::operator!=(Guid const &rhs) const { return *d_ptr == *rhs.d_ptr; }
 
-std::ostream &operator<<(std::ostream &out, const Guid &guid) {
+std::ostream &operator<<(std::ostream &out, Guid const &guid) {
   auto s = guid.str();
   out << s;
   return out;

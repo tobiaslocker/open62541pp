@@ -1,40 +1,43 @@
 #ifndef OPEN62541_CPP_WRAPPER_CLIENT_H
 #define OPEN62541_CPP_WRAPPER_CLIENT_H
 
-#include "open62541.h"
-
 // STL
 #include <memory>
 #include <string>
 #include <vector>
 
+#include "browserequest.hpp"
+#include "browseresponse.hpp"
 #include "endpointdescription.hpp"
-#include "log.hpp"
 #include "nodeid.hpp"
+#include "referencedescription.hpp"
+
+#include "enums.hpp"
 
 namespace open62541 {
 
-class Node;
-
-using namespace logger;
-
-class Client : public std::enable_shared_from_this<Client> {
-  src::severity_channel_logger<severity_level, std::string> m_lg;
-  std::string m_channel = "ua_client";
-  std::shared_ptr<UA_Client> m_client;
-  Client();
-  UA_BrowseResponse browse(UA_BrowseRequest const &request);
+class Client {
+  class impl;
+  std::unique_ptr<impl> d_ptr;
 
  public:
+  Client();
+  ~Client();
+  Client(Client &&) = default;
+  Client(Client const &) = delete;
+  Client &operator=(Client &&);
+  Client &operator=(Client const &) = delete;
+  BrowseResponse browse(BrowseRequest const &request);
   std::vector<EndpointDescription> get_endpoints(std::string const &url);
   void connect(std::string const &url);
   void connect(EndpointDescription const &endpoint);
-  std::shared_ptr<Node> node(NodeId const &node_id);
-  LocalizedText read_display_name_attribute(NodeId const &node_id);
-  std::shared_ptr<Client> client();
-  static std::shared_ptr<Client> create();
 
-  friend class Node;
+  LocalizedText read_display_name_attribute(NodeId const &node_id);
+  std::vector<ReferenceDescription> get_child_references(
+      ReferenceDescription const &reference,
+      BrowseResultMask br_mask,
+      NodeClassMask nc_mask,
+      ReferenceTypeIdentifier id);
 };
 
 }  // namespace open62541

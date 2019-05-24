@@ -1,31 +1,32 @@
 #ifndef OPEN62541_CPP_WRAPPER_LOCALIZED_TEXT_H
 #define OPEN62541_CPP_WRAPPER_LOCALIZED_TEXT_H
 
-#include "open62541.h"
-
 // STL
+#include <memory>
 #include <string>
 
 namespace open62541 {
 
 class LocalizedText {
-  std::string m_text;
-  std::string m_locale;
-  bool m_is_empty;
-  explicit LocalizedText(UA_LocalizedText const &display_name);
+  class impl;
+  std::unique_ptr<impl> d_ptr;
 
  public:
   LocalizedText();
+  ~LocalizedText();
+
+  LocalizedText(LocalizedText &&) noexcept;
+  LocalizedText &operator=(LocalizedText &&) noexcept;
+  LocalizedText(LocalizedText const &);
+  LocalizedText &operator=(LocalizedText const &);
+
+  LocalizedText(std::string const &text, std::string const &locale);
+
   std::string text() const;
   std::string locale() const;
-  bool is_empty() const;
+
   bool operator==(LocalizedText const &rhs) const;
   bool operator!=(LocalizedText const &rhs) const;
-  friend std::ostream &operator<<(std::ostream &out,
-                                  LocalizedText const &localized_text);
-  friend class ApplicationDescription;
-  friend class ReferenceDescription;
-  friend class Client;
 };
 
 }  // namespace open62541

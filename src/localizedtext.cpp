@@ -2,34 +2,56 @@
 
 namespace open62541 {
 
-LocalizedText::LocalizedText(UA_LocalizedText const &display_name) {
-  m_text.assign(display_name.text.data,
-                display_name.text.data + display_name.text.length);
-  m_locale.assign(display_name.locale.data,
-                  display_name.locale.data + display_name.locale.length);
+class LocalizedText::impl {
+  std::string m_text;
+  std::string m_locale;
+
+ public:
+  impl() {}
+
+  impl(std::string const &text, std::string const &locale)
+      : m_text{text}, m_locale{locale} {}
+
+  std::string text() const { return m_text; }
+
+  std::string locale() const { return m_locale; }
+
+  bool operator==(impl const &rhs) const {
+    return text() == rhs.text() && locale() != rhs.locale();
+  }
+
+  bool operator!=(impl const &rhs) const {
+    return text() != rhs.text() && locale() != rhs.locale();
+  }
+};
+
+LocalizedText::LocalizedText() : d_ptr{std::make_unique<impl>()} {}
+
+LocalizedText::~LocalizedText() = default;
+
+LocalizedText::LocalizedText(LocalizedText const &op)
+    : d_ptr(new impl(*op.d_ptr)) {}
+
+LocalizedText &LocalizedText::operator=(LocalizedText const &op) {
+  if (this != &op) {
+    d_ptr.reset(new impl(*op.d_ptr));
+  }
+  return *this;
 }
 
-LocalizedText::LocalizedText() : m_is_empty{true} {}
+LocalizedText::LocalizedText(std::string const &text, std::string const &locale)
+    : d_ptr{std::make_unique<impl>(text, locale)} {}
 
-std::string LocalizedText::text() const { return m_text; }
+std::string LocalizedText::text() const { return d_ptr->text(); }
 
-std::string LocalizedText::locale() const { return m_locale; }
+std::string LocalizedText::locale() const { return d_ptr->locale(); }
 
-bool LocalizedText::is_empty() const { return m_is_empty; }
-
-bool LocalizedText::operator==(const LocalizedText &rhs) const {
-  return text() == rhs.text() && locale() == rhs.locale();
+bool LocalizedText::operator==(LocalizedText const &rhs) const {
+  return *d_ptr == *rhs.d_ptr;
 }
 
-bool LocalizedText::operator!=(const LocalizedText &rhs) const {
-  return text() != rhs.text() && locale() != rhs.locale();
-}
-
-std::ostream &operator<<(std::ostream &out,
-                         const LocalizedText &localized_text) {
-  std::string s = localized_text.text() + " " + localized_text.locale();
-  out << s;
-  return out;
+bool LocalizedText::operator!=(LocalizedText const &rhs) const {
+  return *d_ptr != *rhs.d_ptr;
 }
 
 }  // namespace open62541

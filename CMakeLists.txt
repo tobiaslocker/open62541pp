@@ -21,7 +21,6 @@ find_package(open62541 0.3.0 REQUIRED COMPONENTS FullNamespace Discovery)
 
 
 include_directories(include externals/include)
-#include_directories(externals/include)
 
 set(
     SOURCES
@@ -32,12 +31,14 @@ set(
     src/expandednodeid.cpp
     src/identifier.cpp
     src/localizedtext.cpp
-    src/node.cpp
     src/nodeid.cpp
     src/qualifiedname.cpp
     src/referencedescription.cpp
     src/usertokenpolicy.cpp
     src/guid.cpp
+    src/browserequest.cpp
+    src/browsedescription.cpp
+    src/browseresult.cpp
     src/log.cpp
 )
 

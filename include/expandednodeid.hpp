@@ -1,45 +1,36 @@
 #ifndef OPEN62541_CPP_WRAPPER_EXPANDED_NODE_ID_H
 #define OPEN62541_CPP_WRAPPER_EXPANDED_NODE_ID_H
 
-#include "open62541.h"
-
 // STL
 #include <string>
 
-// Dependencies
-#include <nlohmann/json.hpp>
-
-#include "log.hpp"
 #include "nodeid.hpp"
 
 namespace open62541 {
 
-using namespace logger;
-using namespace nlohmann;
-
 class ExpandedNodeId {
-  NodeId m_node_id;
-  std::string m_namespace_uri;
-  u_int32_t m_server_index = 0;
-  explicit ExpandedNodeId(UA_ExpandedNodeId const &expanded_node_id);
+  class impl;
+  std::unique_ptr<impl> d_ptr;
 
  public:
-  explicit ExpandedNodeId(NodeId const &node_id);
+  ~ExpandedNodeId();
+  ExpandedNodeId();
+
+  ExpandedNodeId(ExpandedNodeId &&) noexcept;
+  ExpandedNodeId &operator=(ExpandedNodeId &&) noexcept;
+  ExpandedNodeId(ExpandedNodeId const &);
+  ExpandedNodeId &operator=(ExpandedNodeId const &);
+
   explicit ExpandedNodeId(NodeId const &node_id,
                           std::string const &namespace_uri,
-                          u_int32_t server_index = 0);
+                          uint32_t server_index = 0);
+
   std::string namespace_uri() const;
   NodeId node_id() const;
-  u_int32_t server_index() const;
-
-  json to_json() const;
+  uint32_t server_index() const;
 
   bool operator==(ExpandedNodeId const &rhs) const;
   bool operator!=(ExpandedNodeId const &rhs) const;
-  friend std::ostream &operator<<(std::ostream &out,
-                                  ExpandedNodeId const &expanded_node_id);
-
-  friend class ReferenceDescription;
 };
 
 }  // namespace open62541

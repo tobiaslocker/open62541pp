@@ -1,108 +1,72 @@
 #include "nodeid.hpp"
+#include "parser.hpp"
 
 namespace open62541 {
 
-NodeId::NodeId(UA_NodeId const &node_id)
-    : m_namespace_index{node_id.namespaceIndex},
-      m_identifier_type{node_id.identifierType},
-      m_ua_node_id{node_id} {
-  switch (m_identifier_type) {
-    case IdentifierType::Guid:
-      m_identifier = Identifier(node_id.identifier.guid);
-      break;
-    case IdentifierType::Numeric:
-      m_identifier = Identifier(node_id.identifier.numeric);
-      break;
-    case IdentifierType::String:
-      m_identifier = Identifier(node_id.identifier.string);
-      break;
-    case IdentifierType::ByteString:
-      m_identifier = Identifier(node_id.identifier.string);
-      break;
+class NodeId::impl {
+  uint16_t m_namespace_index;
+  Identifier m_identifier;
+  IdentifierType m_identifier_type;
+
+ public:
+  impl() {}
+
+  impl(uint16_t namespace_index,
+       Identifier const &identifier,
+       IdentifierType type)
+      : m_namespace_index{namespace_index},
+        m_identifier{identifier},
+        m_identifier_type{type} {}
+
+  Identifier identifier() const { return m_identifier; }
+
+  IdentifierType identifier_type() const { return m_identifier_type; }
+
+  uint16_t namespace_index() const { return m_namespace_index; }
+
+  bool operator==(impl const &rhs) const {
+    return identifier() == rhs.identifier() &&
+           namespace_index() == rhs.namespace_index();
   }
+
+  bool operator!=(impl const &rhs) const {
+    return identifier() != rhs.identifier() &&
+           namespace_index() != rhs.namespace_index();
+  }
+};
+
+NodeId::NodeId() : d_ptr{std::make_unique<impl>()} {}
+
+NodeId::~NodeId() = default;
+
+NodeId::NodeId(NodeId const &op) : d_ptr(new impl(*op.d_ptr)) {}
+
+NodeId &NodeId::operator=(NodeId const &op) {
+  if (this != &op) {
+    d_ptr.reset(new impl(*op.d_ptr));
+  }
+  return *this;
 }
 
-NodeId::NodeId(json const &node_id) : m_namespace_index{node_id["Namespace"]} {
-  /*
-   * The IdentifierType encoded as a JSON number.
-   * Allowed values are:
-   * 0 - UInt32 Identifier encoded as a JSON number.
-   * 1 - A String Identifier encoded as a JSON string.
-   * 2 - A Guid Identifier encoded as described in 5.4.2.7.
-   * 3 - A ByteString Identifier encoded as described in 5.4.2.8.
-   * This field is omitted for UInt32 identifiers.
-   */
+NodeId::NodeId(uint16_t namespace_index,
+               Identifier const &identifier,
+               IdentifierType type)
+    : d_ptr{std::make_unique<impl>(namespace_index, identifier, type)} {}
 
-  if (node_id["IdType"].is_number()) {
-    auto id = node_id["Id"];
-    auto id_type = node_id["IdType"].get<int>();
-    switch (id_type) {
-      case 0:
-        m_identifier = Identifier(id.get<u_int32_t>());
-        break;
-      case 1:
-        m_identifier = Identifier(id.get<std::string>());
-        break;
-      case 2:
-        m_identifier = Identifier(Guid(id.get<std::string>()));
-        break;
-      case 3:
-        m_identifier =
-            Identifier(ByteString::from_base_64(id.get<std::string>()));
-        break;
-      default:
-        // TODO: handle error case
-        break;
-    }
+Identifier NodeId::identifier() const { return d_ptr->identifier(); }
 
-  } else {
-  }
+IdentifierType NodeId::identifier_type() const {
+  return d_ptr->identifier_type();
 }
 
-NodeId::NodeId(uint16_t namespace_index, Identifier const &identifier)
-    : m_namespace_index{namespace_index}, m_identifier{identifier} {}
-
-Identifier NodeId::indentifier() const { return m_identifier; }
-
-u_int16_t NodeId::namespace_index() const { return m_namespace_index; }
-
-json NodeId::to_json() const {
-  json node_id;
-  node_id["NamespaceIndex"] = m_namespace_index;
-  node_id["IdentifierType"] = m_identifier_type.str();
-  switch (m_identifier_type) {
-    case IdentifierType::Guid:
-      node_id["Identifier"] = m_identifier.guid().str();
-      break;
-    case IdentifierType::String:
-      node_id["Identifier"] = m_identifier.string();
-      break;
-    case IdentifierType::Numeric:
-      node_id["Identifier"] = m_identifier.numeric();
-      break;
-    case IdentifierType::ByteString:
-      node_id["Identifier"] = m_identifier.byte_string();
-      break;
-  }
-  return node_id;
-}
+uint16_t NodeId::namespace_index() const { return d_ptr->namespace_index(); }
 
 bool NodeId::operator==(const NodeId &rhs) const {
-  return indentifier() == rhs.indentifier() &&
-         namespace_index() == rhs.namespace_index();
+  return *d_ptr == *rhs.d_ptr;
 }
 
 bool NodeId::operator!=(const NodeId &rhs) const {
-  return indentifier() != rhs.indentifier() &&
-         namespace_index() != rhs.namespace_index();
+  return *d_ptr != *rhs.d_ptr;
 }
-
-std::ostream &operator<<(std::ostream &out, const NodeId &node_id) {
-  auto j = node_id.to_json();
-  out << j;
-  return out;
-}
-
-UA_NodeId NodeId::ua_node_id() const { return m_ua_node_id; }
 
 }  // namespace open62541

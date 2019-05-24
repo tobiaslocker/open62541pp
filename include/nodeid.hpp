@@ -1,43 +1,34 @@
 #ifndef OPEN62541_CPP_WRAPPER_NODE_ID_H
 #define OPEN62541_CPP_WRAPPER_NODE_ID_H
 
-#include "open62541.h"
-
-// Dependencies
-#include <nlohmann/json.hpp>
-
+#include "enums.hpp"
 #include "identifier.hpp"
-#include "log.hpp"
 
 namespace open62541 {
-using namespace nlohmann;
 
 class NodeId {
-  u_int16_t m_namespace_index;
-  Identifier m_identifier;
-  IdentifierType m_identifier_type;
-  UA_NodeId m_ua_node_id;
-
-  explicit NodeId(UA_NodeId const &node_id);
-  UA_NodeId ua_node_id() const;
+  class impl;
+  std::unique_ptr<impl> d_ptr;
 
  public:
-  explicit NodeId(json const &node_id);
-  explicit NodeId(uint16_t namespace_index, Identifier const &identifier);
+  NodeId();
+  ~NodeId();
 
-  u_int16_t namespace_index() const;
-  Identifier indentifier() const;
+  NodeId(NodeId &&) noexcept;
+  NodeId &operator=(NodeId &&) noexcept;
+  NodeId(NodeId const &);
+  NodeId &operator=(NodeId const &);
 
-  json to_json() const;
+  explicit NodeId(uint16_t namespace_index,
+                  Identifier const &identifier,
+                  IdentifierType type);
+
+  uint16_t namespace_index() const;
+  Identifier identifier() const;
+  IdentifierType identifier_type() const;
 
   bool operator==(NodeId const &rhs) const;
   bool operator!=(NodeId const &rhs) const;
-  friend std::ostream &operator<<(std::ostream &out, NodeId const &node_id);
-
-  friend class ReferenceDescription;
-  friend class ExpandedNodeId;
-  friend class Node;
-  friend class Client;
 };
 
 }  // namespace open62541
