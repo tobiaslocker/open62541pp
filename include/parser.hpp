@@ -55,9 +55,7 @@ inline ApplicationDescription from_open62541(
 //                                   user_token_policy.securityPolicyUri.length);
 //}
 
-inline UserTokenPolicy from_open62541(UA_UserTokenPolicy const &up) {
-
-}
+inline UserTokenPolicy from_open62541(UA_UserTokenPolicy const &up) {}
 
 inline EndpointDescription from_open62541(UA_EndpointDescription const &ed) {
   std::vector<UserTokenPolicy> user_identity_tokens;
@@ -215,9 +213,7 @@ inline json to_json(ApplicationDescription const &ad) {
   return app_description;
 }
 
-inline json to_json(UserTokenPolicy const &up) {
-
-}
+inline json to_json(UserTokenPolicy const &up) {}
 
 inline json to_json(EndpointDescription const &ed) {
   json endpoint_desc;

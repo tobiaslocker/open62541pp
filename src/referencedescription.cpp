@@ -42,13 +42,13 @@ class ReferenceDescription::impl {
 
   ExpandedNodeId type_definition() const { return m_type_definition; }
 
-  bool operator==(const impl &rhs) const {
+  bool operator==(impl const &rhs) const {
     return node_id() == rhs.node_id() && display_name() == rhs.display_name() &&
            browse_name() == rhs.browse_name() &&
            type_definition() == rhs.type_definition();
   }
 
-  bool operator!=(const impl &rhs) const {
+  bool operator!=(impl const &rhs) const {
     return node_id() != rhs.node_id() && display_name() != rhs.display_name() &&
            browse_name() != rhs.browse_name() &&
            type_definition() != rhs.type_definition();

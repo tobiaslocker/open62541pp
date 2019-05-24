@@ -22,14 +22,14 @@ class UserTokenPolicy::impl {
 
   std::string security_policy_uri() const { return m_security_policy_uri; }
 
-  bool operator==(const impl &rhs) const {
+  bool operator==(impl const &rhs) const {
     return policy_id() == rhs.policy_id() && token_type() == rhs.token_type() &&
            issued_token_type() == rhs.issued_token_type() &&
            issuer_endpoint_url() == rhs.issuer_endpoint_url() &&
            security_policy_uri() == rhs.security_policy_uri();
   }
 
-  bool operator!=(const impl &rhs) const {
+  bool operator!=(impl const &rhs) const {
     return policy_id() != rhs.policy_id() && token_type() != rhs.token_type() &&
            issued_token_type() != rhs.issued_token_type() &&
            issuer_endpoint_url() != rhs.issuer_endpoint_url() &&

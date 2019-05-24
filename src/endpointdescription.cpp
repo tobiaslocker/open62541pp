@@ -48,7 +48,7 @@ class EndpointDescription::impl {
 
   unsigned char security_level() const { return m_security_level; }
 
-  bool operator==(const impl &rhs) const {
+  bool operator==(impl const &rhs) const {
     return endpoint_url() == rhs.endpoint_url() && server() == rhs.server() &&
            server_certificate() == rhs.server_certificate() &&
            security_mode() == rhs.security_mode() &&
@@ -58,7 +58,7 @@ class EndpointDescription::impl {
            security_level() == rhs.security_level();
   }
 
-  bool operator!=(const impl &rhs) const {
+  bool operator!=(impl const &rhs) const {
     return endpoint_url() != rhs.endpoint_url() && server() == rhs.server() &&
            server_certificate() != rhs.server_certificate() &&
            security_mode() != rhs.security_mode() &&
@@ -121,11 +121,11 @@ unsigned char EndpointDescription::security_level() const {
   return d_ptr->security_level();
 }
 
-bool EndpointDescription::operator==(const EndpointDescription &rhs) const {
+bool EndpointDescription::operator==(EndpointDescription const &rhs) const {
   return *d_ptr == *rhs.d_ptr;
 }
 
-bool EndpointDescription::operator!=(const EndpointDescription &rhs) const {
+bool EndpointDescription::operator!=(EndpointDescription const &rhs) const {
   return *d_ptr != *rhs.d_ptr;
 }
 

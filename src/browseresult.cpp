@@ -9,15 +9,31 @@ class BrowseResult::impl {
 
  public:
   impl() {}
+
   impl(StatusCode status_code,
        const ByteString &continuation_point,
        const std::vector<ReferenceDescription> &references)
       : m_status_code{status_code},
         m_continuation_point{continuation_point},
         m_references{references} {}
-  StatusCode status_code() { return m_status_code; }
-  ByteString continuation_point() { return m_continuation_point; }
-  std::vector<ReferenceDescription> references() { return m_references; }
+
+  StatusCode status_code() const { return m_status_code; }
+
+  ByteString continuation_point() const { return m_continuation_point; }
+
+  std::vector<ReferenceDescription> references() const { return m_references; }
+
+  bool operator==(impl const &rhs) const {
+    return status_code() == rhs.status_code() &&
+           continuation_point() == rhs.continuation_point() &&
+           references() == rhs.references();
+  }
+
+  bool operator!=(impl const &rhs) const {
+    return status_code() != rhs.status_code() &&
+           continuation_point() != rhs.continuation_point() &&
+           references() != rhs.references();
+  }
 };
 
 BrowseResult::BrowseResult() : d_ptr{std::make_unique<impl>()} {}
@@ -49,5 +65,13 @@ BrowseResult &BrowseResult::operator=(BrowseResult const &op) {
 }
 
 BrowseResult::~BrowseResult() = default;
+
+bool BrowseResult::operator==(const BrowseResult &rhs) const {
+  return *d_ptr == *rhs.d_ptr;
+}
+
+bool BrowseResult::operator!=(const BrowseResult &rhs) const {
+  return *d_ptr != *rhs.d_ptr;
+}
 
 }  // namespace open62541

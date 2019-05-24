@@ -9,7 +9,6 @@ class ExpandedNodeId::impl {
 
  public:
   impl() {}
-  //  ~impl() {}
   impl(NodeId const &node_id,
        std::string const &namespace_uri,
        uint32_t server_index)
@@ -23,12 +22,12 @@ class ExpandedNodeId::impl {
 
   uint32_t server_index() const { return m_server_index; }
 
-  bool operator==(const impl &rhs) const {
+  bool operator==(impl const &rhs) const {
     return namespace_uri() == rhs.namespace_uri() &&
            node_id() == rhs.node_id() && server_index() == rhs.server_index();
   }
 
-  bool operator!=(const impl &rhs) const {
+  bool operator!=(impl const &rhs) const {
     return namespace_uri() != rhs.namespace_uri() &&
            node_id() != rhs.node_id() && server_index() != rhs.server_index();
   }

@@ -36,7 +36,6 @@ class BrowseRequest {
 
   bool operator==(BrowseRequest const &rhs) const;
   bool operator!=(BrowseRequest const &rhs) const;
-
 };
 
 }  // namespace open62541

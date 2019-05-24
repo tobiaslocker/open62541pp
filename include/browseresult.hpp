@@ -31,6 +31,9 @@ class BrowseResult {
   StatusCode status_code() const;
   ByteString continuation_point() const;
   std::vector<ReferenceDescription> references() const;
+
+  bool operator==(BrowseResult const &rhs) const;
+  bool operator!=(BrowseResult const &rhs) const;
 };
 
 }  // namespace open62541

@@ -61,14 +61,6 @@ Identifier::Identifier(Guid const &guid)
 Identifier::Identifier(ByteString const &byte_string)
     : d_ptr{std::make_unique<impl>(byte_string)} {}
 
-bool Identifier::operator==(Identifier const &rhs) const {
-  return *d_ptr == *rhs.d_ptr;
-}
-
-bool Identifier::operator!=(Identifier const &rhs) const {
-  return *d_ptr != *rhs.d_ptr;
-}
-
 std::string Identifier::string() const { return d_ptr->string(); }
 
 std::string Identifier::byte_string() const { return d_ptr->byte_string(); }
@@ -76,5 +68,13 @@ std::string Identifier::byte_string() const { return d_ptr->byte_string(); }
 Guid Identifier::guid() const { return d_ptr->guid(); }
 
 uint32_t Identifier::numeric() const { return d_ptr->numeric(); }
+
+bool Identifier::operator==(Identifier const &rhs) const {
+  return *d_ptr == *rhs.d_ptr;
+}
+
+bool Identifier::operator!=(Identifier const &rhs) const {
+  return *d_ptr != *rhs.d_ptr;
+}
 
 }  // namespace open62541

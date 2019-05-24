@@ -61,11 +61,11 @@ IdentifierType NodeId::identifier_type() const {
 
 uint16_t NodeId::namespace_index() const { return d_ptr->namespace_index(); }
 
-bool NodeId::operator==(const NodeId &rhs) const {
+bool NodeId::operator==(NodeId const &rhs) const {
   return *d_ptr == *rhs.d_ptr;
 }
 
-bool NodeId::operator!=(const NodeId &rhs) const {
+bool NodeId::operator!=(NodeId const &rhs) const {
   return *d_ptr != *rhs.d_ptr;
 }
 
