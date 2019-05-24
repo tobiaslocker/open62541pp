@@ -33,6 +33,10 @@ class BrowseRequest {
   ViewDescription view() const;
   uint32_t max_references() const;
   std::vector<BrowseDescription> nodes_to_browse() const;
+
+  bool operator==(BrowseRequest const &rhs) const;
+  bool operator!=(BrowseRequest const &rhs) const;
+
 };
 
 }  // namespace open62541
