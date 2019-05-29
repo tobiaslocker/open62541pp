@@ -65,7 +65,7 @@ inline EndpointDescription from_open62541(UA_EndpointDescription const &ed) {
   }
   return EndpointDescription{from_open62541(ed.endpointUrl),
                              from_open62541(ed.server),
-                             Certificate(from_open62541(ed.serverCertificate)),
+                             from_open62541(ed.serverCertificate),
                              MessageSecurityMode{ed.securityMode},
                              from_open62541(ed.securityPolicyUri),
                              user_identity_tokens,
@@ -162,7 +162,7 @@ inline NodeId from_json<NodeId>(json const &j) {
                     IdentifierType::Guid);
     case 3:
       return NodeId(j["Namespace"],
-                    Identifier(ByteString::from_base_64(id.get<std::string>())),
+                    Identifier(ByteString(id.get<std::string>())),
                     IdentifierType::ByteString);
   }
   return NodeId();

@@ -3,7 +3,12 @@
 
 namespace open62541 {
 
-class ViewDescription {};
+class ViewDescription {
+
+public:
+  bool operator==(ViewDescription const &rhs) const {return true;}
+  bool operator!=(ViewDescription const &rhs) const {return false;}
+};
 
 }  // namespace open62541
 

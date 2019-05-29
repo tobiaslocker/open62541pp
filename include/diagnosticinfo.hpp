@@ -3,7 +3,12 @@
 
 namespace open62541 {
 
-class DiagnosticInfo {};
+class DiagnosticInfo {
+
+public:
+  bool operator==(DiagnosticInfo const &rhs) const {return true;}
+  bool operator!=(DiagnosticInfo const &rhs) const {return false;}
+};
 
 }  // namespace open62541
 

@@ -3,7 +3,12 @@
 
 namespace open62541 {
 
-class ResponseHeader {};
+class ResponseHeader {
+
+public:
+  bool operator==(ResponseHeader const &rhs) const {return true;}
+  bool operator!=(ResponseHeader const &rhs) const {return false;}
+};
 
 }  // namespace open62541
 

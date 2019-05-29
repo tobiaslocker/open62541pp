@@ -31,6 +31,9 @@ class BrowseResponse {
   ResponseHeader response_header() const;
   std::vector<BrowseResult> results() const;
   std::vector<DiagnosticInfo> diagnostic_infos() const;
+
+  bool operator==(BrowseResponse const &rhs) const;
+  bool operator!=(BrowseResponse const &rhs) const ;
 };
 
 }  // namespace open62541

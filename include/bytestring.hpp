@@ -1,13 +1,34 @@
 #ifndef OPEN6541_CPP_WRAPPER_BYTE_STRING_H
 #define OPEN6541_CPP_WRAPPER_BYTE_STRING_H
 
+// STL
 #include <string>
+#include <memory>
+
+#include "base64.hpp"
 
 namespace open62541 {
 
 class ByteString {
+  class impl;
+  std::unique_ptr<impl> d_ptr;
+
  public:
-  static ByteString from_base_64(std::string const &data) {}
+  ByteString();
+  ~ByteString();
+
+  ByteString(ByteString &&) noexcept;
+  ByteString &operator=(ByteString &&) noexcept;
+  ByteString(ByteString const &);
+  ByteString &operator=(ByteString const &);
+
+  ByteString(std::string const &data);
+
+  std::string str() const;
+
+  bool operator==(ByteString const &rhs) const {return true;}
+  bool operator!=(ByteString const &rhs) const {return false;}
+;
 };
 
 }  // namespace open62541
