@@ -17,7 +17,7 @@ class Identifier::impl {
 
   impl(Guid const &guid) : m_guid{guid} {}
 
-  impl(ByteString const &byte_string) : m_byte_string{byte_string} {}
+  //  impl(ByteString const &byte_string) : m_byte_string{byte_string} {}
 
   std::string string() const { return m_string; }
 
@@ -58,8 +58,8 @@ Identifier::Identifier(std::string const &string)
 Identifier::Identifier(Guid const &guid)
     : d_ptr{std::make_unique<impl>(guid)} {}
 
-Identifier::Identifier(ByteString const &byte_string)
-    : d_ptr{std::make_unique<impl>(byte_string)} {}
+// Identifier::Identifier(ByteString const &byte_string)
+//    : d_ptr{std::make_unique<impl>(byte_string)} {}
 
 std::string Identifier::string() const { return d_ptr->string(); }
 

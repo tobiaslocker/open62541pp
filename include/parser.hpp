@@ -39,23 +39,14 @@ inline ApplicationDescription from_open62541(
                                 discovery_urls};
 }
 
-// UserTokenPolicy::UserTokenPolicy(const UA_UserTokenPolicy &user_token_policy)
-//    : m_token_type{UserTokenType(user_token_policy.tokenType)} {
-//  m_policy_id.assign(
-//      user_token_policy.policyId.data,
-//      user_token_policy.policyId.data + user_token_policy.policyId.length);
-//  m_issued_token_type.assign(user_token_policy.issuedTokenType.data,
-//                             user_token_policy.issuedTokenType.data +
-//                                 user_token_policy.issuedTokenType.length);
-//  m_issuer_endpoint_url.assign(user_token_policy.issuerEndpointUrl.data,
-//                               user_token_policy.issuerEndpointUrl.data +
-//                                   user_token_policy.issuerEndpointUrl.length);
-//  m_security_policy_uri.assign(user_token_policy.securityPolicyUri.data,
-//                               user_token_policy.securityPolicyUri.data +
-//                                   user_token_policy.securityPolicyUri.length);
-//}
-
-inline UserTokenPolicy from_open62541(UA_UserTokenPolicy const &up) {}
+inline UserTokenPolicy from_open62541(UA_UserTokenPolicy const &up) {
+  return UserTokenPolicy{
+      from_open62541(up.policyId),
+      UserTokenType{up.tokenType},
+      from_open62541(up.issuedTokenType),
+      from_open62541(up.issuerEndpointUrl),
+      from_open62541(up.securityPolicyUri)};
+}
 
 inline EndpointDescription from_open62541(UA_EndpointDescription const &ed) {
   std::vector<UserTokenPolicy> user_identity_tokens;
@@ -126,7 +117,25 @@ inline ReferenceDescription from_open62541(UA_ReferenceDescription const &rd) {
   };
 }
 
-inline UA_NodeId to_open62541(NodeId const &ni) {}
+inline UA_NodeId to_open62541(NodeId const &ni) {
+    UA_NodeId id;
+    id.identifierType = static_cast<UA_NodeIdType>(ni.identifier_type());
+    switch (ni.identifier_type()) {
+    case IdentifierType::Guid:
+        id.identifierType = UA_NODEIDTYPE_GUID;
+        break;
+    case IdentifierType::String:
+        id.identifierType = UA_NODEIDTYPE_STRING;
+        break;
+    case IdentifierType::Numeric:
+        id.identifierType = UA_NODEIDTYPE_NUMERIC;
+        break;
+    case IdentifierType::ByteString:
+        id.identifierType = UA_NODEIDTYPE_BYTESTRING;
+        break;
+    }
+    return id;
+}
 
 inline UA_ExpandedNodeId to_open62541(ExpandedNodeId const &ni) {}
 

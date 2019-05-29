@@ -23,7 +23,7 @@ class Identifier {
   explicit Identifier(uint32_t const &numeric);
   explicit Identifier(std::string const &string);
   explicit Identifier(Guid const &guid);
-  explicit Identifier(ByteString const &byte_string);
+  //  explicit Identifier(ByteString const &byte_string);
 
   std::string string() const;
   std::string byte_string() const;

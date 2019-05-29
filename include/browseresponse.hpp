@@ -33,7 +33,7 @@ class BrowseResponse {
   std::vector<DiagnosticInfo> diagnostic_infos() const;
 
   bool operator==(BrowseResponse const &rhs) const;
-  bool operator!=(BrowseResponse const &rhs) const ;
+  bool operator!=(BrowseResponse const &rhs) const;
 };
 
 }  // namespace open62541

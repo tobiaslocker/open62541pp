@@ -4,10 +4,9 @@
 namespace open62541 {
 
 class RequestHeader {
-
-public:
-  bool operator==(RequestHeader const &rhs) const {return true;}
-  bool operator!=(RequestHeader const &rhs) const {return false;}
+ public:
+  bool operator==(RequestHeader const &rhs) const { return true; }
+  bool operator!=(RequestHeader const &rhs) const { return false; }
 };
 
 }  // namespace open62541

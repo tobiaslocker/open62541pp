@@ -4,10 +4,9 @@
 namespace open62541 {
 
 class ViewDescription {
-
-public:
-  bool operator==(ViewDescription const &rhs) const {return true;}
-  bool operator!=(ViewDescription const &rhs) const {return false;}
+ public:
+  bool operator==(ViewDescription const &rhs) const { return true; }
+  bool operator!=(ViewDescription const &rhs) const { return false; }
 };
 
 }  // namespace open62541
