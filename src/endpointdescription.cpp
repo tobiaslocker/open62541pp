@@ -89,6 +89,11 @@ EndpointDescription::EndpointDescription(
 
 EndpointDescription::EndpointDescription() {}
 
+EndpointDescription::~EndpointDescription() = default;
+
+EndpointDescription::EndpointDescription(EndpointDescription &&) noexcept =
+    default;
+
 std::string EndpointDescription::endpoint_url() const {
   return d_ptr->endpoint_url();
 }

@@ -23,7 +23,7 @@ class UserTokenPolicy {
   UserTokenPolicy &operator=(UserTokenPolicy const &);
 
   UserTokenPolicy(std::string const &policy_id,
-                  UserTokenType m_token_type,
+                  UserTokenType token_type,
                   std::string const &issued_token_type,
                   std::string const &issuer_endpoint_url,
                   std::string const &security_policy_uri);

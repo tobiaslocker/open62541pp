@@ -40,12 +40,11 @@ inline ApplicationDescription from_open62541(
 }
 
 inline UserTokenPolicy from_open62541(UA_UserTokenPolicy const &up) {
-  return UserTokenPolicy{
-      from_open62541(up.policyId),
-      UserTokenType{up.tokenType},
-      from_open62541(up.issuedTokenType),
-      from_open62541(up.issuerEndpointUrl),
-      from_open62541(up.securityPolicyUri)};
+  return UserTokenPolicy{from_open62541(up.policyId),
+                         UserTokenType{up.tokenType},
+                         from_open62541(up.issuedTokenType),
+                         from_open62541(up.issuerEndpointUrl),
+                         from_open62541(up.securityPolicyUri)};
 }
 
 inline EndpointDescription from_open62541(UA_EndpointDescription const &ed) {
@@ -118,23 +117,23 @@ inline ReferenceDescription from_open62541(UA_ReferenceDescription const &rd) {
 }
 
 inline UA_NodeId to_open62541(NodeId const &ni) {
-    UA_NodeId id;
-    id.identifierType = static_cast<UA_NodeIdType>(ni.identifier_type());
-    switch (ni.identifier_type()) {
+  UA_NodeId id;
+  id.identifierType = static_cast<UA_NodeIdType>(ni.identifier_type());
+  switch (ni.identifier_type()) {
     case IdentifierType::Guid:
-        id.identifierType = UA_NODEIDTYPE_GUID;
-        break;
+      id.identifierType = UA_NODEIDTYPE_GUID;
+      break;
     case IdentifierType::String:
-        id.identifierType = UA_NODEIDTYPE_STRING;
-        break;
+      id.identifierType = UA_NODEIDTYPE_STRING;
+      break;
     case IdentifierType::Numeric:
-        id.identifierType = UA_NODEIDTYPE_NUMERIC;
-        break;
+      id.identifierType = UA_NODEIDTYPE_NUMERIC;
+      break;
     case IdentifierType::ByteString:
-        id.identifierType = UA_NODEIDTYPE_BYTESTRING;
-        break;
-    }
-    return id;
+      id.identifierType = UA_NODEIDTYPE_BYTESTRING;
+      break;
+  }
+  return id;
 }
 
 inline UA_ExpandedNodeId to_open62541(ExpandedNodeId const &ni) {}

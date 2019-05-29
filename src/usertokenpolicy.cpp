@@ -12,6 +12,17 @@ class UserTokenPolicy::impl {
  public:
   impl() {}
 
+  impl(std::string policy_id,
+       UserTokenType token_type,
+       std::string issued_token_type,
+       std::string issuer_endpoint_url,
+       std::string security_policy_uri)
+      : m_policy_id{policy_id},
+        m_token_type{token_type},
+        m_issued_token_type{issued_token_type},
+        m_issuer_endpoint_url{issuer_endpoint_url},
+        m_security_policy_uri{security_policy_uri} {}
+
   std::string policy_id() const { return m_policy_id; }
 
   UserTokenType token_type() const { return m_token_type; }
@@ -39,6 +50,8 @@ class UserTokenPolicy::impl {
 
 UserTokenPolicy::UserTokenPolicy() : d_ptr{std::make_unique<impl>()} {}
 
+UserTokenPolicy::UserTokenPolicy(UserTokenPolicy &&) noexcept = default;
+
 UserTokenPolicy::~UserTokenPolicy() = default;
 
 UserTokenPolicy::UserTokenPolicy(UserTokenPolicy const &op)
@@ -50,6 +63,17 @@ UserTokenPolicy &UserTokenPolicy::operator=(UserTokenPolicy const &op) {
   }
   return *this;
 }
+
+UserTokenPolicy::UserTokenPolicy(std::string const &policy_id,
+                                 UserTokenType token_type,
+                                 std::string const &issued_token_type,
+                                 std::string const &issuer_endpoint_url,
+                                 std::string const &security_policy_uri)
+    : d_ptr{std::make_unique<impl>(policy_id,
+                                   token_type,
+                                   issued_token_type,
+                                   issuer_endpoint_url,
+                                   security_policy_uri)} {}
 
 std::string UserTokenPolicy::policy_id() const { return d_ptr->policy_id(); }
 

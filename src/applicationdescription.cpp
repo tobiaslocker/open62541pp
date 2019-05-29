@@ -82,6 +82,8 @@ ApplicationDescription::ApplicationDescription(
 ApplicationDescription::ApplicationDescription()
     : d_ptr{std::make_unique<impl>()} {}
 
+ApplicationDescription::~ApplicationDescription() = default;
+
 ApplicationDescription::ApplicationDescription(ApplicationDescription const &op)
     : d_ptr(new impl(*op.d_ptr)) {}
 
