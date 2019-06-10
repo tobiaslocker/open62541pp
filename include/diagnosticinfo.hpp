@@ -34,7 +34,8 @@ class DiagnosticInfo {
                  uint32_t localized_text,
                  uint32_t locale,
                  std::string additional_info,
-                 StatusCode inner_status_code);
+                 StatusCode inner_status_code,
+                 std::shared_ptr<DiagnosticInfo> inner_diagnostic_info);
 
   bool has_symbolic_id() const;
   bool has_namespace_uri() const;
@@ -49,7 +50,7 @@ class DiagnosticInfo {
   uint32_t locale() const;
   std::string additional_info() const;
   StatusCode inner_status_code() const;
-  //    class DiagnosticInfo *innerDiagnosticInfo;
+  std::shared_ptr<DiagnosticInfo> inner_diagnostic_info() const;
 
  public:
   bool operator==(DiagnosticInfo const &rhs) const;
