@@ -39,6 +39,7 @@ set(
     src/browsedescription.cpp
     src/browseresult.cpp
     src/browseresponse.cpp
+    src/diagnosticinfo.cpp
     src/log.cpp
 )
 
