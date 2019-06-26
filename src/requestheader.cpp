@@ -14,13 +14,13 @@ class RequestHeader::impl {
  public:
   impl() {}
 
-  impl(NodeId authentication_token,
-       std::string timestamp,
-       uint32_t request_handle,
-       uint32_t return_diagnostics,
-       std::string audit_entry_id,
-       uint32_t timeout_hint,
-       ExtensionObject additional_header)
+  impl(NodeId const &authentication_token,
+       std::string const &timestamp,
+       uint32_t const &request_handle,
+       uint32_t const &return_diagnostics,
+       std::string const &audit_entry_id,
+       uint32_t const &timeout_hint,
+       ExtensionObject const &additional_header)
       : m_authentication_token{authentication_token},
         m_timestamp{timestamp},
         m_request_handle{request_handle},
@@ -64,8 +64,6 @@ class RequestHeader::impl {
   }
 };
 
-RequestHeader::RequestHeader() : d_ptr{std::make_unique<impl>()} {}
-
 RequestHeader::RequestHeader(RequestHeader &&) noexcept = default;
 
 RequestHeader::~RequestHeader() = default;
@@ -79,6 +77,23 @@ RequestHeader &RequestHeader::operator=(RequestHeader const &op) {
   }
   return *this;
 }
+
+RequestHeader::RequestHeader() : d_ptr{std::make_unique<impl>()} {}
+
+RequestHeader::RequestHeader(NodeId const &authentication_token,
+                             std::string const &timestamp,
+                             uint32_t const &request_handle,
+                             uint32_t const &return_diagnostics,
+                             std::string const &audit_entry_id,
+                             uint32_t const &timeout_hint,
+                             ExtensionObject const &additional_header)
+    : d_ptr{std::make_unique<impl>(authentication_token,
+                                   timestamp,
+                                   request_handle,
+                                   return_diagnostics,
+                                   audit_entry_id,
+                                   timeout_hint,
+                                   additional_header)} {}
 
 NodeId RequestHeader::authentication_token() const {
   return d_ptr->authentication_token();

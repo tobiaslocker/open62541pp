@@ -5,6 +5,8 @@ namespace open62541 {
 
 class ExtensionObject {
  public:
+  bool operator==(ExtensionObject const &rhs) const { return true; }
+  bool operator!=(ExtensionObject const &rhs) const { return false; }
 };
 
 }  // namespace open62541

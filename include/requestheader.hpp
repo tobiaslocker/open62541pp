@@ -22,13 +22,13 @@ class RequestHeader {
   RequestHeader(RequestHeader const &);
   RequestHeader &operator=(RequestHeader const &);
 
-  RequestHeader(NodeId authentication_token,
-                std::string timestamp,
-                uint32_t request_handle,
-                uint32_t return_diagnostics,
-                std::string audit_entry_id,
-                uint32_t timeout_hint,
-                ExtensionObject additional_header);
+  RequestHeader(NodeId const &authentication_token,
+                std::string const &timestamp,
+                uint32_t const &request_handle,
+                uint32_t const &return_diagnostics,
+                std::string const &audit_entry_id,
+                uint32_t const &timeout_hint,
+                ExtensionObject const &additional_header);
 
   NodeId authentication_token() const;
   std::string timestamp() const;
