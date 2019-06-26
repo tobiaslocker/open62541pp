@@ -40,6 +40,7 @@ set(
     src/browseresult.cpp
     src/browseresponse.cpp
     src/diagnosticinfo.cpp
+    src/requestheader.cpp
     src/log.cpp
 )
 
