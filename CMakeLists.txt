@@ -41,6 +41,7 @@ set(
     src/browseresponse.cpp
     src/diagnosticinfo.cpp
     src/requestheader.cpp
+    src/responseheader.cpp
     src/log.cpp
 )
 
