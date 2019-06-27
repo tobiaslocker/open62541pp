@@ -4,6 +4,7 @@
 // STL
 #include <memory>
 
+#include "datetime.hpp"
 #include "extensionobject.hpp"
 #include "nodeid.hpp"
 
@@ -23,7 +24,7 @@ class RequestHeader {
   RequestHeader &operator=(RequestHeader const &);
 
   RequestHeader(NodeId const &authentication_token,
-                std::string const &timestamp,
+                DateTime const &timestamp,
                 uint32_t const &request_handle,
                 uint32_t const &return_diagnostics,
                 std::string const &audit_entry_id,
@@ -31,7 +32,7 @@ class RequestHeader {
                 ExtensionObject const &additional_header);
 
   NodeId authentication_token() const;
-  std::string timestamp() const;
+  DateTime timestamp() const;
   uint32_t request_handle() const;
   uint32_t return_diagnostics() const;
   std::string audit_entry_id() const;

@@ -4,7 +4,7 @@ namespace open62541 {
 
 class RequestHeader::impl {
   NodeId m_authentication_token;
-  std::string m_timestamp;
+  DateTime m_timestamp;
   uint32_t m_request_handle;
   uint32_t m_return_diagnostics;
   std::string m_audit_entry_id;
@@ -15,7 +15,7 @@ class RequestHeader::impl {
   impl() {}
 
   impl(NodeId const &authentication_token,
-       std::string const &timestamp,
+       DateTime const &timestamp,
        uint32_t const &request_handle,
        uint32_t const &return_diagnostics,
        std::string const &audit_entry_id,
@@ -31,7 +31,7 @@ class RequestHeader::impl {
 
   NodeId authentication_token() const { return m_authentication_token; }
 
-  std::string timestamp() const { return m_timestamp; }
+  DateTime timestamp() const { return m_timestamp; }
 
   uint32_t request_handle() const { return m_request_handle; }
 
@@ -81,7 +81,7 @@ RequestHeader &RequestHeader::operator=(RequestHeader const &op) {
 RequestHeader::RequestHeader() : d_ptr{std::make_unique<impl>()} {}
 
 RequestHeader::RequestHeader(NodeId const &authentication_token,
-                             std::string const &timestamp,
+                             DateTime const &timestamp,
                              uint32_t const &request_handle,
                              uint32_t const &return_diagnostics,
                              std::string const &audit_entry_id,
@@ -99,7 +99,7 @@ NodeId RequestHeader::authentication_token() const {
   return d_ptr->authentication_token();
 }
 
-std::string RequestHeader::timestamp() const { return d_ptr->timestamp(); }
+DateTime RequestHeader::timestamp() const { return d_ptr->timestamp(); }
 
 uint32_t RequestHeader::request_handle() const {
   return d_ptr->request_handle();
