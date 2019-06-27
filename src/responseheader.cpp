@@ -3,57 +3,51 @@
 namespace open62541 {
 
 class ResponseHeader::impl {
-  std::string m_timestamp;
+  DateTime m_timestamp;
   uint32_t m_request_handle;
   StatusCode m_service_result;
+  std::vector<std::string> m_string_table;
   DiagnosticInfo m_service_diagnostics;
   ExtensionObject m_additional_header;
 
  public:
   impl() {}
 
-  impl(std::string timestamp,
+  impl(DateTime timestamp,
        uint32_t request_handle,
        StatusCode service_result,
+       std::vector<std::string> string_table,
        DiagnosticInfo service_diagnostics,
        ExtensionObject additional_header)
       : m_timestamp{timestamp},
         m_request_handle{request_handle},
         m_service_result{service_result},
+        m_string_table{string_table},
         m_service_diagnostics{service_diagnostics},
         m_additional_header{additional_header} {}
 
-  std::string timestamp() const { return m_timestamp; }
+  DateTime timestamp() const { return m_timestamp; }
 
   uint32_t request_handle() const { return m_request_handle; }
 
-  uint32_t return_diagnostics() const { return m_return_diagnostics; }
+  StatusCode service_result() const { return m_service_result; }
 
-  std::string audit_entry_id() const { return m_audit_entry_id; }
+  DiagnosticInfo service_diagnostics() const { return m_service_diagnostics; }
 
-  uint32_t timeout_hint() const { return m_timeout_hint; }
+  std::vector<std::string> string_table() const { return m_string_table; }
 
   ExtensionObject additional_header() const { return m_additional_header; }
 
   bool operator==(impl const &rhs) const {
-    return authentication_token() == rhs.authentication_token() &&
-           timestamp() == rhs.timestamp() &&
+    return timestamp() == rhs.timestamp() &&
            request_handle() == rhs.request_handle() &&
-           return_diagnostics() == rhs.return_diagnostics() &&
-           audit_entry_id() == rhs.audit_entry_id() &&
-           timeout_hint() == rhs.timeout_hint() &&
+           service_result() == rhs.service_result() &&
+           service_diagnostics() == rhs.service_diagnostics() &&
+           string_table() == rhs.string_table() &&
            additional_header() == rhs.additional_header();
   }
 
-  bool operator!=(impl const &rhs) const {
-    return authentication_token() != rhs.authentication_token() &&
-           timestamp() != rhs.timestamp() &&
-           request_handle() != rhs.request_handle() &&
-           return_diagnostics() != rhs.return_diagnostics() &&
-           audit_entry_id() != rhs.audit_entry_id() &&
-           timeout_hint() != rhs.timeout_hint() &&
-           additional_header() != rhs.additional_header();
-  }
+  bool operator!=(impl const &rhs) const {}
 };
 
 ResponseHeader::ResponseHeader(ResponseHeader &&) noexcept = default;
