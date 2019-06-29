@@ -13,12 +13,12 @@ class ResponseHeader::impl {
  public:
   impl() {}
 
-  impl(DateTime timestamp,
-       uint32_t request_handle,
-       StatusCode service_result,
-       std::vector<std::string> string_table,
-       DiagnosticInfo service_diagnostics,
-       ExtensionObject additional_header)
+  impl(DateTime const &timestamp,
+       uint32_t const &request_handle,
+       StatusCode const &service_result,
+       DiagnosticInfo const &service_diagnostics,
+       std::vector<std::string> const &string_table,
+       ExtensionObject const &additional_header)
       : m_timestamp{timestamp},
         m_request_handle{request_handle},
         m_service_result{service_result},
@@ -73,40 +73,36 @@ ResponseHeader &ResponseHeader::operator=(ResponseHeader const &op) {
 
 ResponseHeader::ResponseHeader() : d_ptr{std::make_unique<impl>()} {}
 
-ResponseHeader::ResponseHeader(NodeId const &authentication_token,
-                               std::string const &timestamp,
+ResponseHeader::ResponseHeader(DateTime const &timestamp,
                                uint32_t const &request_handle,
-                               uint32_t const &return_diagnostics,
-                               std::string const &audit_entry_id,
-                               uint32_t const &timeout_hint,
+                               StatusCode const &service_result,
+                               DiagnosticInfo const &service_diagnostics,
+                               std::vector<std::string> const &string_table,
                                ExtensionObject const &additional_header)
-    : d_ptr{std::make_unique<impl>(authentication_token,
-                                   timestamp,
+    : d_ptr{std::make_unique<impl>(timestamp,
                                    request_handle,
-                                   return_diagnostics,
-                                   audit_entry_id,
-                                   timeout_hint,
+                                   service_result,
+                                   service_diagnostics,
+                                   string_table,
                                    additional_header)} {}
 
-NodeId ResponseHeader::authentication_token() const {
-  return d_ptr->authentication_token();
-}
-
-std::string ResponseHeader::timestamp() const { return d_ptr->timestamp(); }
+DateTime ResponseHeader::timestamp() const { return d_ptr->timestamp(); }
 
 uint32_t ResponseHeader::request_handle() const {
   return d_ptr->request_handle();
 }
 
-uint32_t ResponseHeader::return_diagnostics() const {
-  return d_ptr->return_diagnostics();
+StatusCode ResponseHeader::service_result() const {
+  return d_ptr->service_result();
 }
 
-std::string ResponseHeader::audit_entry_id() const {
-  return d_ptr->audit_entry_id();
+DiagnosticInfo ResponseHeader::service_diagnostics() const {
+  return d_ptr->service_diagnostics();
 }
 
-uint32_t ResponseHeader::timeout_hint() const { return d_ptr->timeout_hint(); }
+std::vector<std::string> ResponseHeader::string_table() const {
+  return d_ptr->string_table();
+}
 
 ExtensionObject ResponseHeader::additional_header() const {
   return d_ptr->additional_header();

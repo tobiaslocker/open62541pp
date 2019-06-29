@@ -22,10 +22,8 @@ class ViewDescription::impl {
   }
 
   bool operator!=(impl const &rhs) const {
-
     return view_id() != rhs.view_id() && timestamp() != rhs.timestamp() &&
            view_version() != rhs.view_version();
-
   }
 };
 
