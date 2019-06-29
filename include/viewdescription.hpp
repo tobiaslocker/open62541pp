@@ -4,8 +4,8 @@
 // STL
 #include <memory>
 
-#include "nodeid.hpp"
 #include "datetime.hpp"
+#include "nodeid.hpp"
 
 namespace open62541 {
 
@@ -25,6 +25,10 @@ class ViewDescription {
   ViewDescription(NodeId const &view_id,
                   DateTime const &timestamp,
                   uint32_t view_version);
+
+  NodeId view_id() const;
+  std::string timestamp() const;
+  uint32_t view_version() const;
 
   bool operator==(ViewDescription const &rhs) const;
   bool operator!=(ViewDescription const &rhs) const;
