@@ -47,7 +47,14 @@ class ResponseHeader::impl {
            additional_header() == rhs.additional_header();
   }
 
-  bool operator!=(impl const &rhs) const {}
+  bool operator!=(impl const &rhs) const {
+    return timestamp() != rhs.timestamp() &&
+           request_handle() != rhs.request_handle() &&
+           service_result() != rhs.service_result() &&
+           service_diagnostics() != rhs.service_diagnostics() &&
+           string_table() != rhs.string_table() &&
+           additional_header() != rhs.additional_header();
+  }
 };
 
 ResponseHeader::ResponseHeader(ResponseHeader &&) noexcept = default;
