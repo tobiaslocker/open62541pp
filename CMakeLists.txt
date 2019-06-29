@@ -42,6 +42,7 @@ set(
     src/diagnosticinfo.cpp
     src/requestheader.cpp
     src/responseheader.cpp
+    src/viewdescription.cpp
     src/log.cpp
 )
 
