@@ -20,7 +20,7 @@ class DateTime {
   DateTime(DateTime const &);
   DateTime &operator=(DateTime const &);
 
-  DateTime(int64_t number_of_100_nanoseconds_since_jan_1_1601);
+  DateTime(int64_t ldap_timestamp);
   DateTime(uint16_t nano_sec,
            uint16_t micro_sec,
            uint16_t milli_sec,
@@ -40,7 +40,7 @@ class DateTime {
   uint16_t day() const;
   uint16_t month() const;
   uint16_t year() const;
-  int64_t number_of_100_nanoseconds_since_jan_1_1601() const;
+  int64_t ldap_timestamp() const;
 
   bool operator==(DateTime const &rhs) const;
   bool operator!=(DateTime const &rhs) const;
