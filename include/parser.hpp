@@ -4,6 +4,7 @@
 #include "open62541.h"
 
 #include "applicationdescription.hpp"
+#include "datetime.hpp"
 #include "endpointdescription.hpp"
 #include "referencedescription.hpp"
 
@@ -115,6 +116,8 @@ inline ReferenceDescription from_open62541(UA_ReferenceDescription const &rd) {
 
   };
 }
+
+inline void from_open62541(UA_DateTime const &d) {}
 
 inline UA_NodeId to_open62541(NodeId const &ni) {
   UA_NodeId id;

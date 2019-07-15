@@ -6,6 +6,7 @@
 #include "open62541.h"
 
 #include "applicationdescription.hpp"
+#include "parser.hpp"
 
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdisabled-macro-expansion"
@@ -15,32 +16,32 @@ using namespace open62541;
 using namespace nlohmann;
 
 BOOST_AUTO_TEST_CASE(test_application_description) {
-  //  const char *PRODUCT_URI = "http://open62541.org";
-  //  const char *APPLICATION_NAME = "open62541-based OPC UA Application";
-  //  const char *APPLICATION_URI = "urn:unconfigured:application";
-  //  const char *DISCOVERY_PROFILE_URI = "urn:unconfigured:profile:uri";
-  //  const char *GATEWAY_SERVER_URI = "urn:unconfigured:gateway:server:uri";
-  //  const char *DISCOVERY_URL_1 = "opc.tcp://discovery-url-1:0000/Test";
-  //  const char *DISCOVERY_URL_2 = "opc.tcp://discovery-url-2:0000/Test";
-  //  const char *DISCOVERY_URL_3 = "opc.tcp://discovery-url-3:0000/Test";
+  const char *PRODUCT_URI = "http://open62541.org";
+  const char *APPLICATION_NAME = "open62541-based OPC UA Application";
+  const char *APPLICATION_URI = "urn:unconfigured:application";
+  const char *DISCOVERY_PROFILE_URI = "urn:unconfigured:profile:uri";
+  const char *GATEWAY_SERVER_URI = "urn:unconfigured:gateway:server:uri";
+  const char *DISCOVERY_URL_1 = "opc.tcp://discovery-url-1:0000/Test";
+  const char *DISCOVERY_URL_2 = "opc.tcp://discovery-url-2:0000/Test";
+  const char *DISCOVERY_URL_3 = "opc.tcp://discovery-url-3:0000/Test";
 
-  //  UA_ApplicationDescription ua_desc;
-  //  ua_desc.productUri = UA_STRING_ALLOC(PRODUCT_URI);
-  //  ua_desc.applicationName = UA_LOCALIZEDTEXT_ALLOC("en", APPLICATION_NAME);
-  //  ua_desc.applicationUri = UA_STRING_ALLOC(APPLICATION_URI);
-  //  ua_desc.applicationType = UA_APPLICATIONTYPE_SERVER;
-  //  ua_desc.gatewayServerUri = UA_STRING_ALLOC(GATEWAY_SERVER_URI);
-  //  ua_desc.discoveryProfileUri = UA_STRING_ALLOC(DISCOVERY_PROFILE_URI);
+  UA_ApplicationDescription ua_desc;
+  ua_desc.productUri = UA_STRING_ALLOC(PRODUCT_URI);
+  ua_desc.applicationName = UA_LOCALIZEDTEXT_ALLOC("en", APPLICATION_NAME);
+  ua_desc.applicationUri = UA_STRING_ALLOC(APPLICATION_URI);
+  ua_desc.applicationType = UA_APPLICATIONTYPE_SERVER;
+  ua_desc.gatewayServerUri = UA_STRING_ALLOC(GATEWAY_SERVER_URI);
+  ua_desc.discoveryProfileUri = UA_STRING_ALLOC(DISCOVERY_PROFILE_URI);
 
-  //  UA_String arr[3];
-  //  arr[0] = UA_STRING_ALLOC(DISCOVERY_URL_1);
-  //  arr[1] = UA_STRING_ALLOC(DISCOVERY_URL_2);
-  //  arr[2] = UA_STRING_ALLOC(DISCOVERY_URL_3);
+  UA_String arr[3];
+  arr[0] = UA_STRING_ALLOC(DISCOVERY_URL_1);
+  arr[1] = UA_STRING_ALLOC(DISCOVERY_URL_2);
+  arr[2] = UA_STRING_ALLOC(DISCOVERY_URL_3);
 
-  //  ua_desc.discoveryUrlsSize = 3;
-  //  ua_desc.discoveryUrls = arr;
+  ua_desc.discoveryUrlsSize = 3;
+  ua_desc.discoveryUrls = arr;
 
-  //  auto desc = ApplicationDescription(ua_desc);
+  auto desc = parser::from_open62541(ua_desc);
   //  auto product_uri = desc.product_uri();
   //  auto application_name_text = desc.application_name().text();
   //  auto application_name_locale = desc.application_name().locale();

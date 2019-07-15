@@ -4,15 +4,22 @@ namespace open62541 {
 
 class ViewDescription::impl {
   NodeId m_view_id;
-  std::string m_timestamp;
+  DateTime m_timestamp;
   uint32_t m_view_version;
 
  public:
   impl() {}
 
+  impl(NodeId const &view_id,
+       DateTime const &timestamp,
+       uint32_t const &view_version)
+      : m_view_id{view_id},
+        m_timestamp{timestamp},
+        m_view_version{view_version} {}
+
   NodeId view_id() const { return m_view_id; }
 
-  std::string timestamp() const { return m_timestamp; }
+  DateTime timestamp() const { return m_timestamp; }
 
   uint32_t view_version() const { return m_view_version; }
 
@@ -50,7 +57,7 @@ ViewDescription::ViewDescription(NodeId const &view_id,
 
 NodeId ViewDescription::view_id() const { return d_ptr->view_id(); }
 
-std::string ViewDescription::timestamp() const { return d_ptr->timestamp(); }
+DateTime ViewDescription::timestamp() const { return d_ptr->timestamp(); }
 
 uint32_t ViewDescription::view_version() const { return d_ptr->view_version(); }
 

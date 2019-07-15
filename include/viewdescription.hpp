@@ -27,7 +27,7 @@ class ViewDescription {
                   uint32_t view_version);
 
   NodeId view_id() const;
-  std::string timestamp() const;
+  DateTime timestamp() const;
   uint32_t view_version() const;
 
   bool operator==(ViewDescription const &rhs) const;
