@@ -117,7 +117,7 @@ inline ReferenceDescription from_open62541(UA_ReferenceDescription const &rd) {
   };
 }
 
-inline void from_open62541(UA_DateTime const &d) {}
+inline DateTime from_open62541(UA_DateTime const &d) { return DateTime(d); }
 
 inline UA_NodeId to_open62541(NodeId const &ni) {
   UA_NodeId id;
@@ -139,7 +139,13 @@ inline UA_NodeId to_open62541(NodeId const &ni) {
   return id;
 }
 
-inline UA_ExpandedNodeId to_open62541(ExpandedNodeId const &ni) {}
+inline UA_ExpandedNodeId to_open62541(ExpandedNodeId const &ni) {
+  UA_ExpandedNodeId id;
+  id.nodeId = to_open62541(ni.node_id());
+  id.serverIndex = ni.server_index();
+  id.namespaceUri = UA_STRING_ALLOC(ni.namespace_uri().c_str());
+  return id;
+}
 
 template <typename T>
 inline T from_json(json const &j);
