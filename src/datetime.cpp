@@ -1,21 +1,38 @@
 #include "datetime.hpp"
 
+#include <chrono>
+#include <ctime>
+
 namespace open62541 {
 
 class DateTime::impl {
-  uint16_t m_nano_sec;
-  uint16_t m_micro_sec;
-  uint16_t m_milli_sec;
-  uint16_t m_sec;
-  uint16_t m_min;
-  uint16_t m_hour;
-  uint16_t m_day;
-  uint16_t m_month;
-  uint16_t m_year;
-  int64_t m_ldap_timestamp;
+  uint16_t m_nano_sec = 0;
+  uint16_t m_micro_sec = 0;
+  uint16_t m_milli_sec = 0;
+  uint16_t m_sec = 0;
+  uint16_t m_min = 0;
+  uint16_t m_hour = 0;
+  uint16_t m_day = 0;
+  uint16_t m_month = 0;
+  uint16_t m_year = 0;
+  int64_t m_ldap_timestamp = 0;
 
  public:
   impl() {}
+
+  impl(int64_t ldap_timestamp) {
+    m_nano_sec = static_cast<uint16_t>((ldap_timestamp % 10) * 100);
+    m_micro_sec = static_cast<uint16_t>((ldap_timestamp % 10000) / 10);
+    m_milli_sec = static_cast<uint16_t>((ldap_timestamp % 10000000) / 10000);
+    time_t secs_since_epoch = ldap_timestamp / 10000000LL - 11644473600LL;
+    auto lt = localtime(&secs_since_epoch);
+    m_year = static_cast<uint16_t>(lt->tm_year + 1900);
+    m_month = static_cast<uint16_t>(lt->tm_mon + 1);
+    m_sec = static_cast<uint16_t>(lt->tm_sec);
+    m_min = static_cast<uint16_t>(lt->tm_min);
+    m_hour = static_cast<uint16_t>(lt->tm_hour);
+    m_day = static_cast<uint16_t>(lt->tm_mday);
+  }
 
   impl(uint16_t nano_sec,
        uint16_t micro_sec,
@@ -34,7 +51,19 @@ class DateTime::impl {
         m_hour{hour},
         m_day{day},
         m_month{month},
-        m_year{year} {}
+        m_year{year} {
+    time_t t;
+    struct tm tm;
+    tm.tm_year = year - 1900;
+    tm.tm_mon = month - 1;
+    tm.tm_mday = day;
+    tm.tm_hour = hour;
+    tm.tm_min = min;
+    tm.tm_sec = sec;
+    t = timegm(&tm);
+    m_ldap_timestamp = (t  + 11644473600LL) * 10000000LL;
+    m_ldap_timestamp += nano_sec / 100 + micro_sec * 10 + milli_sec * 10000;
+  }
 
   uint16_t nano_sec() const { return m_nano_sec; }
 
@@ -87,6 +116,9 @@ DateTime &DateTime::operator=(DateTime const &op) {
 }
 
 DateTime::DateTime() : d_ptr{std::make_unique<impl>()} {}
+
+DateTime::DateTime(int64_t ldap_timestamp)
+    : d_ptr{std::make_unique<impl>(ldap_timestamp)} {}
 
 DateTime::DateTime(uint16_t nano_sec,
                    uint16_t micro_sec,

@@ -119,8 +119,6 @@ inline ReferenceDescription from_open62541(UA_ReferenceDescription const &rd) {
 
 inline DateTime from_open62541(UA_DateTime const &d) { return DateTime(d); }
 
-
-
 inline UA_NodeId to_open62541(NodeId const &ni) {
   UA_NodeId id;
   id.identifierType = static_cast<UA_NodeIdType>(ni.identifier_type());
