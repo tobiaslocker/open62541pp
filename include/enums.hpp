@@ -169,6 +169,15 @@ enum class NodeClass : uint32_t {
   All = 255
 };
 
+enum class ClientState : uint32_t {
+    Disconnected = 0,
+    Connected = 1,
+    Securechannel = 2,
+    Session = 3,
+    SessionRenewed = 4
+};
+
+
 inline NodeClass operator|(NodeClass a, NodeClass b) {
   return static_cast<NodeClass>(static_cast<int>(a) | static_cast<int>(b));
 }

@@ -86,50 +86,18 @@ class Client::impl {
   std::vector<ReferenceDescription> get_child_references(
       ReferenceDescription const &reference,
       BrowseResultMask br_mask,
-      NodeClassMask node_class_mask,
+      NodeClass node_class,
       ReferenceTypeIdentifier id) {
     BOOST_LOG_CHANNEL_SEV(m_lg, m_channel, debug) << "Getting child references";
     std::vector<ReferenceDescription> children;
     std::shared_ptr<UA_BrowseDescription> browse_desc(new UA_BrowseDescription);
     UA_BrowseDescription_init(browse_desc.get());
-    browse_desc->nodeClassMask = node_class_mask;
+    browse_desc->nodeClassMask = static_cast<uint32_t>(node_class);
     auto browse_req =
         browse_request(browse_desc.get(),
                        parser::to_open62541(reference.node_id().node_id()),
                        static_cast<UA_BrowseResultMask>(br_mask),
                        UA_NODEID_NUMERIC(0, static_cast<uint32_t>(id)));
-    UA_BrowseResponse browse_response = browse(browse_req);
-    for (size_t i = 0; i < browse_response.resultsSize; ++i) {
-      for (size_t j = 0; j < browse_response.results[i].referencesSize; ++j) {
-        auto ep =
-            parser::from_open62541(browse_response.results[i].references[j]);
-        children.push_back(ep);
-      }
-    }
-    UA_BrowseResponse_deleteMembers(&browse_response);
-    return children;
-  }
-
-  std::vector<ReferenceDescription> browse_children(
-      NodeId const &node_id,
-      BrowseResultMask mask,
-      NodeClassMask node_class_mask,
-      ReferenceTypeIdentifier id) {
-    BOOST_LOG_CHANNEL_SEV(m_lg, m_channel, debug) << "Browsing children";
-    std::vector<ReferenceDescription> children;
-    UA_BrowseRequest browse_req;
-    UA_BrowseRequest_init(&browse_req);
-    std::shared_ptr<UA_BrowseDescription> browse_desc(new UA_BrowseDescription);
-    UA_BrowseDescription_init(browse_desc.get());
-    browse_desc->nodeClassMask = node_class_mask;
-    browse_req.requestedMaxReferencesPerNode = 0;
-    browse_req.nodesToBrowse = browse_desc.get();
-    browse_req.nodesToBrowseSize = 1;
-    browse_req.nodesToBrowse[0].nodeId = parser::to_open62541(node_id);
-    browse_req.nodesToBrowse[0].resultMask = static_cast<uint32_t>(mask);
-    browse_req.nodesToBrowse[0].referenceTypeId =
-        UA_NODEID_NUMERIC(0, static_cast<uint32_t>(id));
-    browse_req.nodesToBrowse[0].includeSubtypes = true;
     UA_BrowseResponse browse_response = browse(browse_req);
     for (size_t i = 0; i < browse_response.resultsSize; ++i) {
       for (size_t j = 0; j < browse_response.results[i].referencesSize; ++j) {
@@ -168,15 +136,19 @@ void Client::connect(EndpointDescription const &endpoint) {
 }
 
 LocalizedText Client::read_display_name_attribute(NodeId const &node_id) {
-  return d_ptr->read_display_name_attribute(node_id);
+    return d_ptr->read_display_name_attribute(node_id);
 }
 
-std::vector<ReferenceDescription> Client::get_child_references(
-    ReferenceDescription const &reference,
-    BrowseResultMask br_mask,
-    NodeClassMask nc_mask,
-    ReferenceTypeIdentifier id) {
-  return d_ptr->get_child_references(reference, br_mask, nc_mask, id);
+void Client::on_state_changed(ClientState state)
+{
+
+}
+
+std::vector<ReferenceDescription> Client::get_child_references(ReferenceDescription const &reference,
+    BrowseResultMask browse_result_mask,
+    NodeClass node_class,
+    ReferenceTypeIdentifier identifier) {
+  return d_ptr->get_child_references(reference, browse_result_mask, node_class, identifier);
 }
 
 Client::~Client() = default;
