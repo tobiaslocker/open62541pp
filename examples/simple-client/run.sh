@@ -9,4 +9,4 @@ else
     LEVEL=$1
 fi
 echo $LEVEL
-LOG=${LEVEL} ./test-lib
+LOG=${LEVEL} ./example-client

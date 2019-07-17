@@ -282,29 +282,6 @@ inline json to_json(ExpandedNodeId const &en) {
   return exp_node_id;
 }
 
-// json UserTokenPolicy::to_json() const {
-//  json policy;
-//  policy["PolicyId"] = m_policy_id;
-//  policy["IssuedTokenType"] = m_issued_token_type;
-//  policy["IssuerEndpointUrl"] = m_policy_id;
-//  policy["SecurityPolicyUri"] = m_policy_id;
-//  switch (m_token_type) {
-//    case UserTokenType::Anonymous:
-//      policy["UserTokenType"] = "Anonymous";
-//      break;
-//    case UserTokenType::UserName:
-//      policy["UserTokenType"] = "UserName";
-//      break;
-//    case UserTokenType::Certificate:
-//      policy["UserTokenType"] = "Certificate";
-//      break;
-//    case UserTokenType::IssuedToken:
-//      policy["UserTokenType"] = "IssuedToken";
-//      break;
-//  }
-//  return policy;
-//}
-
 }  // namespace parser
 
 }  // namespace open62541
