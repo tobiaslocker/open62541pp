@@ -37,8 +37,8 @@ enum class StatusCode : uint32_t {
 
 enum class IdentifierType : uint32_t { Numeric, String, Guid, ByteString };
 
-inline std::ostream &operator<<(std::ostream &out, IdentifierType const &i) {
-  switch (i) {
+inline std::ostream &operator<<(std::ostream &out, IdentifierType const &op) {
+  switch (op) {
     case IdentifierType::Numeric:
       out << "Numeric";
       break;
@@ -62,6 +62,24 @@ enum class MessageSecurityMode : uint32_t {
   SignAndEncrypt = 3
 };
 
+inline std::ostream &operator<<(std::ostream &out,
+                                MessageSecurityMode const &op) {
+  switch (op) {
+    case MessageSecurityMode::Invalid:
+      out << "Invalid";
+      break;
+    case MessageSecurityMode::None:
+      out << "None";
+      break;
+    case MessageSecurityMode::Sign:
+      out << "Sign";
+      break;
+    case MessageSecurityMode::SignAndEncrypt:
+      out << "SignAndEncrypt";
+      break;
+  }
+  return out;
+}
 enum class ApplicationType : uint32_t {
   Server = 0,
   Client = 1,
