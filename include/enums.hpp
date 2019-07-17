@@ -13,6 +13,24 @@ enum class UserTokenType : uint32_t {
   IssuedToken = 3
 };
 
+inline std::ostream &operator<<(std::ostream &out, UserTokenType const &op) {
+  switch (op) {
+    case UserTokenType::Anonymous:
+      out << "Anonymous";
+      break;
+    case UserTokenType::UserName:
+      out << "UserName";
+      break;
+    case UserTokenType::Certificate:
+      out << "Certificate";
+      break;
+    case UserTokenType::IssuedToken:
+      out << "IssuedToken";
+      break;
+  }
+  return out;
+}
+
 enum class StatusCode : uint32_t {
   // TODO
 };

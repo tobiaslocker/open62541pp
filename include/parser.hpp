@@ -230,7 +230,15 @@ inline json to_json(ApplicationDescription const &ad) {
   return app_description;
 }
 
-inline json to_json(UserTokenPolicy const &up) {}
+inline json to_json(UserTokenPolicy const &up) {
+  json policy;
+  policy["PolicyId"] = up.policy_id();
+  policy["IssuedTokenType"] = up.issued_token_type();
+  policy["IssuerEndpointUrl"] = up.issuer_endpoint_url();
+  policy["SecurityPolicyUri"] = up.security_policy_uri();
+  policy["UserTokenType"] = up.token_type();
+  return policy;
+}
 
 inline json to_json(EndpointDescription const &ed) {
   json endpoint_desc;

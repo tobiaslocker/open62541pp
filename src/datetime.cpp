@@ -61,7 +61,7 @@ class DateTime::impl {
     tm.tm_min = min;
     tm.tm_sec = sec;
     t = timegm(&tm);
-    m_ldap_timestamp = (t  + 11644473600LL) * 10000000LL;
+    m_ldap_timestamp = (t + 11644473600LL) * 10000000LL;
     m_ldap_timestamp += nano_sec / 100 + micro_sec * 10 + milli_sec * 10000;
   }
 
