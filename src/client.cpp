@@ -40,6 +40,8 @@ class Client::impl {
           << "Getting endpoints failed. Status code = " << status;
     }
     for (size_t i = 0; i < len; i++) {
+      BOOST_LOG_CHANNEL_SEV(m_lg, m_channel, debug)
+          << "Endpoint " << i;
       result.push_back(parser::from_open62541(endpoints[i]));
     }
     UA_Array_delete(endpoints, len, &UA_TYPES[UA_TYPES_ENDPOINTDESCRIPTION]);

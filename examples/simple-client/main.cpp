@@ -1,26 +1,28 @@
+#include <iomanip>
 #include <iostream>
 #include "client.hpp"
-//#include "base64.hpp"
 
 using namespace open62541;
+using namespace std;
 
 int main() {
-  std::string url = "opc.tcp://opcua.demo-this.com:51210/UA/SampleServer";
+  string url = "opc.tcp://opcua.demo-this.com:51210/UA/SampleServer";
 
   Client client;
   client.connect(url);
 
   auto endpoints = client.get_endpoints(url);
 
-  for (auto const &ep : endpoints) {
-    //      auto b = base64::to_base64(ep.server_certificate());
-
-    //      std::cout << b << '\n';
-
-    std::cout << "Endpoint url: " << ep.endpoint_url();
-    std::cout << "Security Mode" << ep.security_mode();
-    auto s = ep.server();
-    std::cout << "Server application uri: " << s.application_uri() << '\n';
-    std::cout << "Server product uri: " << s.product_uri() << '\n';
-  }
+//  for (auto const &ep : endpoints) {
+//    cout << left << setw(25) << "Endpoint url: " << ep.endpoint_url() << '\n';
+//    cout << left << setw(25) << "Security mode: " << ep.security_mode() << '\n';
+//    cout << left << setw(25)
+//         << "Security policy uri: " << ep.security_policy_uri() << '\n';
+//    auto s = ep.server();
+//    cout << left << setw(25)
+//         << "Server application uri: " << s.application_uri() << '\n';
+//    cout << left << setw(25) << "Server product uri: " << s.product_uri()
+//         << '\n';
+//    cout << '\n';
+//  }
 }
