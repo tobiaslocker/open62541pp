@@ -8,10 +8,18 @@ namespace open62541 {
 
 using namespace logger;
 
+
+class ClientEventHandler {
+public:
+    virtual void f() {}
+};
+
 class Client::impl {
   src::severity_channel_logger<severity_level, std::string> m_lg;
   std::string m_channel = "ua_client";
-  std::unique_ptr<UA_Client, decltype (&UA_Client_delete)> m_client;
+  std::unique_ptr<UA_Client, decltype(&UA_Client_delete)> m_client;
+
+  std::unique_ptr<ClientEventHandler> m_event_handler;
 
   UA_BrowseResponse browse(const UA_BrowseRequest &request) {
     UA_BrowseResponse browse_response =
@@ -21,9 +29,21 @@ class Client::impl {
 
  public:
   impl()
-      : m_client{std::unique_ptr<UA_Client, decltype (&UA_Client_delete)>(
-            UA_Client_new(UA_ClientConfig_default), UA_Client_delete)} {
+      : m_client{std::unique_ptr<UA_Client, decltype(&UA_Client_delete)>(
+            UA_Client_new(config()), UA_Client_delete)} {
     logger::init();
+  }
+
+  static void on_state_changed(UA_Client *client, UA_ClientState state) {
+
+
+
+  }
+
+  UA_ClientConfig config() {
+    auto c = UA_ClientConfig_default;
+    c.stateCallback = on_state_changed;
+    return c;
   }
 
   std::vector<EndpointDescription> get_endpoints(std::string const &url) {
@@ -40,8 +60,7 @@ class Client::impl {
           << "Getting endpoints failed. Status code = " << status;
     }
     for (size_t i = 0; i < len; i++) {
-      BOOST_LOG_CHANNEL_SEV(m_lg, m_channel, debug)
-          << "Endpoint " << i;
+      BOOST_LOG_CHANNEL_SEV(m_lg, m_channel, debug) << "Endpoint " << i;
       result.push_back(parser::from_open62541(endpoints[i]));
     }
     UA_Array_delete(endpoints, len, &UA_TYPES[UA_TYPES_ENDPOINTDESCRIPTION]);
@@ -137,19 +156,18 @@ void Client::connect(EndpointDescription const &endpoint) {
 }
 
 LocalizedText Client::read_display_name_attribute(NodeId const &node_id) {
-    return d_ptr->read_display_name_attribute(node_id);
+  return d_ptr->read_display_name_attribute(node_id);
 }
 
-void Client::on_state_changed(ClientState state)
-{
+void Client::on_state_changed(ClientState state) {}
 
-}
-
-std::vector<ReferenceDescription> Client::get_child_references(ReferenceDescription const &reference,
+std::vector<ReferenceDescription> Client::get_child_references(
+    ReferenceDescription const &reference,
     BrowseResultMask browse_result_mask,
     NodeClass node_class,
     ReferenceTypeIdentifier identifier) {
-  return d_ptr->get_child_references(reference, browse_result_mask, node_class, identifier);
+  return d_ptr->get_child_references(
+      reference, browse_result_mask, node_class, identifier);
 }
 
 Client::~Client() = default;

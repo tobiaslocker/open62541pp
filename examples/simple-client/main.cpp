@@ -13,16 +13,16 @@ int main() {
 
   auto endpoints = client.get_endpoints(url);
 
-//  for (auto const &ep : endpoints) {
-//    cout << left << setw(25) << "Endpoint url: " << ep.endpoint_url() << '\n';
-//    cout << left << setw(25) << "Security mode: " << ep.security_mode() << '\n';
-//    cout << left << setw(25)
-//         << "Security policy uri: " << ep.security_policy_uri() << '\n';
-//    auto s = ep.server();
-//    cout << left << setw(25)
-//         << "Server application uri: " << s.application_uri() << '\n';
-//    cout << left << setw(25) << "Server product uri: " << s.product_uri()
-//         << '\n';
-//    cout << '\n';
-//  }
+  //  for (auto const &ep : endpoints) {
+  //    cout << left << setw(25) << "Endpoint url: " << ep.endpoint_url() <<
+  //    '\n'; cout << left << setw(25) << "Security mode: " <<
+  //    ep.security_mode() << '\n'; cout << left << setw(25)
+  //         << "Security policy uri: " << ep.security_policy_uri() << '\n';
+  //    auto s = ep.server();
+  //    cout << left << setw(25)
+  //         << "Server application uri: " << s.application_uri() << '\n';
+  //    cout << left << setw(25) << "Server product uri: " << s.product_uri()
+  //         << '\n';
+  //    cout << '\n';
+  //  }
 }
