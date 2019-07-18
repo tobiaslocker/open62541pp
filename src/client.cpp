@@ -11,7 +11,7 @@ using namespace logger;
 class Client::impl {
   src::severity_channel_logger<severity_level, std::string> m_lg;
   std::string m_channel = "ua_client";
-  std::shared_ptr<UA_Client> m_client;
+  std::unique_ptr<UA_Client, decltype (&UA_Client_delete)> m_client;
 
   UA_BrowseResponse browse(const UA_BrowseRequest &request) {
     UA_BrowseResponse browse_response =
@@ -21,7 +21,7 @@ class Client::impl {
 
  public:
   impl()
-      : m_client{std::shared_ptr<UA_Client>(
+      : m_client{std::unique_ptr<UA_Client, decltype (&UA_Client_delete)>(
             UA_Client_new(UA_ClientConfig_default), UA_Client_delete)} {
     logger::init();
   }
@@ -83,6 +83,7 @@ class Client::impl {
     browse_req.nodesToBrowse[0].includeSubtypes = true;
     return browse_req;
   }
+
   std::vector<ReferenceDescription> get_child_references(
       ReferenceDescription const &reference,
       BrowseResultMask br_mask,
