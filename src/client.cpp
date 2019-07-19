@@ -8,27 +8,30 @@ namespace open62541 {
 
 using namespace logger;
 
+struct StateCallback {
+  static void callback(UA_Client *client, UA_ClientState state) {
+    return func(client, state);
+  }
+  static std::function<void(UA_Client *client, UA_ClientState state)> func;
+};
 
-//class ClientEventHandler {
-//public:
-//    virtual void f() {}
-//};
+std::function<void(UA_Client *client, UA_ClientState state)>
+    StateCallback::func;
 
 class Client::impl {
   src::severity_channel_logger<severity_level, std::string> m_lg;
   std::string m_channel = "ua_client";
   std::unique_ptr<UA_Client, decltype(&UA_Client_delete)> m_client;
 
-//  std::unique_ptr<ClientEventHandler> m_event_handler;
-
-
-  UA_ClientStateCallback cb = nullptr;
-
-
   UA_BrowseResponse browse(const UA_BrowseRequest &request) {
     UA_BrowseResponse browse_response =
         UA_Client_Service_browse(m_client.get(), request);
     return browse_response;
+  }
+
+  void on_state_changed(UA_Client *client, UA_ClientState state) {
+      BOOST_LOG_CHANNEL_SEV(m_lg, m_channel, info)
+          << "State " << state;
   }
 
  public:
@@ -38,15 +41,15 @@ class Client::impl {
     logger::init();
   }
 
-  static void on_state_changed(UA_Client *client, UA_ClientState state) {
-
-
-
-  }
-
   UA_ClientConfig config() {
     auto c = UA_ClientConfig_default;
-    c.stateCallback = cb;
+    StateCallback::func = std::bind(&Client::impl::on_state_changed,
+                                    this,
+                                    std::placeholders::_1,
+                                    std::placeholders::_2);
+    void (*c_func)(UA_Client *, UA_ClientState) =
+        static_cast<decltype(c_func)>(StateCallback::callback);
+    c.stateCallback = c_func;
     return c;
   }
 

@@ -16,6 +16,16 @@
 
 namespace open62541 {
 
+class ClientEventHandler {
+  class impl;
+  std::unique_ptr<impl> d_ptr;
+
+ public:
+  virtual ~ClientEventHandler();
+  virtual void on_state_changed(ClientState) = 0;
+  friend class Client;
+};
+
 class Client {
   class impl;
   std::unique_ptr<impl> d_ptr;
