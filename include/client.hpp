@@ -18,8 +18,7 @@ namespace open62541 {
 
 class Client {
   class impl;
-//  std::unique_ptr<impl> d_ptr;
-  std::shared_ptr<impl> d_ptr;
+  std::unique_ptr<impl> d_ptr;
 
  public:
   Client();

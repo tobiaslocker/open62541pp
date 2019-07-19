@@ -9,17 +9,21 @@ namespace open62541 {
 using namespace logger;
 
 
-class ClientEventHandler {
-public:
-    virtual void f() {}
-};
+//class ClientEventHandler {
+//public:
+//    virtual void f() {}
+//};
 
 class Client::impl {
   src::severity_channel_logger<severity_level, std::string> m_lg;
   std::string m_channel = "ua_client";
   std::unique_ptr<UA_Client, decltype(&UA_Client_delete)> m_client;
 
-  std::unique_ptr<ClientEventHandler> m_event_handler;
+//  std::unique_ptr<ClientEventHandler> m_event_handler;
+
+
+  UA_ClientStateCallback cb = nullptr;
+
 
   UA_BrowseResponse browse(const UA_BrowseRequest &request) {
     UA_BrowseResponse browse_response =
@@ -42,7 +46,7 @@ class Client::impl {
 
   UA_ClientConfig config() {
     auto c = UA_ClientConfig_default;
-    c.stateCallback = on_state_changed;
+    c.stateCallback = cb;
     return c;
   }
 
