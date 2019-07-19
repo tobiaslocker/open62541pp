@@ -21,6 +21,7 @@ std::function<void(UA_Client *client, UA_ClientState state)>
 class Client::impl {
   src::severity_channel_logger<severity_level, std::string> m_lg;
   std::string m_channel = "ua_client";
+  UA_ClientConfig m_config;
   std::unique_ptr<UA_Client, decltype(&UA_Client_delete)> m_client;
 
   UA_BrowseResponse browse(const UA_BrowseRequest &request) {
@@ -30,14 +31,14 @@ class Client::impl {
   }
 
   void on_state_changed(UA_Client *client, UA_ClientState state) {
-      BOOST_LOG_CHANNEL_SEV(m_lg, m_channel, info)
-          << "State " << state;
+    BOOST_LOG_CHANNEL_SEV(m_lg, m_channel, info) << "State " << state;
   }
 
  public:
   impl()
-      : m_client{std::unique_ptr<UA_Client, decltype(&UA_Client_delete)>(
-            UA_Client_new(config()), UA_Client_delete)} {
+      : m_config{config()},
+        m_client{std::unique_ptr<UA_Client, decltype(&UA_Client_delete)>(
+            UA_Client_new(m_config), UA_Client_delete)} {
     logger::init();
   }
 
