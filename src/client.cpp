@@ -21,6 +21,7 @@ std::function<void(UA_Client *client, UA_ClientState state)>
 class Client::impl {
   src::severity_channel_logger<severity_level, std::string> m_lg;
   std::string m_channel = "ua_client";
+  std::unique_ptr<ClientEventHandler> m_handler;
   UA_ClientConfig m_config;
   std::unique_ptr<UA_Client, decltype(&UA_Client_delete)> m_client;
 
@@ -31,6 +32,13 @@ class Client::impl {
   }
 
   void on_state_changed(UA_Client *client, UA_ClientState state) {
+    if (m_handler) {
+      BOOST_LOG_CHANNEL_SEV(m_lg, m_channel, trace) << "Handler installed";
+      m_handler->on_state_changed(ClientState::Connected);
+    } else {
+      BOOST_LOG_CHANNEL_SEV(m_lg, m_channel, trace) << "No Handler installed";
+
+    }
     BOOST_LOG_CHANNEL_SEV(m_lg, m_channel, info) << "State " << state;
   }
 
@@ -39,6 +47,15 @@ class Client::impl {
       : m_config{config()},
         m_client{std::unique_ptr<UA_Client, decltype(&UA_Client_delete)>(
             UA_Client_new(m_config), UA_Client_delete)} {
+    logger::init();
+  }
+
+ public:
+  impl(std::unique_ptr<ClientEventHandler> handler)
+      : m_handler{std::move(handler)},
+        m_config{config()},
+        m_client{std::unique_ptr<UA_Client, decltype(&UA_Client_delete)>(
+                        UA_Client_new(m_config), UA_Client_delete)} {
     logger::init();
   }
 
@@ -153,6 +170,9 @@ class Client::impl {
 
 Client::Client() : d_ptr{std::make_unique<impl>()} {}
 
+Client::Client(std::unique_ptr<ClientEventHandler> handler)
+    : d_ptr{std::make_unique<impl>(std::move(handler))} {}
+
 std::vector<EndpointDescription> Client::get_endpoints(std::string const &url) {
   return d_ptr->get_endpoints(url);
 }
@@ -166,8 +186,6 @@ void Client::connect(EndpointDescription const &endpoint) {
 LocalizedText Client::read_display_name_attribute(NodeId const &node_id) {
   return d_ptr->read_display_name_attribute(node_id);
 }
-
-void Client::on_state_changed(ClientState state) {}
 
 std::vector<ReferenceDescription> Client::get_child_references(
     ReferenceDescription const &reference,

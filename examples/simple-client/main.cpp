@@ -5,24 +5,16 @@
 using namespace open62541;
 using namespace std;
 
+struct EventHandler : public ClientEventHandler {
+  void on_state_changed(ClientState state) override {
+    cout << "Hello from Handler!\n";
+  }
+};
+
 int main() {
   string url = "opc.tcp://opcua.demo-this.com:51210/UA/SampleServer";
-
-  Client client;
+  auto handler = std::make_unique<EventHandler>();
+  Client client(std::move(handler));
   client.connect(url);
-
   auto endpoints = client.get_endpoints(url);
-
-  //  for (auto const &ep : endpoints) {
-  //    cout << left << setw(25) << "Endpoint url: " << ep.endpoint_url() <<
-  //    '\n'; cout << left << setw(25) << "Security mode: " <<
-  //    ep.security_mode() << '\n'; cout << left << setw(25)
-  //         << "Security policy uri: " << ep.security_policy_uri() << '\n';
-  //    auto s = ep.server();
-  //    cout << left << setw(25)
-  //         << "Server application uri: " << s.application_uri() << '\n';
-  //    cout << left << setw(25) << "Server product uri: " << s.product_uri()
-  //         << '\n';
-  //    cout << '\n';
-  //  }
 }

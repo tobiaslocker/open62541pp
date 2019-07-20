@@ -16,14 +16,9 @@
 
 namespace open62541 {
 
-class ClientEventHandler {
-  class impl;
-  std::unique_ptr<impl> d_ptr;
-
- public:
-  virtual ~ClientEventHandler();
+struct ClientEventHandler {
+    virtual ~ClientEventHandler(){}
   virtual void on_state_changed(ClientState) = 0;
-  friend class Client;
 };
 
 class Client {
@@ -32,12 +27,14 @@ class Client {
 
  public:
   Client();
-  virtual ~Client();
+  ~Client();
 
   Client(Client &&) = default;
   Client(Client const &) = delete;
   Client &operator=(Client &&);
   Client &operator=(Client const &) = delete;
+
+  Client(std::unique_ptr<ClientEventHandler> handler);
 
   BrowseResponse browse(BrowseRequest const &request);
   std::vector<EndpointDescription> get_endpoints(std::string const &url);
@@ -50,7 +47,6 @@ class Client {
       NodeClass node_class,
       ReferenceTypeIdentifier identifier);
   LocalizedText read_display_name_attribute(NodeId const &node_id);
-  virtual void on_state_changed(ClientState state);
 };
 
 }  // namespace open62541
