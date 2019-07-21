@@ -17,8 +17,29 @@
 namespace open62541 {
 
 struct ClientEventHandler {
-    virtual ~ClientEventHandler(){}
+  virtual ~ClientEventHandler();
   virtual void on_state_changed(ClientState) = 0;
+  virtual void on_subscription_inactivity(uint32_t) = 0;
+  virtual void on_inactivity(ClientState) = 0;
+};
+
+struct ClientConfig {
+        uint32_t timeout;
+        uint32_t secure_channel_lifetime;
+//        UA_Logger logger;
+//        UA_ConnectionConfig localConnectionConfig;
+//        UA_ConnectClientConnection connectionFunc;
+
+//        size_t customDataTypesSize;
+//        const UA_DataType *customDataTypes;
+
+//        UA_ClientStateCallback stateCallback;
+//        UA_SubscriptionInactivityCallback subscriptionInactivityCallback;
+//        UA_InactivityCallback inactivityCallback;
+
+        uint16_t out_standing_publish_requests;
+        uint32_t connectivity_check_interval;
+
 };
 
 class Client {

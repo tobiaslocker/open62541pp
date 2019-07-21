@@ -37,7 +37,6 @@ class Client::impl {
       m_handler->on_state_changed(ClientState::Connected);
     } else {
       BOOST_LOG_CHANNEL_SEV(m_lg, m_channel, trace) << "No Handler installed";
-
     }
     BOOST_LOG_CHANNEL_SEV(m_lg, m_channel, info) << "State " << state;
   }
@@ -55,7 +54,7 @@ class Client::impl {
       : m_handler{std::move(handler)},
         m_config{config()},
         m_client{std::unique_ptr<UA_Client, decltype(&UA_Client_delete)>(
-                        UA_Client_new(m_config), UA_Client_delete)} {
+            UA_Client_new(m_config), UA_Client_delete)} {
     logger::init();
   }
 
@@ -199,5 +198,7 @@ std::vector<ReferenceDescription> Client::get_child_references(
 Client::~Client() = default;
 
 Client &Client::operator=(Client &&) = default;
+
+ClientEventHandler::~ClientEventHandler() {}
 
 }  // namespace open62541
