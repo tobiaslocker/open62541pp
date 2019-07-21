@@ -24,22 +24,10 @@ struct ClientEventHandler {
 };
 
 struct ClientConfig {
-        uint32_t timeout;
-        uint32_t secure_channel_lifetime;
-//        UA_Logger logger;
-//        UA_ConnectionConfig localConnectionConfig;
-//        UA_ConnectClientConnection connectionFunc;
-
-//        size_t customDataTypesSize;
-//        const UA_DataType *customDataTypes;
-
-//        UA_ClientStateCallback stateCallback;
-//        UA_SubscriptionInactivityCallback subscriptionInactivityCallback;
-//        UA_InactivityCallback inactivityCallback;
-
-        uint16_t out_standing_publish_requests;
-        uint32_t connectivity_check_interval;
-
+  uint32_t timeout;
+  uint32_t secure_channel_lifetime;
+  uint16_t out_standing_publish_requests;
+  uint32_t connectivity_check_interval;
 };
 
 class Client {
