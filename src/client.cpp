@@ -33,19 +33,25 @@ class Client::impl {
 
   void on_state_changed(UA_Client *client, UA_ClientState state) {
     static_cast<void>(client);
+    ClientState cs = static_cast<ClientState>(state);
     if (m_handler) {
-      BOOST_LOG_CHANNEL_SEV(m_lg, m_channel, trace) << "Handler installed";
-      m_handler->on_state_changed(ClientState::Connected);
-    } else {
-      BOOST_LOG_CHANNEL_SEV(m_lg, m_channel, trace) << "No Handler installed";
+      m_handler->on_state_changed(cs);
     }
-    BOOST_LOG_CHANNEL_SEV(m_lg, m_channel, info) << "State " << state;
+    BOOST_LOG_CHANNEL_SEV(m_lg, m_channel, debug) << "Client state -> " << cs;
   }
 
  public:
   impl(std::unique_ptr<ClientEventHandler> handler)
       : m_handler{std::move(handler)},
         m_config{config()},
+        m_client{std::unique_ptr<UA_Client, decltype(&UA_Client_delete)>(
+            UA_Client_new(m_config), UA_Client_delete)} {
+    logger::init();
+  }
+
+  impl(ClientConfig const &cfg, std::unique_ptr<ClientEventHandler> handler)
+      : m_handler{std::move(handler)},
+        m_config{config(cfg)},
         m_client{std::unique_ptr<UA_Client, decltype(&UA_Client_delete)>(
             UA_Client_new(m_config), UA_Client_delete)} {
     logger::init();
@@ -63,7 +69,17 @@ class Client::impl {
     return c;
   }
 
+  UA_ClientConfig config(ClientConfig const &cfg) {
+    auto c = config();
+    c.timeout = cfg.timeout;
+    c.secureChannelLifeTime = cfg.secure_channel_lifetime;
+    c.outStandingPublishRequests = cfg.out_standing_publish_requests;
+    c.connectivityCheckInterval = cfg.connectivity_check_interval;
+    return c;
+  }
+
   std::vector<EndpointDescription> get_endpoints(std::string const &url) {
+    BOOST_LOG_CHANNEL_SEV(m_lg, m_channel, info) << "Get list of endpoints from server...";
     std::vector<EndpointDescription> result;
     UA_EndpointDescription *endpoints = nullptr;
     size_t len = 0;
@@ -71,23 +87,26 @@ class Client::impl {
         UA_Client_getEndpoints(m_client.get(), url.c_str(), &len, &endpoints);
     if (status == UA_STATUSCODE_GOOD) {
       BOOST_LOG_CHANNEL_SEV(m_lg, m_channel, info)
-          << "Got endpoints from " << url;
+          << "OK";
     } else {
       BOOST_LOG_CHANNEL_SEV(m_lg, m_channel, error)
           << "Getting endpoints failed. Status code = " << status;
     }
     for (size_t i = 0; i < len; i++) {
       BOOST_LOG_CHANNEL_SEV(m_lg, m_channel, debug) << "Endpoint " << i;
-      result.push_back(parser::from_open62541(endpoints[i]));
+      auto ep = parser::from_open62541(endpoints[i]);
+//      BOOST_LOG_CHANNEL_SEV(m_lg, m_channel, debug) << "Url " << ep.endpoint_url();
+      result.push_back(ep);
     }
     UA_Array_delete(endpoints, len, &UA_TYPES[UA_TYPES_ENDPOINTDESCRIPTION]);
     return result;
   }
 
   void connect(std::string const &url) {
+    BOOST_LOG_CHANNEL_SEV(m_lg, m_channel, info) << "Connect to server...";
     auto status = UA_Client_connect(m_client.get(), url.c_str());
     if (status == UA_STATUSCODE_GOOD) {
-      BOOST_LOG_CHANNEL_SEV(m_lg, m_channel, info) << "Connected to " << url;
+      BOOST_LOG_CHANNEL_SEV(m_lg, m_channel, info) << "OK";
     } else {
       BOOST_LOG_CHANNEL_SEV(m_lg, m_channel, error)
           << "Connect failed. Status code = " << status;
@@ -95,15 +114,9 @@ class Client::impl {
   }
 
   void connect(EndpointDescription const &endpoint) {
-    auto url = endpoint.endpoint_url();
-    auto status = UA_Client_connect(m_client.get(), url.c_str());
-    if (status == UA_STATUSCODE_GOOD) {
-      BOOST_LOG_CHANNEL_SEV(m_lg, m_channel, info) << "Connected to " << url;
-    } else {
-      BOOST_LOG_CHANNEL_SEV(m_lg, m_channel, error)
-          << "Connect failed. Status code = " << status;
-    }
+    connect(endpoint.endpoint_url());
   }
+
   UA_BrowseRequest browse_request(UA_BrowseDescription *bd,
                                   UA_NodeId const &node_id,
                                   UA_BrowseResultMask br_mask,
@@ -162,6 +175,9 @@ class Client::impl {
 
 Client::Client(std::unique_ptr<ClientEventHandler> handler)
     : d_ptr{std::make_unique<impl>(std::move(handler))} {}
+
+Client::Client(const ClientConfig &config, std::unique_ptr<ClientEventHandler> handler)
+    : d_ptr{std::make_unique<impl>(config, std::move(handler))} {}
 
 std::vector<EndpointDescription> Client::get_endpoints(std::string const &url) {
   return d_ptr->get_endpoints(url);

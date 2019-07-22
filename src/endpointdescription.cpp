@@ -87,12 +87,20 @@ EndpointDescription::EndpointDescription(
                                    transport_profile_uri,
                                    security_level)} {}
 
-EndpointDescription::EndpointDescription() {}
-
 EndpointDescription::~EndpointDescription() = default;
 
-EndpointDescription::EndpointDescription(EndpointDescription &&) noexcept =
-    default;
+EndpointDescription::EndpointDescription(EndpointDescription const &op)
+    : d_ptr(new impl(*op.d_ptr)) {}
+
+EndpointDescription::EndpointDescription(EndpointDescription &&) noexcept = default;
+
+EndpointDescription &EndpointDescription::operator=(
+    EndpointDescription const &op) {
+  if (this != &op) {
+    d_ptr.reset(new impl(*op.d_ptr));
+  }
+  return *this;
+}
 
 std::string EndpointDescription::endpoint_url() const {
   return d_ptr->endpoint_url();
