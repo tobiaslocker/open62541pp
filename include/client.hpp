@@ -35,7 +35,6 @@ class Client {
   std::unique_ptr<impl> d_ptr;
 
  public:
-  Client();
   ~Client();
 
   Client(Client &&) = default;
@@ -43,7 +42,7 @@ class Client {
   Client &operator=(Client &&);
   Client &operator=(Client const &) = delete;
 
-  Client(std::unique_ptr<ClientEventHandler> handler);
+  Client(std::unique_ptr<ClientEventHandler> handler = nullptr);
 
   BrowseResponse browse(BrowseRequest const &request);
   std::vector<EndpointDescription> get_endpoints(std::string const &url);

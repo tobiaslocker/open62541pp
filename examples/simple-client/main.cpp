@@ -9,6 +9,14 @@ struct EventHandler : public ClientEventHandler {
   void on_state_changed(ClientState state) override {
     cout << "Hello from Handler!\n";
   }
+
+  void on_subscription_inactivity(u_int32_t id) override {
+    cout << "Hello from Handler!\n";
+  }
+
+  void on_inactivity(ClientState state) override {
+    cout << "Hello from Handler!\n";
+  }
 };
 
 int main() {

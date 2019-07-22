@@ -42,14 +42,6 @@ class Client::impl {
   }
 
  public:
-  impl()
-      : m_config{config()},
-        m_client{std::unique_ptr<UA_Client, decltype(&UA_Client_delete)>(
-            UA_Client_new(m_config), UA_Client_delete)} {
-    logger::init();
-  }
-
- public:
   impl(std::unique_ptr<ClientEventHandler> handler)
       : m_handler{std::move(handler)},
         m_config{config()},
@@ -166,8 +158,6 @@ class Client::impl {
     return LocalizedText();
   }
 };
-
-Client::Client() : d_ptr{std::make_unique<impl>()} {}
 
 Client::Client(std::unique_ptr<ClientEventHandler> handler)
     : d_ptr{std::make_unique<impl>(std::move(handler))} {}
