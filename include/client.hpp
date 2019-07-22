@@ -44,7 +44,8 @@ class Client {
 
   Client(std::unique_ptr<ClientEventHandler> handler = nullptr);
 
-  Client(ClientConfig const &config, std::unique_ptr<ClientEventHandler> handler = nullptr);
+  Client(ClientConfig const &config,
+         std::unique_ptr<ClientEventHandler> handler = nullptr);
 
   BrowseResponse browse(BrowseRequest const &request);
   std::vector<EndpointDescription> get_endpoints(std::string const &url);

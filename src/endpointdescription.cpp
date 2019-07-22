@@ -92,7 +92,8 @@ EndpointDescription::~EndpointDescription() = default;
 EndpointDescription::EndpointDescription(EndpointDescription const &op)
     : d_ptr(new impl(*op.d_ptr)) {}
 
-EndpointDescription::EndpointDescription(EndpointDescription &&) noexcept = default;
+EndpointDescription::EndpointDescription(EndpointDescription &&) noexcept =
+    default;
 
 EndpointDescription &EndpointDescription::operator=(
     EndpointDescription const &op) {
@@ -140,6 +141,29 @@ bool EndpointDescription::operator==(EndpointDescription const &rhs) const {
 
 bool EndpointDescription::operator!=(EndpointDescription const &rhs) const {
   return *d_ptr != *rhs.d_ptr;
+}
+
+std::ostream &operator<<(std::ostream &out, const EndpointDescription &op) {
+  out << "{\n"
+      << "    endpoint_url -> " << op.endpoint_url() << '\n'
+      << "    security_mode -> " << op.security_mode() << '\n'
+      << "    security_level -> "
+      << static_cast<unsigned int>(op.security_level()) << '\n'
+      << "    security_policy_uri -> " << op.security_policy_uri() << '\n'
+      << "    transport_profile_uri -> " << op.transport_profile_uri() << '\n'
+      << "    user_identity_tokens ->\n    [\n";
+  for (auto const &token : op.user_identity_tokens()) {
+    out << "        {\n"
+        << "            policy_id -> " << token.policy_id() << '\n'
+        << "            token_type -> " << token.token_type() << '\n'
+        << "            issued_token_type -> " << token.issued_token_type() << '\n'
+        << "            issuer_endpoint_url -> " << token.issuer_endpoint_url() << '\n'
+        << "            security_policy_uri -> " << token.security_policy_uri() << '\n'
+        << "        }\n";
+  }
+
+  out << "    ]\n}";
+  return out;
 }
 
 }  // namespace open62541

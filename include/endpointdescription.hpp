@@ -48,6 +48,8 @@ class EndpointDescription {
   bool operator!=(EndpointDescription const &rhs) const;
 };
 
+std::ostream &operator<<(std::ostream &out, EndpointDescription const &op);
+
 }  // namespace open62541
 
 #endif  // OPEN62541_CPP_WRAPPER_ENDPOINT_DESCRIPTION_H

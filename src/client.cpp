@@ -79,23 +79,23 @@ class Client::impl {
   }
 
   std::vector<EndpointDescription> get_endpoints(std::string const &url) {
-    BOOST_LOG_CHANNEL_SEV(m_lg, m_channel, info) << "Get list of endpoints from server...";
+    BOOST_LOG_CHANNEL_SEV(m_lg, m_channel, info)
+        << "Get endpoints from server...";
     std::vector<EndpointDescription> result;
     UA_EndpointDescription *endpoints = nullptr;
     size_t len = 0;
     auto status =
         UA_Client_getEndpoints(m_client.get(), url.c_str(), &len, &endpoints);
     if (status == UA_STATUSCODE_GOOD) {
-      BOOST_LOG_CHANNEL_SEV(m_lg, m_channel, info)
-          << "OK";
+      BOOST_LOG_CHANNEL_SEV(m_lg, m_channel, info) << "Status: OK";
     } else {
       BOOST_LOG_CHANNEL_SEV(m_lg, m_channel, error)
           << "Getting endpoints failed. Status code = " << status;
     }
     for (size_t i = 0; i < len; i++) {
-      BOOST_LOG_CHANNEL_SEV(m_lg, m_channel, debug) << "Endpoint " << i;
       auto ep = parser::from_open62541(endpoints[i]);
-//      BOOST_LOG_CHANNEL_SEV(m_lg, m_channel, debug) << "Url " << ep.endpoint_url();
+      BOOST_LOG_CHANNEL_SEV(m_lg, m_channel, debug) << "Endpoint " << i << '\n'
+                                                    << ep;
       result.push_back(ep);
     }
     UA_Array_delete(endpoints, len, &UA_TYPES[UA_TYPES_ENDPOINTDESCRIPTION]);
@@ -106,7 +106,7 @@ class Client::impl {
     BOOST_LOG_CHANNEL_SEV(m_lg, m_channel, info) << "Connect to server...";
     auto status = UA_Client_connect(m_client.get(), url.c_str());
     if (status == UA_STATUSCODE_GOOD) {
-      BOOST_LOG_CHANNEL_SEV(m_lg, m_channel, info) << "OK";
+      BOOST_LOG_CHANNEL_SEV(m_lg, m_channel, info) << "Status: OK";
     } else {
       BOOST_LOG_CHANNEL_SEV(m_lg, m_channel, error)
           << "Connect failed. Status code = " << status;
@@ -176,7 +176,8 @@ class Client::impl {
 Client::Client(std::unique_ptr<ClientEventHandler> handler)
     : d_ptr{std::make_unique<impl>(std::move(handler))} {}
 
-Client::Client(const ClientConfig &config, std::unique_ptr<ClientEventHandler> handler)
+Client::Client(const ClientConfig &config,
+               std::unique_ptr<ClientEventHandler> handler)
     : d_ptr{std::make_unique<impl>(config, std::move(handler))} {}
 
 std::vector<EndpointDescription> Client::get_endpoints(std::string const &url) {
