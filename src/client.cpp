@@ -32,6 +32,7 @@ class Client::impl {
   }
 
   void on_state_changed(UA_Client *client, UA_ClientState state) {
+    static_cast<void>(client);
     if (m_handler) {
       BOOST_LOG_CHANNEL_SEV(m_lg, m_channel, trace) << "Handler installed";
       m_handler->on_state_changed(ClientState::Connected);
