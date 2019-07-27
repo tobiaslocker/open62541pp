@@ -21,7 +21,8 @@ endif()
 find_package(open62541 REQUIRED)
 
 
-include_directories(include third-party/open62541/build/include third-party/base64/include)
+#include_directories(include third-party/open62541/build/include third-party/base64/include)
+include_directories(include staging/include/open62541 third-party/base64/include)
 
 set(
     SOURCES
@@ -54,7 +55,7 @@ set_property(TARGET ${PROJECT_NAME} PROPERTY POSITION_INDEPENDENT_CODE ON)
 target_link_libraries(
     ${PROJECT_NAME}
     PUBLIC ${Boost_LIBRARIES}
-    open62541::open62541
+    open62541
 )
 
 enable_testing()
