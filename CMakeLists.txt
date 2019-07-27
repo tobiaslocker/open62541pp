@@ -17,10 +17,11 @@ if(Boost_FOUND)
   link_directories(${Boost_LIBRARY_DIRS})
 endif()
 
-find_package(open62541 0.3.0 REQUIRED COMPONENTS FullNamespace Discovery)
+
+find_package(open62541 REQUIRED)
 
 
-include_directories(include externals/include externals/base64/include)
+include_directories(include third-party/open62541/build/include third-party/base64/include)
 
 set(
     SOURCES
@@ -53,8 +54,7 @@ set_property(TARGET ${PROJECT_NAME} PROPERTY POSITION_INDEPENDENT_CODE ON)
 target_link_libraries(
     ${PROJECT_NAME}
     PUBLIC ${Boost_LIBRARIES}
-    open62541
-    
+    open62541::open62541
 )
 
 enable_testing()
