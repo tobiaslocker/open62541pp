@@ -2,6 +2,7 @@
 *.ignore
 *.user
 build
+staging
 */build
 externals/include/
 externals/lib/
