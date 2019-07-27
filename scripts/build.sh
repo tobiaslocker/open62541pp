@@ -10,7 +10,9 @@ echo ${OPEN62541_INSTALL_DIR}
 mkdir -p ${TOP_DIR}/third-party/open62541/build/
 cd ${TOP_DIR}/third-party/open62541/build/
 
-cmake -DCMAKE_INSTALL_PREFIX=${OPEN62541_INSTALL_DIR} ..
+cmake -DCMAKE_INSTALL_PREFIX=${OPEN62541_INSTALL_DIR} \
+    -DUA_ENABLE_AMALGAMATION=true \
+    ..
 
 make 
 make install
