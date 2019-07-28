@@ -4,10 +4,9 @@ TOP_DIR=${SCRIPTS_DIR}/..
 
 OPEN62541_INSTALL_DIR=${TOP_DIR}/staging
 mkdir -p ${OPEN62541_INSTALL_DIR}
-
-echo ${OPEN62541_INSTALL_DIR}
-
 mkdir -p ${TOP_DIR}/third-party/open62541/build/
+cd ${TOP_DIR}/third-party/open62541/
+git checkout v0.3.0
 cd ${TOP_DIR}/third-party/open62541/build/
 
 cmake -DCMAKE_INSTALL_PREFIX=${OPEN62541_INSTALL_DIR} \
