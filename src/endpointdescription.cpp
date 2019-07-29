@@ -97,7 +97,6 @@ EndpointDescription::EndpointDescription(EndpointDescription &&) noexcept =
 
 EndpointDescription::EndpointDescription() = default;
 
-
 EndpointDescription &EndpointDescription::operator=(
     EndpointDescription const &op) {
   if (this != &op) {
@@ -159,9 +158,12 @@ std::ostream &operator<<(std::ostream &out, const EndpointDescription &op) {
     out << "        {\n"
         << "            policy_id -> " << token.policy_id() << '\n'
         << "            token_type -> " << token.token_type() << '\n'
-        << "            issued_token_type -> " << token.issued_token_type() << '\n'
-        << "            issuer_endpoint_url -> " << token.issuer_endpoint_url() << '\n'
-        << "            security_policy_uri -> " << token.security_policy_uri() << '\n'
+        << "            issued_token_type -> " << token.issued_token_type()
+        << '\n'
+        << "            issuer_endpoint_url -> " << token.issuer_endpoint_url()
+        << '\n'
+        << "            security_policy_uri -> " << token.security_policy_uri()
+        << '\n'
         << "        }\n";
   }
 

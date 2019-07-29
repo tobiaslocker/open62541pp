@@ -101,4 +101,15 @@ bool UserTokenPolicy::operator!=(UserTokenPolicy const &rhs) const {
   return *d_ptr != *rhs.d_ptr;
 }
 
+std::ostream &operator<<(std::ostream &out, const UserTokenPolicy &op) {
+  out << "{\n"
+      << "    policy_id -> " << op.policy_id() << '\n'
+      << "    token_type -> " << op.token_type() << '\n'
+      << "    issued_token_type -> " << op.issued_token_type() << '\n'
+      << "    issuer_endpoint_url -> " << op.issuer_endpoint_url() << '\n'
+      << "    security_policy_uri -> " << op.security_policy_uri() << '\n'
+      << "}\n";
+
+  return out;
+}
 }  // namespace open62541

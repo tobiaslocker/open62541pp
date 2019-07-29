@@ -16,15 +16,11 @@ namespace parser {
 using namespace nlohmann;
 
 inline std::string from_open62541(UA_String const &str) {
-    if(str.data) {
-        return std::string(str.data, str.data + str.length);
-    }
-    return std::string();
+  if (str.data) {
+    return std::string(str.data, str.data + str.length);
+  }
+  return std::string();
 }
-
-//inline ByteString from_open62541(UA_ByteString const &str) {
-//  return std::string(str.data, str.data + str.length);
-//}
 
 inline LocalizedText from_open62541(UA_LocalizedText const &lt) {
   return LocalizedText(from_open62541(lt.text), from_open62541(lt.locale));
@@ -38,21 +34,23 @@ inline ApplicationDescription from_open62541(
       discovery_urls.push_back(from_open62541(ad.discoveryUrls[i]));
     }
   }
-  return ApplicationDescription{from_open62541(ad.applicationUri),
+  return ApplicationDescription(from_open62541(ad.applicationUri),
                                 from_open62541(ad.productUri),
                                 from_open62541(ad.applicationName),
                                 ApplicationType{ad.applicationType},
                                 from_open62541(ad.gatewayServerUri),
                                 from_open62541(ad.discoveryProfileUri),
-                                discovery_urls};
+                                discovery_urls);
 }
 
 inline UserTokenPolicy from_open62541(UA_UserTokenPolicy const &up) {
-  return UserTokenPolicy{from_open62541(up.policyId),
-                         UserTokenType{up.tokenType},
-                         from_open62541(up.issuedTokenType),
-                         from_open62541(up.issuerEndpointUrl),
-                         from_open62541(up.securityPolicyUri)};
+
+    return UserTokenPolicy();
+//  return UserTokenPolicy(from_open62541(up.policyId),
+//                         UserTokenType{up.tokenType},
+//                         from_open62541(up.issuedTokenType),
+//                         from_open62541(up.issuerEndpointUrl),
+//                         from_open62541(up.securityPolicyUri));
 }
 
 inline EndpointDescription from_open62541(UA_EndpointDescription const &ed) {
@@ -61,25 +59,14 @@ inline EndpointDescription from_open62541(UA_EndpointDescription const &ed) {
     auto policy = from_open62541(ed.userIdentityTokens[i]);
     user_identity_tokens.push_back(policy);
   }
-
-//  auto url = from_open62541(ed.endpointUrl);
-//  auto server = from_open62541(ed.server);
-//  auto cert = from_open62541(ed.serverCertificate);
-//  auto mode =MessageSecurityMode{ed.securityMode};
-//  auto policy = from_open62541(ed.securityPolicyUri);
-//  auto tokens = user_identity_tokens;
-//  auto puri = from_open62541(ed.transportProfileUri);
-//  auto level = ed.securityLevel;
-
-//  return EndpointDescription();
-  return EndpointDescription{from_open62541(ed.endpointUrl),
+  return EndpointDescription(from_open62541(ed.endpointUrl),
                              from_open62541(ed.server),
                              from_open62541(ed.serverCertificate),
                              MessageSecurityMode{ed.securityMode},
                              from_open62541(ed.securityPolicyUri),
                              user_identity_tokens,
                              from_open62541(ed.transportProfileUri),
-                             ed.securityLevel};
+                             ed.securityLevel);
 }
 
 inline Guid from_open62541(UA_Guid const &g) {
@@ -114,25 +101,23 @@ inline NodeId from_open62541(UA_NodeId const &ni) {
 }
 
 inline QualifiedName from_open62541(UA_QualifiedName const &qn) {
-  return QualifiedName{from_open62541(qn.name), qn.namespaceIndex};
+  return QualifiedName(from_open62541(qn.name), qn.namespaceIndex);
 }
 
 inline ExpandedNodeId from_open62541(UA_ExpandedNodeId const &en) {
-  return ExpandedNodeId{from_open62541(en.nodeId),
+  return ExpandedNodeId(from_open62541(en.nodeId),
                         from_open62541(en.namespaceUri),
-                        en.serverIndex};
+                        en.serverIndex);
 }
 
 inline ReferenceDescription from_open62541(UA_ReferenceDescription const &rd) {
-  return ReferenceDescription{from_open62541(rd.referenceTypeId),
+  return ReferenceDescription(from_open62541(rd.referenceTypeId),
                               rd.isForward,
                               from_open62541(rd.nodeId),
                               from_open62541(rd.browseName),
                               from_open62541(rd.displayName),
                               NodeClass{rd.nodeClass},
-                              from_open62541(rd.typeDefinition)
-
-  };
+                              from_open62541(rd.typeDefinition));
 }
 
 inline DateTime from_open62541(UA_DateTime const &d) { return DateTime(d); }

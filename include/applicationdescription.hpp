@@ -44,10 +44,10 @@ class ApplicationDescription {
   bool operator!=(ApplicationDescription const &rhs) const;
 };
 
-inline std::ostream &operator<<(std::ostream &out, ApplicationDescription const &op) {
-    out << "Hi";
-    return out;
-
+inline std::ostream &operator<<(std::ostream &out,
+                                ApplicationDescription const &op) {
+  out << "Hi";
+  return out;
 }
 
 }  // namespace open62541

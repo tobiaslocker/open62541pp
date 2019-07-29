@@ -39,6 +39,7 @@ class UserTokenPolicy {
   bool operator!=(UserTokenPolicy const &rhs) const;
 };
 
+std::ostream &operator<<(std::ostream &out, UserTokenPolicy const &op);
 }  // namespace open62541
 
 #endif  // OPEN62541_CPP_WRAPPER_USER_TOKEN_POLICY_H
