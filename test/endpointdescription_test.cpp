@@ -86,7 +86,10 @@ BOOST_AUTO_TEST_CASE(test_endpoint_description) {
 //                                    user_identity_tokens.end(),
 //                                    test_tokens.begin(),
 //                                    test_tokens.end());
-//    BOOST_TEST(server == a);
+
+
+    BOOST_TEST_MESSAGE("Huuuuu");
+    BOOST_TEST(server != a);
     BOOST_REQUIRE(security_mode == MessageSecurityMode::None);
     BOOST_TEST(security_level == 'a');
 }

@@ -44,6 +44,12 @@ class ApplicationDescription {
   bool operator!=(ApplicationDescription const &rhs) const;
 };
 
+inline std::ostream &operator<<(std::ostream &out, ApplicationDescription const &op) {
+    out << "Hi";
+    return out;
+
+}
+
 }  // namespace open62541
 
 #endif  // OPEN62541_CPP_WRAPPER_APPLICATION_DESCRIPTION_H
