@@ -88,8 +88,8 @@ BOOST_AUTO_TEST_CASE(test_endpoint_description) {
 //                                    test_tokens.end());
 
 
-    BOOST_TEST_MESSAGE("Huuuuu");
-    BOOST_TEST(server != a);
+    BOOST_TEST_MESSAGE("Huuuuu Huuuuuuu");
+    BOOST_CHECK_EQUAL(server, a);
     BOOST_REQUIRE(security_mode == MessageSecurityMode::None);
     BOOST_TEST(security_level == 'a');
 }
