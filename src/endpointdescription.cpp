@@ -59,7 +59,7 @@ class EndpointDescription::impl {
   }
 
   bool operator!=(impl const &rhs) const {
-    return endpoint_url() != rhs.endpoint_url() && server() == rhs.server() &&
+    return endpoint_url() != rhs.endpoint_url() && server() != rhs.server() &&
            server_certificate() != rhs.server_certificate() &&
            security_mode() != rhs.security_mode() &&
            security_policy_uri() != rhs.security_policy_uri() &&
@@ -94,6 +94,9 @@ EndpointDescription::EndpointDescription(EndpointDescription const &op)
 
 EndpointDescription::EndpointDescription(EndpointDescription &&) noexcept =
     default;
+
+EndpointDescription::EndpointDescription() = default;
+
 
 EndpointDescription &EndpointDescription::operator=(
     EndpointDescription const &op) {

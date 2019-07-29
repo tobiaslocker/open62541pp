@@ -50,18 +50,29 @@ inline UserTokenPolicy from_open62541(UA_UserTokenPolicy const &up) {
 
 inline EndpointDescription from_open62541(UA_EndpointDescription const &ed) {
   std::vector<UserTokenPolicy> user_identity_tokens;
-  for (size_t i = 0; i < ed.userIdentityTokensSize; ++i) {
-    auto policy = from_open62541(ed.userIdentityTokens[i]);
-    user_identity_tokens.push_back(policy);
-  }
-  return EndpointDescription{from_open62541(ed.endpointUrl),
-                             from_open62541(ed.server),
-                             from_open62541(ed.serverCertificate),
-                             MessageSecurityMode{ed.securityMode},
-                             from_open62541(ed.securityPolicyUri),
-                             user_identity_tokens,
-                             from_open62541(ed.transportProfileUri),
-                             ed.securityLevel};
+//  for (size_t i = 0; i < ed.userIdentityTokensSize; ++i) {
+//    auto policy = from_open62541(ed.userIdentityTokens[i]);
+//    user_identity_tokens.push_back(policy);
+//  }
+
+//  auto url = from_open62541(ed.endpointUrl);
+//  auto server = from_open62541(ed.server);
+//  auto cert = from_open62541(ed.serverCertificate);
+//  auto mode =MessageSecurityMode{ed.securityMode};
+//  auto policy = from_open62541(ed.securityPolicyUri);
+//  auto tokens = user_identity_tokens;
+//  auto puri = from_open62541(ed.transportProfileUri);
+//  auto level = ed.securityLevel;
+
+  return EndpointDescription();
+//  return EndpointDescription{from_open62541(ed.endpointUrl),
+//                             from_open62541(ed.server),
+//                             from_open62541(ed.serverCertificate),
+//                             MessageSecurityMode{ed.securityMode},
+//                             from_open62541(ed.securityPolicyUri),
+//                             user_identity_tokens,
+//                             from_open62541(ed.transportProfileUri),
+//                             ed.securityLevel};
 }
 
 inline Guid from_open62541(UA_Guid const &g) {

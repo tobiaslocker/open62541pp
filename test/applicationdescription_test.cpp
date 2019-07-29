@@ -42,32 +42,33 @@ BOOST_AUTO_TEST_CASE(test_application_description) {
   ua_desc.discoveryUrls = arr;
 
   auto desc = parser::from_open62541(ua_desc);
-  //  auto product_uri = desc.product_uri();
-  //  auto application_name_text = desc.application_name().text();
-  //  auto application_name_locale = desc.application_name().locale();
-  //  auto application_type = desc.application_type();
-  //  auto gateway_server_uri = desc.gateway_server_uri();
-  //  auto discovery_profile_uri = desc.discovery_profile_uri();
+  auto product_uri = desc.product_uri();
+  auto application_name_text = desc.application_name().text();
+  auto application_name_locale = desc.application_name().locale();
+  auto application_type = desc.application_type();
+  auto gateway_server_uri = desc.gateway_server_uri();
+  auto discovery_profile_uri = desc.discovery_profile_uri();
 
-  //  BOOST_TEST(product_uri == PRODUCT_URI);
-  //  BOOST_TEST(application_name_text == APPLICATION_NAME);
-  //  BOOST_TEST(application_name_locale == "en");
-  //  BOOST_CHECK(application_type == ApplicationType::Server);
-  //  BOOST_TEST(gateway_server_uri == GATEWAY_SERVER_URI);
-  //  BOOST_TEST(discovery_profile_uri == DISCOVERY_PROFILE_URI);
-  //  BOOST_TEST(desc.discovery_urls().size() == 3U);
-  //  BOOST_TEST(desc.discovery_urls().at(0) == DISCOVERY_URL_1);
-  //  BOOST_TEST(desc.discovery_urls().at(1) == DISCOVERY_URL_2);
-  //  BOOST_TEST(desc.discovery_urls().at(2) == DISCOVERY_URL_3);
+  BOOST_TEST(product_uri == PRODUCT_URI);
+  BOOST_TEST(application_name_text == APPLICATION_NAME);
+  BOOST_TEST(application_name_locale == "en");
+  BOOST_CHECK(application_type == ApplicationType::Server);
+  BOOST_TEST(gateway_server_uri == GATEWAY_SERVER_URI);
+  BOOST_TEST(discovery_profile_uri == DISCOVERY_PROFILE_URI);
+  BOOST_TEST(desc.discovery_urls().size() == 3U);
+  BOOST_TEST(desc.discovery_urls().at(0) == DISCOVERY_URL_1);
+  BOOST_TEST(desc.discovery_urls().at(1) == DISCOVERY_URL_2);
+  BOOST_TEST(desc.discovery_urls().at(2) == DISCOVERY_URL_3);
 
-  //  json j = desc.to_json();
-  //  BOOST_TEST(j["ApplicationName"] == APPLICATION_NAME);
-  //  BOOST_TEST(j["ApplicationType"] == "Server");
-  //  BOOST_TEST(j["ApplicationUri"] == APPLICATION_URI);
-  //  BOOST_TEST(j["DiscoveryProfileUri"] == DISCOVERY_PROFILE_URI);
-  //  BOOST_TEST(j["GatewayServerUri"] == GATEWAY_SERVER_URI);
-  //  BOOST_TEST(j["DiscoveryUrls"][0] == DISCOVERY_URL_1);
-  //  BOOST_TEST(j["DiscoveryUrls"][1] == DISCOVERY_URL_2);
-  //  BOOST_TEST(j["DiscoveryUrls"][2] == DISCOVERY_URL_3);
+  json j = parser::to_json(desc);
+
+  BOOST_TEST(j["ApplicationName"] == APPLICATION_NAME);
+  BOOST_TEST(j["ApplicationType"] == "Server");
+  BOOST_TEST(j["ApplicationUri"] == APPLICATION_URI);
+  BOOST_TEST(j["DiscoveryProfileUri"] == DISCOVERY_PROFILE_URI);
+  BOOST_TEST(j["GatewayServerUri"] == GATEWAY_SERVER_URI);
+  BOOST_TEST(j["DiscoveryUrls"][0] == DISCOVERY_URL_1);
+  BOOST_TEST(j["DiscoveryUrls"][1] == DISCOVERY_URL_2);
+  BOOST_TEST(j["DiscoveryUrls"][2] == DISCOVERY_URL_3);
 }
 #pragma clang diagnostic pop
