@@ -6,11 +6,10 @@
 #include "open62541.h"
 
 #include "parser.hpp"
-
 #include "applicationdescription.hpp"
 #include "endpointdescription.hpp"
+#include "common.hpp"
 
-#include <iostream>
 
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdisabled-macro-expansion"
@@ -19,78 +18,112 @@
 using namespace open62541;
 using namespace nlohmann;
 
+
+//UA_ApplicationDescription make_ua_application_description() {
+
+//  const char *product_uri = "http://open62541.org";
+//  const char *application_name = "open62541-based OPC UA Application";
+//  const char *application_uri = "urn:unconfigured:application";
+//  const char *discovery_profile_uri = "urn:unconfigured:profile:uri";
+//  const char *gateway_server_uri = "urn:unconfigured:gateway:server:uri";
+//  const char *discovery_url_1 = "opc.tcp://discovery-url-1:0000/Test";
+//  const char *discovery_url_2 = "opc.tcp://discovery-url-2:0000/Test";
+//  const char *discovery_url_3 = "opc.tcp://discovery-url-3:0000/Test";
+
+//  UA_ApplicationDescription ua_server;
+//  ua_server.productUri = UA_STRING_ALLOC(product_uri);
+//  ua_server.applicationName = UA_LOCALIZEDTEXT_ALLOC("en", application_name);
+//  ua_server.applicationUri = UA_STRING_ALLOC(application_uri);
+//  ua_server.applicationType = UA_APPLICATIONTYPE_SERVER;
+//  ua_server.gatewayServerUri = UA_STRING_ALLOC(gateway_server_uri);
+//  ua_server.discoveryProfileUri = UA_STRING_ALLOC(discovery_profile_uri);
+//  UA_String arr[3];
+//  arr[0] = UA_STRING_ALLOC(discovery_url_1);
+//  arr[1] = UA_STRING_ALLOC(discovery_url_2);
+//  arr[2] = UA_STRING_ALLOC(discovery_url_3);
+//  ua_server.discoveryUrlsSize = 3;
+//  ua_server.discoveryUrls = arr;
+//  return ua_server;
+//};
+
 BOOST_AUTO_TEST_CASE(test_endpoint_description) {
-  const char *PRODUCT_URI = "http://open62541.org";
-  const char *APPLICATION_NAME = "open62541-based OPC UA Application";
-  const char *APPLICATION_URI = "urn:unconfigured:application";
-  const char *DISCOVERY_PROFILE_URI = "urn:unconfigured:profile:uri";
-  const char *GATEWAY_SERVER_URI = "urn:unconfigured:gateway:server:uri";
-  const char *DISCOVERY_URL_1 = "opc.tcp://discovery-url-1:0000/Test";
-  const char *DISCOVERY_URL_2 = "opc.tcp://discovery-url-2:0000/Test";
-  const char *DISCOVERY_URL_3 = "opc.tcp://discovery-url-3:0000/Test";
-  const char *ENDPOINT_URL = "opc.tcp://endpoint-url:0000/Test";
-  const char *SECURITY_POLICY_URI =
+
+//  const char *product_uri = "http://open62541.org";
+//  const char *application_name = "open62541-based OPC UA Application";
+//  const char *application_uri = "urn:unconfigured:application";
+//  const char *discovery_profile_uri = "urn:unconfigured:profile:uri";
+//  const char *gateway_server_uri = "urn:unconfigured:gateway:server:uri";
+//  const char *discovery_url_1 = "opc.tcp://discovery-url-1:0000/Test";
+//  const char *discovery_url_2 = "opc.tcp://discovery-url-2:0000/Test";
+//  const char *discovery_url_3 = "opc.tcp://discovery-url-3:0000/Test";
+
+//  UA_ApplicationDescription ua_server;
+//  ua_server.productUri = UA_STRING_ALLOC(product_uri);
+//  ua_server.applicationName = UA_LOCALIZEDTEXT_ALLOC("en", application_name);
+//  ua_server.applicationUri = UA_STRING_ALLOC(application_uri);
+//  ua_server.applicationType = UA_APPLICATIONTYPE_SERVER;
+//  ua_server.gatewayServerUri = UA_STRING_ALLOC(gateway_server_uri);
+//  ua_server.discoveryProfileUri = UA_STRING_ALLOC(discovery_profile_uri);
+//  UA_String arr[3];
+//  arr[0] = UA_STRING_ALLOC(discovery_url_1);
+//  arr[1] = UA_STRING_ALLOC(discovery_url_2);
+//  arr[2] = UA_STRING_ALLOC(discovery_url_3);
+//  ua_server.discoveryUrlsSize = 3;
+//  ua_server.discoveryUrls = arr;
+
+
+    auto ua_server = common::make_ua_application_description();
+
+
+
+  auto app_desc = parser::from_open62541(ua_server);
+
+  const char *endpoint_url = "opc.tcp://endpoint-url:0000/Test";
+  const char *security_policy_uri =
       "http://opcfoundation.org/UA/SecurityPolicy#Basic128Rsa15";
-  const char *TRANSPORT_PROFILE_URI =
+  const char *transport_profile_uri =
       "http://opcfoundation.org/UA/profiles/transport/wsxmlorbinary";
-  const char *SERVER_CERTIFICATE = "this-is-a-server-cert";
+  const char *server_certificate = "this-is-a-server-cert";
+  UA_EndpointDescription res;
+  res.server = ua_server;
+  res.endpointUrl = UA_STRING_ALLOC(endpoint_url);
+  res.securityMode = UA_MESSAGESECURITYMODE_NONE;
+  res.securityLevel = 'a';
+  res.securityPolicyUri = UA_STRING_ALLOC(security_policy_uri);
+  res.userIdentityTokens = nullptr;
+  res.userIdentityTokensSize = 0;
+  res.transportProfileUri = UA_STRING_ALLOC(transport_profile_uri);
+  res.serverCertificate = UA_STRING_ALLOC(server_certificate);
 
-  UA_ApplicationDescription server_;
-  server_.productUri = UA_STRING_ALLOC(PRODUCT_URI);
-  server_.applicationName = UA_LOCALIZEDTEXT_ALLOC("en", APPLICATION_NAME);
-  server_.applicationUri = UA_STRING_ALLOC(APPLICATION_URI);
-  server_.applicationType = UA_APPLICATIONTYPE_SERVER;
-  server_.gatewayServerUri = UA_STRING_ALLOC(GATEWAY_SERVER_URI);
-  server_.discoveryProfileUri = UA_STRING_ALLOC(DISCOVERY_PROFILE_URI);
+  auto ua_endpoint_desc = common::make_endpoint_description();
 
-  UA_String arr[3];
-  arr[0] = UA_STRING_ALLOC(DISCOVERY_URL_1);
-  arr[1] = UA_STRING_ALLOC(DISCOVERY_URL_2);
-  arr[2] = UA_STRING_ALLOC(DISCOVERY_URL_3);
+//  auto endpoint = parser::from_open62541(ua_endpoint_desc);
+  auto endpoint = parser::from_open62541(res);
 
-  server_.discoveryUrlsSize = 3;
-  server_.discoveryUrls = arr;
 
-  UA_EndpointDescription ua_desc;
-  ua_desc.server = server_;
-  ua_desc.endpointUrl = UA_STRING_ALLOC(ENDPOINT_URL);
-  ua_desc.securityMode = UA_MESSAGESECURITYMODE_NONE;
-  ua_desc.securityLevel = 'a';
-  ua_desc.securityPolicyUri = UA_STRING_ALLOC(SECURITY_POLICY_URI);
-  ua_desc.userIdentityTokens = nullptr;
-  ua_desc.userIdentityTokensSize = 0;
-  ua_desc.transportProfileUri = UA_STRING_ALLOC(TRANSPORT_PROFILE_URI);
-  ua_desc.serverCertificate = UA_STRING_ALLOC(SERVER_CERTIFICATE);
 
-  auto desc = parser::from_open62541(ua_desc);
-  auto endpoint_url = desc.endpoint_url();
 
-  auto server = desc.server();
-  auto security_mode = desc.security_mode();
-  auto security_level = desc.security_level();
-  auto security_policy_uri = desc.security_policy_uri();
-  auto user_identity_tokens = desc.user_identity_tokens();
-  auto transport_profile_uri = desc.transport_profile_uri();
+//  BOOST_TEST_MESSAGE("Hello Test");
+//  BOOST_TEST_MESSAGE("Endpoint url: " + parser::from_open62541(ua_desc.endpointUrl));
+//  auto desc = parser::from_open62541(ua_desc);
+//  auto test_tokens = std::vector<UserTokenPolicy>();
 
-  auto test_tokens = std::vector<UserTokenPolicy>();
+//  UA_UserTokenPolicy policy1;
+//  test_tokens.push_back(parser::from_open62541(policy1));
 
-  UA_UserTokenPolicy policy1;
-  test_tokens.push_back(parser::from_open62541(policy1));
+//  auto a = parser::from_open62541(common::make_ua_application_description());
 
-  auto a = parser::from_open62541(server_);
+//  BOOST_TEST(desc.endpoint_url() == common::endpoint_url);
+//  BOOST_TEST(desc.security_policy_uri() == common::security_policy_uri);
+//  BOOST_TEST(desc.transport_profile_uri() == common::transport_profile_uri);
+////  BOOST_REQUIRE_EQUAL_COLLECTIONS(user_identity_tokens.begin(),
+////                                  user_identity_tokens.end(),
+////                                  test_tokens.begin(),
+////                                  test_tokens.end());
 
-  BOOST_TEST(endpoint_url == ENDPOINT_URL);
-  BOOST_TEST(security_policy_uri == SECURITY_POLICY_URI);
-  BOOST_TEST(transport_profile_uri == TRANSPORT_PROFILE_URI);
-//  BOOST_REQUIRE_EQUAL_COLLECTIONS(user_identity_tokens.begin(),
-//                                  user_identity_tokens.end(),
-//                                  test_tokens.begin(),
-//                                  test_tokens.end());
-
-  BOOST_TEST_MESSAGE("Huuuuu Huuuuuuu");
-  BOOST_CHECK_EQUAL(server, a);
-  BOOST_REQUIRE(security_mode == MessageSecurityMode::None);
-  BOOST_TEST(security_level == 'a');
+//  BOOST_CHECK_EQUAL(desc.server(), a);
+//  BOOST_REQUIRE(desc.security_mode() == MessageSecurityMode::None);
+//  BOOST_TEST(desc.security_level() == 'a');
 }
 
 #pragma clang diagnostic pop

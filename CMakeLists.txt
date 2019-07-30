@@ -78,6 +78,7 @@ function (make_test TEST_NAME)
 
 endfunction()
 
+include_directories(test/include)
 
 make_test(applicationdescription_test)
 make_test(endpointdescription_test)
