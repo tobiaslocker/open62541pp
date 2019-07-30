@@ -155,16 +155,17 @@ std::ostream &operator<<(std::ostream &out, const EndpointDescription &op) {
       << "    transport_profile_uri -> " << op.transport_profile_uri() << '\n'
       << "    user_identity_tokens ->\n    [\n";
   for (auto const &token : op.user_identity_tokens()) {
-    out << "        {\n"
-        << "            policy_id -> " << token.policy_id() << '\n'
-        << "            token_type -> " << token.token_type() << '\n'
-        << "            issued_token_type -> " << token.issued_token_type()
-        << '\n'
-        << "            issuer_endpoint_url -> " << token.issuer_endpoint_url()
-        << '\n'
-        << "            security_policy_uri -> " << token.security_policy_uri()
-        << '\n'
-        << "        }\n";
+      out << token;
+//    out << "        {\n"
+//        << "            policy_id -> " << token.policy_id() << '\n'
+//        << "            token_type -> " << token.token_type() << '\n'
+//        << "            issued_token_type -> " << token.issued_token_type()
+//        << '\n'
+//        << "            issuer_endpoint_url -> " << token.issuer_endpoint_url()
+//        << '\n'
+//        << "            security_policy_uri -> " << token.security_policy_uri()
+//        << '\n'
+//        << "        }\n";
   }
 
   out << "    ]\n}";
