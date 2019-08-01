@@ -19,14 +19,17 @@ using namespace open62541;
 using namespace nlohmann;
 
 BOOST_AUTO_TEST_CASE(test_endpoint_description) {
-  auto ua_server = common::make_ua_application_description();
-  auto app_desc = parser::from_open62541(ua_server);
-  auto ua_endpoint_desc = common::make_endpoint_description();
-  auto endpoint = parser::from_open62541(ua_endpoint_desc);
+//  auto ua_server = common::make_ua_application_description();
+//  auto app_desc = parser::from_open62541(ua_server);
+//  auto ua_endpoint_desc = common::make_endpoint_description();
+//  auto endpoint = parser::from_open62541(ua_endpoint_desc);
+
+    auto a = UA_ApplicationDescription_new();
+    UA_ApplicationDescription_init(a);
+  auto app_desc = parser::from_open62541(*a);
 
 
-
-//  BOOST_TEST_MESSAGE("Hello Test");
+  BOOST_TEST_MESSAGE("Hello Test");
 //  BOOST_TEST_MESSAGE("Endpoint url: " + parser::from_open62541(ua_desc.endpointUrl));
 //  auto desc = parser::from_open62541(ua_desc);
 //  auto test_tokens = std::vector<UserTokenPolicy>();
@@ -44,6 +47,11 @@ BOOST_AUTO_TEST_CASE(test_endpoint_description) {
 //  BOOST_CHECK_EQUAL(desc.server(), a);
 //  BOOST_REQUIRE(desc.security_mode() == MessageSecurityMode::None);
 //  BOOST_TEST(desc.security_level() == 'a');
+}
+
+BOOST_AUTO_TEST_CASE(test_another_test) {
+    BOOST_TEST(true);
+
 }
 
 #pragma clang diagnostic pop
