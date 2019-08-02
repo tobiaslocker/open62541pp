@@ -24,9 +24,10 @@ BOOST_AUTO_TEST_CASE(test_endpoint_description) {
 //  auto ua_endpoint_desc = common::make_endpoint_description();
 //  auto endpoint = parser::from_open62541(ua_endpoint_desc);
 
-    auto a = UA_ApplicationDescription_new();
-    UA_ApplicationDescription_init(a);
-  auto app_desc = parser::from_open62541(*a);
+//    auto a = UA_ApplicationDescription_new();
+//    UA_ApplicationDescription_init(a);
+  auto a = common::make_ua_application_description();
+  auto server = parser::from_open62541(*a);
 
 
   BOOST_TEST_MESSAGE("Hello Test");
