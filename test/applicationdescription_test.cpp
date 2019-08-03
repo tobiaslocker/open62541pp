@@ -28,21 +28,15 @@ BOOST_AUTO_TEST_CASE(test_default_constructor) {
 }
 
 BOOST_AUTO_TEST_CASE(test_constructor) {
-
   std::string application_uri = "app:uri:test:123";
   std::string m_product_uri = "prod:uri:test:456";
-  LocalizedText m_application_name = LocalizedText("en", "app-test-name");
+  LocalizedText m_application_name = LocalizedText("app-test-name", Locale("en"));
   ApplicationType m_application_type;
   std::string m_gateway_server_uri;
   std::string m_discovery_profile_uri;
   std::vector<std::string> m_discovery_urls;
-
 }
 
-BOOST_AUTO_TEST_CASE(test_comparison_operators) {
-
-}
-
-
+BOOST_AUTO_TEST_CASE(test_comparison_operators) {}
 
 #pragma clang diagnostic pop

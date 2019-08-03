@@ -29,11 +29,11 @@ inline LocalizedText from_open62541(UA_LocalizedText const &lt) {
 inline ApplicationDescription from_open62541(
     UA_ApplicationDescription const &ad) {
   std::vector<std::string> discovery_urls;
-//  if (ad.discoveryUrls) {
-//    for (size_t i = 0; i < ad.discoveryUrlsSize; ++i) {
-//      discovery_urls.push_back(from_open62541(ad.discoveryUrls[i]));
-//    }
-//  }
+  //  if (ad.discoveryUrls) {
+  //    for (size_t i = 0; i < ad.discoveryUrlsSize; ++i) {
+  //      discovery_urls.push_back(from_open62541(ad.discoveryUrls[i]));
+  //    }
+  //  }
   return ApplicationDescription(from_open62541(ad.applicationUri),
                                 from_open62541(ad.productUri),
                                 from_open62541(ad.applicationName),
@@ -44,7 +44,6 @@ inline ApplicationDescription from_open62541(
 }
 
 inline UserTokenPolicy from_open62541(UA_UserTokenPolicy const &up) {
-
   return UserTokenPolicy(from_open62541(up.policyId),
                          UserTokenType{up.tokenType},
                          from_open62541(up.issuedTokenType),
@@ -66,15 +65,15 @@ inline EndpointDescription from_open62541(UA_EndpointDescription const &ed) {
                              user_identity_tokens,
                              from_open62541(ed.transportProfileUri),
                              ed.securityLevel);
-//  return EndpointDescription(std::string(),//from_open62541(ed.endpointUrl),
-//                             ApplicationDescription(),//from_open62541(ed.server),
-//                             from_open62541(ed.serverCertificate),
-//                             MessageSecurityMode{ed.securityMode},
-//                             from_open62541(ed.securityPolicyUri),
-//                             user_identity_tokens,
-//                             from_open62541(ed.transportProfileUri),
-//                             ed.securityLevel);
-//    return EndpointDescription();
+  //  return EndpointDescription(std::string(),//from_open62541(ed.endpointUrl),
+  //                             ApplicationDescription(),//from_open62541(ed.server),
+  //                             from_open62541(ed.serverCertificate),
+  //                             MessageSecurityMode{ed.securityMode},
+  //                             from_open62541(ed.securityPolicyUri),
+  //                             user_identity_tokens,
+  //                             from_open62541(ed.transportProfileUri),
+  //                             ed.securityLevel);
+  //    return EndpointDescription();
 }
 
 inline Guid from_open62541(UA_Guid const &g) {

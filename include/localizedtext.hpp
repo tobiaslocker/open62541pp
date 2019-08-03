@@ -8,14 +8,15 @@
 namespace open62541 {
 
 class Locale {
-    std::string m_data;
-    bool m_empty = false;
-public:
-    Locale() : m_empty{true} {}
-    Locale(std::string const &locale) : m_data {locale} {}
-    std::string str() const { return m_data; }
-    bool empty() const {return m_empty; }
-    bool operator==(Locale const &rhs) const { return m_data == rhs.m_data; }
+  std::string m_data;
+  bool m_empty = false;
+
+ public:
+  Locale() : m_empty{true} {}
+  explicit Locale(std::string const &locale) : m_data{locale} {}
+  std::string str() const { return m_data; }
+  bool empty() const { return m_empty; }
+  bool operator==(Locale const &rhs) const { return m_data == rhs.m_data; }
   bool operator!=(Locale const &rhs) const { return m_data != rhs.m_data; }
 };
 
@@ -33,7 +34,7 @@ class LocalizedText {
   LocalizedText &operator=(LocalizedText const &);
 
   // TODO make types for text & locale
-//  LocalizedText(std::string const &text, std::string const &locale);
+  //  LocalizedText(std::string const &text, std::string const &locale);
   LocalizedText(std::string const &text, Locale const &locale);
 
   std::string text() const;

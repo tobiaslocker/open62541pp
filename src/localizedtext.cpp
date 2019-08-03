@@ -9,7 +9,7 @@ class LocalizedText::impl {
   bool m_empty = false;
 
  public:
-  impl() :m_empty{true} {}
+  impl() : m_empty{true} {}
 
   impl(std::string const &text, Locale const &locale)
       : m_text{text}, m_locale{locale} {}
@@ -43,7 +43,7 @@ LocalizedText &LocalizedText::operator=(LocalizedText const &op) {
   return *this;
 }
 
-LocalizedText::LocalizedText(std::string const &text,  Locale const &locale)
+LocalizedText::LocalizedText(std::string const &text, Locale const &locale)
     : d_ptr{std::make_unique<impl>(text, locale)} {}
 
 std::string LocalizedText::text() const { return d_ptr->text(); }

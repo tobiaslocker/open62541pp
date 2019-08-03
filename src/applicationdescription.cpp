@@ -14,7 +14,7 @@ class ApplicationDescription::impl {
   bool m_empty = false;
 
  public:
-  impl() : m_application_type{ApplicationType::Server}, m_empty {true}  {}
+  impl() : m_application_type{ApplicationType::Server}, m_empty{true} {}
 
   impl(std::string application_uri,
        std::string product_uri,
@@ -123,14 +123,10 @@ std::string ApplicationDescription::discovery_profile_uri() const {
 }
 
 std::vector<std::string> ApplicationDescription::discovery_urls() const {
-    return d_ptr->discovery_urls();
+  return d_ptr->discovery_urls();
 }
 
-bool ApplicationDescription::empty() const
-{
-    return d_ptr->empty();
-
-}
+bool ApplicationDescription::empty() const { return d_ptr->empty(); }
 
 bool ApplicationDescription::operator==(
     const ApplicationDescription &rhs) const {
