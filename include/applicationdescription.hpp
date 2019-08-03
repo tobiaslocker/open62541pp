@@ -40,6 +40,8 @@ class ApplicationDescription {
   std::string discovery_profile_uri() const;
   std::vector<std::string> discovery_urls() const;
 
+  bool empty() const;
+
   bool operator==(ApplicationDescription const &rhs) const;
   bool operator!=(ApplicationDescription const &rhs) const;
 };

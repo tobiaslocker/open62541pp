@@ -6,8 +6,10 @@ class LocalizedText::impl {
   std::string m_text;
   std::string m_locale;
 
+  bool m_empty = false;
+
  public:
-  impl() {}
+  impl() :m_empty{true} {}
 
   impl(std::string const &text, std::string const &locale)
       : m_text{text}, m_locale{locale} {}
@@ -15,6 +17,8 @@ class LocalizedText::impl {
   std::string text() const { return m_text; }
 
   std::string locale() const { return m_locale; }
+
+  bool empty() const { return m_empty; }
 
   bool operator==(impl const &rhs) const {
     return text() == rhs.text() && locale() == rhs.locale();
@@ -45,6 +49,8 @@ LocalizedText::LocalizedText(std::string const &text, std::string const &locale)
 std::string LocalizedText::text() const { return d_ptr->text(); }
 
 std::string LocalizedText::locale() const { return d_ptr->locale(); }
+
+bool LocalizedText::empty() const { return d_ptr->empty(); }
 
 bool LocalizedText::operator==(LocalizedText const &rhs) const {
   return *d_ptr == *rhs.d_ptr;

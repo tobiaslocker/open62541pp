@@ -11,9 +11,10 @@ class ApplicationDescription::impl {
   std::string m_gateway_server_uri;
   std::string m_discovery_profile_uri;
   std::vector<std::string> m_discovery_urls;
+  bool m_empty = false;
 
  public:
-  impl() {}
+  impl() : m_empty {true} {}
 
   impl(std::string application_uri,
        std::string product_uri,
@@ -43,6 +44,8 @@ class ApplicationDescription::impl {
   std::string discovery_profile_uri() const { return m_discovery_profile_uri; }
 
   std::vector<std::string> discovery_urls() const { return m_discovery_urls; }
+
+  bool empty() const { return m_empty; }
 
   bool operator==(const impl &rhs) const {
     return product_uri() == rhs.product_uri() &&
@@ -120,7 +123,13 @@ std::string ApplicationDescription::discovery_profile_uri() const {
 }
 
 std::vector<std::string> ApplicationDescription::discovery_urls() const {
-  return d_ptr->discovery_urls();
+    return d_ptr->discovery_urls();
+}
+
+bool ApplicationDescription::empty() const
+{
+    return d_ptr->empty();
+
 }
 
 bool ApplicationDescription::operator==(

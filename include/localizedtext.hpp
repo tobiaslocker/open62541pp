@@ -24,6 +24,7 @@ class LocalizedText {
 
   std::string text() const;
   std::string locale() const;
+  bool empty() const;
 
   bool operator==(LocalizedText const &rhs) const;
   bool operator!=(LocalizedText const &rhs) const;
