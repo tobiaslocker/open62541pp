@@ -20,6 +20,7 @@ class LocalizedText {
   LocalizedText(LocalizedText const &);
   LocalizedText &operator=(LocalizedText const &);
 
+  // TODO make types for text & locale
   LocalizedText(std::string const &text, std::string const &locale);
 
   std::string text() const;
