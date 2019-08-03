@@ -23,7 +23,7 @@ BOOST_AUTO_TEST_CASE(test_default_constructor) {
   BOOST_TEST(a_empty.application_uri().empty());
   BOOST_TEST(a_empty.product_uri().empty());
   BOOST_TEST(a_empty.application_name().empty());
-//  BOOST_TEST(a_empty.application_type().empty());
+  BOOST_TEST(a_empty.application_type() == ApplicationType::Server);
   BOOST_TEST(a_empty.gateway_server_uri().empty());
   BOOST_TEST(a_empty.discovery_profile_uri().empty());
   BOOST_TEST(a_empty.discovery_urls().empty());

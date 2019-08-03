@@ -14,7 +14,7 @@ class ApplicationDescription::impl {
   bool m_empty = false;
 
  public:
-  impl() : m_empty {true} {}
+  impl() : m_application_type{ApplicationType::Server}, m_empty {true}  {}
 
   impl(std::string application_uri,
        std::string product_uri,
