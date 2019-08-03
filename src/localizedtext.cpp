@@ -4,19 +4,19 @@ namespace open62541 {
 
 class LocalizedText::impl {
   std::string m_text;
-  std::string m_locale;
+  Locale m_locale;
 
   bool m_empty = false;
 
  public:
   impl() :m_empty{true} {}
 
-  impl(std::string const &text, std::string const &locale)
+  impl(std::string const &text, Locale const &locale)
       : m_text{text}, m_locale{locale} {}
 
   std::string text() const { return m_text; }
 
-  std::string locale() const { return m_locale; }
+  Locale locale() const { return m_locale; }
 
   bool empty() const { return m_empty; }
 
@@ -43,12 +43,12 @@ LocalizedText &LocalizedText::operator=(LocalizedText const &op) {
   return *this;
 }
 
-LocalizedText::LocalizedText(std::string const &text, std::string const &locale)
+LocalizedText::LocalizedText(std::string const &text,  Locale const &locale)
     : d_ptr{std::make_unique<impl>(text, locale)} {}
 
 std::string LocalizedText::text() const { return d_ptr->text(); }
 
-std::string LocalizedText::locale() const { return d_ptr->locale(); }
+Locale LocalizedText::locale() const { return d_ptr->locale(); }
 
 bool LocalizedText::empty() const { return d_ptr->empty(); }
 
