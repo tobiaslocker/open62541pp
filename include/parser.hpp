@@ -23,7 +23,8 @@ inline std::string from_open62541(UA_String const &str) {
 }
 
 inline LocalizedText from_open62541(UA_LocalizedText const &lt) {
-  return LocalizedText(from_open62541(lt.text), from_open62541(lt.locale));
+  return LocalizedText(Text(from_open62541(lt.text)),
+                       Locale(from_open62541(lt.locale)));
 }
 
 inline ApplicationDescription from_open62541(
@@ -219,7 +220,7 @@ inline json to_json(ApplicationDescription const &ad) {
   json app_description;
   app_description["ApplicationUri"] = ad.application_uri();
   app_description["ProductUri"] = ad.product_uri();
-  app_description["ApplicationName"] = ad.application_name().text();
+  app_description["ApplicationName"] = ad.application_name().text().str();
   switch (ad.application_type()) {
     case ApplicationType::Server:
       app_description["ApplicationType"] = "Server";

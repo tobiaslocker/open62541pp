@@ -3,7 +3,7 @@
 namespace open62541 {
 
 class LocalizedText::impl {
-  std::string m_text;
+  Text m_text;
   Locale m_locale;
 
   bool m_empty = false;
@@ -11,10 +11,10 @@ class LocalizedText::impl {
  public:
   impl() : m_empty{true} {}
 
-  impl(std::string const &text, Locale const &locale)
+  impl(Text const &text, Locale const &locale)
       : m_text{text}, m_locale{locale} {}
 
-  std::string text() const { return m_text; }
+  Text text() const { return m_text; }
 
   Locale locale() const { return m_locale; }
 
@@ -43,10 +43,10 @@ LocalizedText &LocalizedText::operator=(LocalizedText const &op) {
   return *this;
 }
 
-LocalizedText::LocalizedText(std::string const &text, Locale const &locale)
+LocalizedText::LocalizedText(Text const &text, Locale const &locale)
     : d_ptr{std::make_unique<impl>(text, locale)} {}
 
-std::string LocalizedText::text() const { return d_ptr->text(); }
+Text LocalizedText::text() const { return d_ptr->text(); }
 
 Locale LocalizedText::locale() const { return d_ptr->locale(); }
 

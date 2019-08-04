@@ -20,6 +20,19 @@ class Locale {
   bool operator!=(Locale const &rhs) const { return m_data != rhs.m_data; }
 };
 
+class Text {
+  std::string m_data;
+  bool m_empty = false;
+
+ public:
+  Text() : m_empty{true} {}
+  explicit Text(std::string const &text) : m_data{text} {}
+  std::string str() const { return m_data; }
+  bool empty() const { return m_empty; }
+  bool operator==(Text const &rhs) const { return m_data == rhs.m_data; }
+  bool operator!=(Text const &rhs) const { return m_data != rhs.m_data; }
+};
+
 class LocalizedText {
   class impl;
   std::unique_ptr<impl> d_ptr;
@@ -33,11 +46,9 @@ class LocalizedText {
   LocalizedText(LocalizedText const &);
   LocalizedText &operator=(LocalizedText const &);
 
-  // TODO make types for text & locale
-  //  LocalizedText(std::string const &text, std::string const &locale);
-  LocalizedText(std::string const &text, Locale const &locale);
+  LocalizedText(Text const &text, Locale const &locale);
 
-  std::string text() const;
+  Text text() const;
   Locale locale() const;
   bool empty() const;
 
