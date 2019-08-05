@@ -60,16 +60,6 @@ bool LocalizedText::operator!=(LocalizedText const &rhs) const {
     return *d_ptr != *rhs.d_ptr;
 }
 
-std::ostream &operator<<(std::ostream &out, const LocalizedText &op) {
-
-  out << "{\n"
-      << "    locale -> " << op.locale()
-      << "    text -> " << op.text();
-
-  out << "    ]\n}";
-  return out;
-}
-
 Locale::Locale() : m_empty{true} {}
 
 Locale::Locale(const std::string &locale) : m_data{locale} {}
@@ -82,11 +72,11 @@ bool Locale::operator==(const Locale &rhs) const { return m_data == rhs.m_data; 
 
 bool Locale::operator!=(const Locale &rhs) const { return m_data != rhs.m_data; }
 
-std::ostream &operator<<(std::ostream &out, const Locale &op)
-{
-    out << op.str();
-    return out;
-}
+//std::ostream &operator<<(std::ostream &out, const Locale &op)
+//{
+//    out << op.str();
+//    return out;
+//}
 
 Text::Text() : m_empty{true} {}
 
@@ -104,6 +94,17 @@ std::ostream &operator<<(std::ostream &out, const Text &op)
 {
     out << op.str();
     return out;
+}
+
+std::ostream &operator<<(std::ostream &out, const LocalizedText &op) {
+
+//      << "    locale -> " << op.locale()
+//      << "    text -> " << op.text();
+
+//  out << "    ]\n}";
+    out << "{\n     text -> " + op.text().str() +
+           "    locale -> " + op.locale().str() + "\n}";
+  return out;
 }
 
 }  // namespace open62541
