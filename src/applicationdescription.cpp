@@ -1,6 +1,8 @@
 #include "applicationdescription.hpp"
 #include "parser.hpp"
 
+#include <iomanip>
+
 namespace open62541 {
 
 class ApplicationDescription::impl {
@@ -141,18 +143,18 @@ bool ApplicationDescription::operator==(
 
 bool ApplicationDescription::operator!=(
     const ApplicationDescription &rhs) const {
-    return *d_ptr != *rhs.d_ptr;
+  return *d_ptr != *rhs.d_ptr;
 }
 
 std::ostream &operator<<(std::ostream &out, const ApplicationDescription &op) {
-
-  out << op.application_uri() << ", " << op.product_uri() << ", " << op.application_name();
-//  op.application_type() + ", "
-//  op.gateway_server_uri() + ", "
-//  op.discovery_profile_uri() + ", "
-//  op.discovery_urls() + ", "
-
-
+  out << '{' << std::quoted(op.application_uri()) << ", "
+      << std::quoted(op.product_uri()) << ", " << op.application_name() << ", "
+      << op.application_type() << ", " << std::quoted(op.gateway_server_uri())
+      << ", " << std::quoted(op.discovery_profile_uri()) << ", [";
+  for (auto const &url : op.discovery_urls()) {
+    out << std::quoted(url) << ", ";
+  }
+  out << "]}";
   return out;
 }
 

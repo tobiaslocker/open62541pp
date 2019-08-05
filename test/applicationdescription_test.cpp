@@ -1,19 +1,14 @@
-#define BOOST_TEST_MODULE "open62541_cpp_wrapper"
+#define BOOST_TEST_MODULE "open62541pp"
 
 #include <boost/test/included/unit_test.hpp>
 
-#include <nlohmann/json.hpp>
-#include "open62541.h"
-
 #include "applicationdescription.hpp"
-#include "parser.hpp"
 
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdisabled-macro-expansion"
 #pragma clang diagnostic ignored "-Wwritable-strings"
 
 using namespace open62541;
-using namespace nlohmann;
 
 BOOST_AUTO_TEST_CASE(test_move_constructor) {
   ApplicationDescription a;

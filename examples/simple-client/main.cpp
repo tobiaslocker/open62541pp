@@ -1,3 +1,4 @@
+#include <iostream>
 #include "client.hpp"
 
 using namespace open62541;
@@ -22,4 +23,8 @@ int main() {
   Client client(std::move(handler));
   client.connect(url);
   auto endpoints = client.get_endpoints(url);
+
+  auto e = endpoints.at(0).server();
+
+  std::cout << e << '\n';
 }

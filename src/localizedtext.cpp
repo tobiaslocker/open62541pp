@@ -1,5 +1,7 @@
 #include "localizedtext.hpp"
 
+#include <iomanip>
+
 namespace open62541 {
 
 class LocalizedText::impl {
@@ -103,8 +105,8 @@ std::ostream &operator<<(std::ostream &out, const Text &op) {
 }
 
 std::ostream &operator<<(std::ostream &out, const LocalizedText &op) {
-  out << "{\n     text -> " + op.text().str() + "\n    locale -> " +
-             op.locale().str() + "\n}";
+  out << '{' << std::quoted(op.locale().str()) << ", "
+      << std::quoted(op.text().str()) << '}';
   return out;
 }
 
