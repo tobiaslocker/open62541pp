@@ -11,7 +11,7 @@ class LocalizedText::impl {
  public:
   impl() : m_empty{true} {}
 
-  impl(Text const &text, Locale const &locale)
+  impl(Locale const &locale, Text const &text)
       : m_text{text}, m_locale{locale} {}
 
   Text text() const { return m_text; }
@@ -43,8 +43,8 @@ LocalizedText &LocalizedText::operator=(LocalizedText const &op) {
   return *this;
 }
 
-LocalizedText::LocalizedText(Text const &text, Locale const &locale)
-    : d_ptr{std::make_unique<impl>(text, locale)} {}
+LocalizedText::LocalizedText(Locale const &locale, Text const &text)
+    : d_ptr{std::make_unique<impl>(locale, text)} {}
 
 Text LocalizedText::text() const { return d_ptr->text(); }
 
@@ -57,7 +57,53 @@ bool LocalizedText::operator==(LocalizedText const &rhs) const {
 }
 
 bool LocalizedText::operator!=(LocalizedText const &rhs) const {
-  return *d_ptr != *rhs.d_ptr;
+    return *d_ptr != *rhs.d_ptr;
+}
+
+std::ostream &operator<<(std::ostream &out, const LocalizedText &op) {
+
+  out << "{\n"
+      << "    locale -> " << op.locale()
+      << "    text -> " << op.text();
+
+  out << "    ]\n}";
+  return out;
+}
+
+Locale::Locale() : m_empty{true} {}
+
+Locale::Locale(const std::string &locale) : m_data{locale} {}
+
+std::string Locale::str() const { return m_data; }
+
+bool Locale::empty() const { return m_empty; }
+
+bool Locale::operator==(const Locale &rhs) const { return m_data == rhs.m_data; }
+
+bool Locale::operator!=(const Locale &rhs) const { return m_data != rhs.m_data; }
+
+std::ostream &operator<<(std::ostream &out, const Locale &op)
+{
+    out << op.str();
+    return out;
+}
+
+Text::Text() : m_empty{true} {}
+
+Text::Text(const std::string &text) : m_data{text} {}
+
+std::string Text::str() const { return m_data; }
+
+bool Text::empty() const { return m_empty; }
+
+bool Text::operator==(const Text &rhs) const { return m_data == rhs.m_data; }
+
+bool Text::operator!=(const Text &rhs) const { return m_data != rhs.m_data; }
+
+std::ostream &operator<<(std::ostream &out, const Text &op)
+{
+    out << op.str();
+    return out;
 }
 
 }  // namespace open62541

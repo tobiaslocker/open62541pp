@@ -23,8 +23,8 @@ inline std::string from_open62541(UA_String const &str) {
 }
 
 inline LocalizedText from_open62541(UA_LocalizedText const &lt) {
-  return LocalizedText(Text(from_open62541(lt.text)),
-                       Locale(from_open62541(lt.locale)));
+  return LocalizedText(Locale(from_open62541(lt.locale)),
+                       Text(from_open62541(lt.text)));
 }
 
 inline ApplicationDescription from_open62541(
@@ -216,6 +216,7 @@ inline json to_json(NodeId const &ni) {
   }
   return j;
 }
+
 inline json to_json(ApplicationDescription const &ad) {
   json app_description;
   app_description["ApplicationUri"] = ad.application_uri();

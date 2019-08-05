@@ -12,26 +12,30 @@ class Locale {
   bool m_empty = false;
 
  public:
-  Locale() : m_empty{true} {}
-  explicit Locale(std::string const &locale) : m_data{locale} {}
-  std::string str() const { return m_data; }
-  bool empty() const { return m_empty; }
-  bool operator==(Locale const &rhs) const { return m_data == rhs.m_data; }
-  bool operator!=(Locale const &rhs) const { return m_data != rhs.m_data; }
+  Locale();
+  explicit Locale(std::string const &locale);
+  std::string str() const;
+  bool empty() const;
+  bool operator==(Locale const &rhs) const;
+  bool operator!=(Locale const &rhs) const;
 };
+
+std::ostream &operator<<(std::ostream &out, Locale const &op);
 
 class Text {
   std::string m_data;
   bool m_empty = false;
 
  public:
-  Text() : m_empty{true} {}
-  explicit Text(std::string const &text) : m_data{text} {}
-  std::string str() const { return m_data; }
-  bool empty() const { return m_empty; }
-  bool operator==(Text const &rhs) const { return m_data == rhs.m_data; }
-  bool operator!=(Text const &rhs) const { return m_data != rhs.m_data; }
+  Text();
+  explicit Text(std::string const &text);
+  std::string str() const;
+  bool empty() const;
+  bool operator==(Text const &rhs) const;
+  bool operator!=(Text const &rhs) const;
 };
+
+std::ostream &operator<<(std::ostream &out, Text const &op);
 
 class LocalizedText {
   class impl;
@@ -46,7 +50,7 @@ class LocalizedText {
   LocalizedText(LocalizedText const &);
   LocalizedText &operator=(LocalizedText const &);
 
-  LocalizedText(Text const &text, Locale const &locale);
+  LocalizedText(Locale const &locale, Text const &text);
 
   Text text() const;
   Locale locale() const;
@@ -56,6 +60,7 @@ class LocalizedText {
   bool operator!=(LocalizedText const &rhs) const;
 };
 
+std::ostream &operator<<(std::ostream &out, LocalizedText const &op);
 }  // namespace open62541
 
 #endif  // OPEN62541_CPP_WRAPPER_LOCALIZED_TEXT_H
