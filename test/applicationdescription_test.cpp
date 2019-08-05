@@ -115,11 +115,11 @@ BOOST_AUTO_TEST_CASE(test_constructor) {
 }
 
 BOOST_AUTO_TEST_CASE(test_comparison_operators) {
-    auto a = make_application_description_1();
-    auto a1 = make_application_description_1();
-    auto b = make_application_description_2();
-    BOOST_TEST(a != b);
-    BOOST_TEST(a == a1);
+  auto a = make_application_description_1();
+  auto a1 = make_application_description_1();
+  auto b = make_application_description_2();
+  BOOST_TEST(a != b);
+  BOOST_TEST(a == a1);
 }
 
 #pragma clang diagnostic pop

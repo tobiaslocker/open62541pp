@@ -57,11 +57,11 @@ class ApplicationDescription::impl {
   }
 
   bool operator!=(const impl &rhs) const {
-    return product_uri() != rhs.product_uri() &&
-           discovery_urls() != rhs.discovery_urls() &&
-           application_uri() != rhs.application_uri() &&
-           application_name() != rhs.application_name() &&
-           application_type() != rhs.application_type() &&
+    return product_uri() != rhs.product_uri() ||
+           discovery_urls() != rhs.discovery_urls() ||
+           application_uri() != rhs.application_uri() ||
+           application_name() != rhs.application_name() ||
+           application_type() != rhs.application_type() ||
            gateway_server_uri() != rhs.gateway_server_uri();
   }
 };
@@ -141,7 +141,19 @@ bool ApplicationDescription::operator==(
 
 bool ApplicationDescription::operator!=(
     const ApplicationDescription &rhs) const {
-  return *d_ptr != *rhs.d_ptr;
+    return *d_ptr != *rhs.d_ptr;
+}
+
+std::ostream &operator<<(std::ostream &out, const ApplicationDescription &op) {
+
+  out << op.application_uri() << ", " << op.product_uri() << ", " << op.application_name();
+//  op.application_type() + ", "
+//  op.gateway_server_uri() + ", "
+//  op.discovery_profile_uri() + ", "
+//  op.discovery_urls() + ", "
+
+
+  return out;
 }
 
 }  // namespace open62541
