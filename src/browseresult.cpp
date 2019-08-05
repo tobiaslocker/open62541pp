@@ -30,8 +30,8 @@ class BrowseResult::impl {
   }
 
   bool operator!=(impl const &rhs) const {
-    return status_code() != rhs.status_code() &&
-           continuation_point() != rhs.continuation_point() &&
+    return status_code() != rhs.status_code() ||
+           continuation_point() != rhs.continuation_point() ||
            references() != rhs.references();
   }
 };

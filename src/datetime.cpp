@@ -94,10 +94,10 @@ class DateTime::impl {
   }
 
   bool operator!=(impl const &rhs) const {
-    return nano_sec() != rhs.nano_sec() && micro_sec() != rhs.micro_sec() &&
-           milli_sec() != rhs.milli_sec() && sec() != rhs.sec() &&
-           min() != rhs.min() && hour() != rhs.hour() && day() != rhs.day() &&
-           month() != rhs.month() && year() != rhs.year() &&
+    return nano_sec() != rhs.nano_sec() || micro_sec() != rhs.micro_sec() ||
+           milli_sec() != rhs.milli_sec() || sec() != rhs.sec() ||
+           min() != rhs.min() || hour() != rhs.hour() || day() != rhs.day() ||
+           month() != rhs.month() || year() != rhs.year() ||
            ldap_timestamp() != rhs.ldap_timestamp();
   }
 };

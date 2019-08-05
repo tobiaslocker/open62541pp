@@ -48,11 +48,11 @@ class BrowseDescription::impl {
   }
 
   bool operator!=(impl const &rhs) const {
-    return node_id() != rhs.node_id() &&
-           browse_direction() != rhs.browse_direction() &&
-           reference_type_id() != rhs.reference_type_id() &&
-           include_subtypes() != rhs.include_subtypes() &&
-           node_class_mask() != rhs.node_class_mask() &&
+    return node_id() != rhs.node_id() ||
+           browse_direction() != rhs.browse_direction() ||
+           reference_type_id() != rhs.reference_type_id() ||
+           include_subtypes() != rhs.include_subtypes() ||
+           node_class_mask() != rhs.node_class_mask() ||
            result_mask() != rhs.result_mask();
   }
 };

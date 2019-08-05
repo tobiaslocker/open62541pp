@@ -25,7 +25,7 @@ class LocalizedText::impl {
   }
 
   bool operator!=(impl const &rhs) const {
-    return text() != rhs.text() && locale() != rhs.locale();
+    return text() != rhs.text() || locale() != rhs.locale();
   }
 };
 

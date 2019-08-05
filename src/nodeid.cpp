@@ -30,7 +30,7 @@ class NodeId::impl {
   }
 
   bool operator!=(impl const &rhs) const {
-    return identifier() != rhs.identifier() &&
+    return identifier() != rhs.identifier() ||
            namespace_index() != rhs.namespace_index();
   }
 };

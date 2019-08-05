@@ -28,8 +28,8 @@ class ExpandedNodeId::impl {
   }
 
   bool operator!=(impl const &rhs) const {
-    return namespace_uri() != rhs.namespace_uri() &&
-           node_id() != rhs.node_id() && server_index() != rhs.server_index();
+    return namespace_uri() != rhs.namespace_uri() ||
+           node_id() != rhs.node_id() || server_index() != rhs.server_index();
   }
 };
 

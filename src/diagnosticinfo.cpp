@@ -96,19 +96,19 @@ class DiagnosticInfo::impl {
   }
 
   bool operator!=(impl const &rhs) const {
-    return has_symbolic_id() != rhs.has_symbolic_id() &&
-           has_namespace_uri() != rhs.has_namespace_uri() &&
-           has_localized_text() != rhs.has_localized_text() &&
-           has_locale() != rhs.has_locale() &&
-           has_additional_info() != rhs.has_additional_info() &&
-           has_inner_status_code() != rhs.has_inner_status_code() &&
-           has_inner_diagnostic_info() != rhs.has_inner_diagnostic_info() &&
-           symbolic_id() != rhs.symbolic_id() &&
-           namespace_uri() != rhs.namespace_uri() &&
-           localized_text() != rhs.localized_text() &&
-           locale() != rhs.locale() &&
-           additional_info() != rhs.additional_info() &&
-           inner_status_code() != rhs.inner_status_code() &&
+    return has_symbolic_id() != rhs.has_symbolic_id() ||
+           has_namespace_uri() != rhs.has_namespace_uri() ||
+           has_localized_text() != rhs.has_localized_text() ||
+           has_locale() != rhs.has_locale() ||
+           has_additional_info() != rhs.has_additional_info() ||
+           has_inner_status_code() != rhs.has_inner_status_code() ||
+           has_inner_diagnostic_info() != rhs.has_inner_diagnostic_info() ||
+           symbolic_id() != rhs.symbolic_id() ||
+           namespace_uri() != rhs.namespace_uri() ||
+           localized_text() != rhs.localized_text() ||
+           locale() != rhs.locale() ||
+           additional_info() != rhs.additional_info() ||
+           inner_status_code() != rhs.inner_status_code() ||
            inner_diagnostic_info() != rhs.inner_diagnostic_info();
   }
 };

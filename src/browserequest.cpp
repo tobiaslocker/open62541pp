@@ -36,8 +36,8 @@ class BrowseRequest::impl {
   }
 
   bool operator!=(impl const &rhs) const {
-    return request_header() != rhs.request_header() && view() != rhs.view() &&
-           max_references() != rhs.max_references() &&
+    return request_header() != rhs.request_header() || view() != rhs.view() ||
+           max_references() != rhs.max_references() ||
            nodes_to_browse() != rhs.nodes_to_browse();
   }
 };

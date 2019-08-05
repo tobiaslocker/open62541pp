@@ -32,8 +32,8 @@ class BrowseResponse::impl {
   }
 
   bool operator!=(impl const &rhs) const {
-    return response_header() != rhs.response_header() &&
-           results() != rhs.results() &&
+    return response_header() != rhs.response_header() ||
+           results() != rhs.results() ||
            diagnostic_infos() != rhs.diagnostic_infos();
   }
 };

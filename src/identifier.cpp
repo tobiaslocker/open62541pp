@@ -17,8 +17,6 @@ class Identifier::impl {
 
   impl(Guid const &guid) : m_guid{guid} {}
 
-  //  impl(ByteString const &byte_string) : m_byte_string{byte_string} {}
-
   std::string string() const { return m_string; }
 
   std::string byte_string() const { return m_string; }
@@ -32,7 +30,7 @@ class Identifier::impl {
   }
 
   bool operator!=(impl const &rhs) const {
-    return string() != rhs.string() && numeric() != rhs.numeric();
+    return string() != rhs.string() || numeric() != rhs.numeric();
   }
 };
 

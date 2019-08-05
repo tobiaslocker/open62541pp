@@ -20,7 +20,7 @@ class QualifiedName::impl {
   }
 
   bool operator!=(impl const &rhs) const {
-    return name() != rhs.name() && namespace_index() != rhs.namespace_index();
+    return name() != rhs.name() || namespace_index() != rhs.namespace_index();
   }
 };
 

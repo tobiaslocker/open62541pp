@@ -54,12 +54,12 @@ class RequestHeader::impl {
   }
 
   bool operator!=(impl const &rhs) const {
-    return authentication_token() != rhs.authentication_token() &&
-           timestamp() != rhs.timestamp() &&
-           request_handle() != rhs.request_handle() &&
-           return_diagnostics() != rhs.return_diagnostics() &&
-           audit_entry_id() != rhs.audit_entry_id() &&
-           timeout_hint() != rhs.timeout_hint() &&
+    return authentication_token() != rhs.authentication_token() ||
+           timestamp() != rhs.timestamp() ||
+           request_handle() != rhs.request_handle() ||
+           return_diagnostics() != rhs.return_diagnostics() ||
+           audit_entry_id() != rhs.audit_entry_id() ||
+           timeout_hint() != rhs.timeout_hint() ||
            additional_header() != rhs.additional_header();
   }
 };

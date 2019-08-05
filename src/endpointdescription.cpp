@@ -59,12 +59,12 @@ class EndpointDescription::impl {
   }
 
   bool operator!=(impl const &rhs) const {
-    return endpoint_url() != rhs.endpoint_url() && server() != rhs.server() &&
-           server_certificate() != rhs.server_certificate() &&
-           security_mode() != rhs.security_mode() &&
-           security_policy_uri() != rhs.security_policy_uri() &&
-           user_identity_tokens() != rhs.user_identity_tokens() &&
-           transport_profile_uri() != rhs.transport_profile_uri() &&
+    return endpoint_url() != rhs.endpoint_url() || server() != rhs.server() ||
+           server_certificate() != rhs.server_certificate() ||
+           security_mode() != rhs.security_mode() ||
+           security_policy_uri() != rhs.security_policy_uri() ||
+           user_identity_tokens() != rhs.user_identity_tokens() ||
+           transport_profile_uri() != rhs.transport_profile_uri() ||
            security_level() != rhs.security_level();
   }
 };
