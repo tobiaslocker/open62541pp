@@ -49,7 +49,40 @@ BOOST_AUTO_TEST_CASE(test_default_constructor) {
   BOOST_TEST(a_empty.discovery_urls().empty());
 }
 
+ApplicationDescription make_application_description_1() {
+  std::string application_uri = "app:uri:test:123";
+  std::string product_uri = "prod:uri:test:456";
+  LocalizedText application_name =
+      LocalizedText(Locale("en"), Text("app-test-name"));
+  ApplicationType application_type = ApplicationType::Client;
+  std::string gateway_server_uri = "gateway:server:uri";
+  std::string discovery_profile_uri = "discovery:profile:uri";
+  std::vector<std::string> discovery_urls = {"url-1", "url-2"};
+
+  return ApplicationDescription(application_uri,
+                                product_uri,
+                                application_name,
+                                application_type,
+                                gateway_server_uri,
+                                discovery_profile_uri,
+                                discovery_urls);
+}
+
 BOOST_AUTO_TEST_CASE(test_constructor) {
+  auto a = make_application_description_1();
+
+  BOOST_TEST(a.application_uri() == "app:uri:test:123");
+  BOOST_TEST(a.product_uri() == "prod:uri:test:456");
+  BOOST_TEST(a.application_name() ==
+             LocalizedText(Locale("en"), Text("app-test-name")));
+  BOOST_TEST(a.application_type() == ApplicationType::Client);
+  BOOST_TEST(a.gateway_server_uri() == "gateway:server:uri");
+  BOOST_TEST(a.discovery_profile_uri() == "discovery:profile:uri");
+  //  BOOST_TEST(a.discovery_urls() == discovery_urls);
+  //  "url-1", "url-2";
+}
+
+BOOST_AUTO_TEST_CASE(test_comparison_operators) {
   std::string application_uri = "app:uri:test:123";
   std::string product_uri = "prod:uri:test:456";
   LocalizedText application_name =
@@ -66,16 +99,6 @@ BOOST_AUTO_TEST_CASE(test_constructor) {
                                   gateway_server_uri,
                                   discovery_profile_uri,
                                   discovery_urls);
-
-  BOOST_TEST(a.application_uri() == application_uri);
-  BOOST_TEST(a.product_uri() == product_uri);
-  BOOST_TEST(a.application_name() == application_name);
-  BOOST_TEST(a.application_type() == application_type);
-  BOOST_TEST(a.gateway_server_uri() == gateway_server_uri);
-  BOOST_TEST(a.discovery_profile_uri() == discovery_profile_uri);
-  BOOST_TEST(a.discovery_urls() == discovery_urls);
 }
-
-BOOST_AUTO_TEST_CASE(test_comparison_operators) {}
 
 #pragma clang diagnostic pop
