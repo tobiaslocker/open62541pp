@@ -85,6 +85,12 @@ ApplicationDescription::ApplicationDescription(
 ApplicationDescription::ApplicationDescription()
     : d_ptr{std::make_unique<impl>()} {}
 
+ApplicationDescription &ApplicationDescription::operator=(
+    ApplicationDescription &&) noexcept = default;
+
+ApplicationDescription::ApplicationDescription(
+    ApplicationDescription &&) noexcept = default;
+
 ApplicationDescription::~ApplicationDescription() = default;
 
 ApplicationDescription::ApplicationDescription(ApplicationDescription const &op)

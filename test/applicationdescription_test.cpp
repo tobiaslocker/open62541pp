@@ -15,6 +15,28 @@
 using namespace open62541;
 using namespace nlohmann;
 
+BOOST_AUTO_TEST_CASE(test_move_constructor) {
+  ApplicationDescription a;
+  ApplicationDescription b(std::move(a));
+}
+
+BOOST_AUTO_TEST_CASE(test_move_assignment) {
+  ApplicationDescription a;
+  ApplicationDescription b;
+  b = std::move(a);
+}
+
+BOOST_AUTO_TEST_CASE(test_copy_constructor) {
+  ApplicationDescription a;
+  ApplicationDescription b(a);
+}
+
+BOOST_AUTO_TEST_CASE(test_copy_assignment) {
+  ApplicationDescription a;
+  ApplicationDescription b;
+  b = a;
+}
+
 BOOST_AUTO_TEST_CASE(test_default_constructor) {
   ApplicationDescription const a_empty;
   BOOST_TEST(a_empty.empty());
@@ -37,21 +59,21 @@ BOOST_AUTO_TEST_CASE(test_constructor) {
   std::string discovery_profile_uri = "discovery:profile:uri";
   std::vector<std::string> discovery_urls = {"url-1", "url-2"};
 
-  auto ad = ApplicationDescription(application_uri,
-                                   product_uri,
-                                   application_name,
-                                   application_type,
-                                   gateway_server_uri,
-                                   discovery_profile_uri,
-                                   discovery_urls);
+  auto a = ApplicationDescription(application_uri,
+                                  product_uri,
+                                  application_name,
+                                  application_type,
+                                  gateway_server_uri,
+                                  discovery_profile_uri,
+                                  discovery_urls);
 
-  BOOST_TEST(ad.application_uri() == application_uri);
-  BOOST_TEST(ad.product_uri() == product_uri);
-  BOOST_TEST(ad.application_name() == application_name);
-  BOOST_TEST(ad.application_type() == application_type);
-  BOOST_TEST(ad.gateway_server_uri() == gateway_server_uri);
-  BOOST_TEST(ad.discovery_profile_uri() == discovery_profile_uri);
-  BOOST_TEST(ad.discovery_urls() == discovery_urls);
+  BOOST_TEST(a.application_uri() == application_uri);
+  BOOST_TEST(a.product_uri() == product_uri);
+  BOOST_TEST(a.application_name() == application_name);
+  BOOST_TEST(a.application_type() == application_type);
+  BOOST_TEST(a.gateway_server_uri() == gateway_server_uri);
+  BOOST_TEST(a.discovery_profile_uri() == discovery_profile_uri);
+  BOOST_TEST(a.discovery_urls() == discovery_urls);
 }
 
 BOOST_AUTO_TEST_CASE(test_comparison_operators) {}
