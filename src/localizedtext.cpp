@@ -31,6 +31,10 @@ class LocalizedText::impl {
 
 LocalizedText::LocalizedText() : d_ptr{std::make_unique<impl>()} {}
 
+LocalizedText &LocalizedText::operator=(LocalizedText &&) noexcept = default;
+
+LocalizedText::LocalizedText(LocalizedText &&) noexcept = default;
+
 LocalizedText::~LocalizedText() = default;
 
 LocalizedText::LocalizedText(LocalizedText const &op)
@@ -57,7 +61,7 @@ bool LocalizedText::operator==(LocalizedText const &rhs) const {
 }
 
 bool LocalizedText::operator!=(LocalizedText const &rhs) const {
-    return *d_ptr != *rhs.d_ptr;
+  return *d_ptr != *rhs.d_ptr;
 }
 
 Locale::Locale() : m_empty{true} {}
@@ -68,15 +72,18 @@ std::string Locale::str() const { return m_data; }
 
 bool Locale::empty() const { return m_empty; }
 
-bool Locale::operator==(const Locale &rhs) const { return m_data == rhs.m_data; }
+bool Locale::operator==(const Locale &rhs) const {
+  return m_data == rhs.m_data;
+}
 
-bool Locale::operator!=(const Locale &rhs) const { return m_data != rhs.m_data; }
+bool Locale::operator!=(const Locale &rhs) const {
+  return m_data != rhs.m_data;
+}
 
-//std::ostream &operator<<(std::ostream &out, const Locale &op)
-//{
-//    out << op.str();
-//    return out;
-//}
+std::ostream &operator<<(std::ostream &out, const Locale &op) {
+  out << op.str();
+  return out;
+}
 
 Text::Text() : m_empty{true} {}
 
@@ -90,20 +97,14 @@ bool Text::operator==(const Text &rhs) const { return m_data == rhs.m_data; }
 
 bool Text::operator!=(const Text &rhs) const { return m_data != rhs.m_data; }
 
-std::ostream &operator<<(std::ostream &out, const Text &op)
-{
-    out << op.str();
-    return out;
+std::ostream &operator<<(std::ostream &out, const Text &op) {
+  out << op.str();
+  return out;
 }
 
 std::ostream &operator<<(std::ostream &out, const LocalizedText &op) {
-
-//      << "    locale -> " << op.locale()
-//      << "    text -> " << op.text();
-
-//  out << "    ]\n}";
-    out << "{\n     text -> " + op.text().str() +
-           "    locale -> " + op.locale().str() + "\n}";
+  out << "{\n     text -> " + op.text().str() + "\n    locale -> " +
+             op.locale().str() + "\n}";
   return out;
 }
 

@@ -35,7 +35,7 @@ class Text {
   bool operator!=(Text const &rhs) const;
 };
 
-//std::ostream &operator<<(std::ostream &out, Text const &op);
+std::ostream &operator<<(std::ostream &out, Text const &op);
 
 class LocalizedText {
   class impl;

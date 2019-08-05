@@ -38,12 +38,12 @@ BOOST_AUTO_TEST_CASE(test_constructor) {
   std::vector<std::string> discovery_urls = {"url-1", "url-2"};
 
   auto ad = ApplicationDescription(application_uri,
-                         product_uri,
-                         application_name,
-                         application_type,
-                         gateway_server_uri,
-                         discovery_profile_uri,
-                         discovery_urls);
+                                   product_uri,
+                                   application_name,
+                                   application_type,
+                                   gateway_server_uri,
+                                   discovery_profile_uri,
+                                   discovery_urls);
 
   BOOST_TEST(ad.application_uri() == application_uri);
   BOOST_TEST(ad.product_uri() == product_uri);
