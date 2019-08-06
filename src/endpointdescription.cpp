@@ -10,10 +10,11 @@ class EndpointDescription::impl {
   std::string m_security_policy_uri;
   std::vector<UserTokenPolicy> m_user_identity_tokens;
   std::string m_transport_profile_uri;
-  unsigned char m_security_level;
+  unsigned char m_security_level = 0;
+  bool m_empty = false;
 
  public:
-  impl(){}
+  impl() : m_security_mode{MessageSecurityMode::None}, m_empty{true} {}
 
   impl(std::string const &endpoint_url,
        ApplicationDescription const &server,
@@ -49,6 +50,8 @@ class EndpointDescription::impl {
   std::string transport_profile_uri() const { return m_transport_profile_uri; }
 
   unsigned char security_level() const { return m_security_level; }
+
+  bool empty() const { return m_empty; }
 
   bool operator==(impl const &rhs) const {
     return endpoint_url() == rhs.endpoint_url() && server() == rhs.server() &&
@@ -100,8 +103,7 @@ EndpointDescription::EndpointDescription(EndpointDescription &&) noexcept =
 EndpointDescription &EndpointDescription::operator=(
     EndpointDescription &&) noexcept = default;
 
-EndpointDescription::EndpointDescription()
-    : d_ptr{std::make_unique<impl>()} {}
+EndpointDescription::EndpointDescription() : d_ptr{std::make_unique<impl>()} {}
 
 EndpointDescription &EndpointDescription::operator=(
     EndpointDescription const &op) {
@@ -142,6 +144,8 @@ std::string EndpointDescription::transport_profile_uri() const {
 unsigned char EndpointDescription::security_level() const {
   return d_ptr->security_level();
 }
+
+bool EndpointDescription::empty() const { return d_ptr->empty(); }
 
 bool EndpointDescription::operator==(EndpointDescription const &rhs) const {
   return *d_ptr == *rhs.d_ptr;

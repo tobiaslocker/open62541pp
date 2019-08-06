@@ -33,23 +33,16 @@ BOOST_AUTO_TEST_CASE(test_copy_assignment) {
 }
 
 BOOST_AUTO_TEST_CASE(test_default_constructor) {
-  EndpointDescription const a_empty;
-  //  std::string endpoint_url() const;
-  //  ApplicationDescription server() const;
-  //  ByteString server_certificate() const;
-  //  MessageSecurityMode security_mode() const;
-  //  std::string security_policy_uri() const;
-  //  std::vector<UserTokenPolicy> user_identity_tokens() const;
-  //  std::string transport_profile_uri() const;
-  //  unsigned char security_level() const;
-  //  BOOST_TEST(a_empty
-  //  BOOST_TEST(a_empty
-  //  BOOST_TEST(a_empty
-  //  BOOST_TEST(a_empty
-  //  BOOST_TEST(a_empty
-  //  BOOST_TEST(a_empty
-  //  BOOST_TEST(a_empty
-  //  BOOST_TEST(a_empty
+  EndpointDescription const a;
+  BOOST_TEST(a.endpoint_url().empty());
+  BOOST_TEST(a.server().empty());
+  BOOST_TEST(a.server_certificate().empty());
+  BOOST_TEST(a.security_mode() == MessageSecurityMode::None);
+  BOOST_TEST(a.security_policy_uri().empty());
+  BOOST_TEST(a.user_identity_tokens().empty());
+  BOOST_TEST(a.transport_profile_uri().empty());
+  BOOST_TEST(a.security_level() == 0);
+  BOOST_TEST(a.empty());
 }
 
 // EndpointDescription make_application_description_1() {

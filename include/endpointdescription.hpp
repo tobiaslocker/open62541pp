@@ -44,6 +44,8 @@ class EndpointDescription {
   std::string transport_profile_uri() const;
   unsigned char security_level() const;
 
+  bool empty() const;
+
   bool operator==(EndpointDescription const &rhs) const;
   bool operator!=(EndpointDescription const &rhs) const;
 };

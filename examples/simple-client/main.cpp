@@ -24,9 +24,7 @@ int main() {
   client.connect(url);
   auto endpoints = client.get_endpoints(url);
 
-
   EndpointDescription a;
   EndpointDescription b;
   b = a;
-
 }
