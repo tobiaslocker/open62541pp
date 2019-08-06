@@ -2,6 +2,7 @@
 
 #include <boost/test/included/unit_test.hpp>
 
+#include "common.hpp"
 #include "applicationdescription.hpp"
 
 #pragma clang diagnostic push
@@ -44,29 +45,8 @@ BOOST_AUTO_TEST_CASE(test_default_constructor) {
   BOOST_TEST(a_empty.discovery_urls().empty());
 }
 
-ApplicationDescription make_application_description_1() {
-  return ApplicationDescription(
-      "app:uri:test:123",
-      "prod:uri:test:456",
-      LocalizedText(Locale("en"), Text("app-test-name")),
-      ApplicationType::Client,
-      "gateway:server:uri",
-      "discovery:profile:uri",
-      {"url-1", "url-2"});
-}
-
-ApplicationDescription make_application_description_2() {
-    return ApplicationDescription("app:uri:test:123:different",
-  "prod:uri:test:456:different",
-  LocalizedText(Locale("de"), Text("app-test-name:different")),
-  ApplicationType::Client,
-  "gateway:server:uri:different",
-  "discovery:profile:uri:different",
-  {"url-1:different", "url-2:different"});
-}
-
 BOOST_AUTO_TEST_CASE(test_constructor) {
-  auto a = make_application_description_1();
+  auto a = common::make_application_description_1();
 
   BOOST_TEST(!a.empty());
   BOOST_TEST(a.application_uri() == "app:uri:test:123");
@@ -93,9 +73,9 @@ BOOST_AUTO_TEST_CASE(test_constructor) {
 }
 
 BOOST_AUTO_TEST_CASE(test_comparison_operators) {
-  auto a = make_application_description_1();
-  auto a1 = make_application_description_1();
-  auto b = make_application_description_2();
+  auto a = common::make_application_description_1();
+  auto a1 = common::make_application_description_1();
+  auto b = common::make_application_description_2();
   BOOST_TEST(a != b);
   BOOST_TEST(a == a1);
 }
