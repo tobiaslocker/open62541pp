@@ -2,8 +2,8 @@
 
 #include <boost/test/included/unit_test.hpp>
 
-#include "common.hpp"
 #include "applicationdescription.hpp"
+#include "common.hpp"
 
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdisabled-macro-expansion"

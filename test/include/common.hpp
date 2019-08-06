@@ -30,6 +30,22 @@ ApplicationDescription make_application_description_2() {
       {"url-1:different", "url-2:different"});
 }
 
+UserTokenPolicy make_user_token_policy_1() {
+  return UserTokenPolicy("1",
+                         UserTokenType::Anonymous,
+                         "issued-token-type-1",
+                         "opc.tcp://issuer-endpoint.com:51210/url",
+                         "http://opcfoundation.org/UA/SecurityPolicy#None");
+}
+
+UserTokenPolicy make_user_token_policy_2() {
+  return UserTokenPolicy("2",
+                         UserTokenType::Certificate,
+                         "issued-token-type-2",
+                         "opc.tcp://issuer-endpoint.com:51210/url-2",
+                         "http://opcfoundation.org/UA/SecurityPolicy#Basic256");
+}
+
 EndpointDescription make_endpoint_description_1() {
   auto server = make_application_description_1();
   return EndpointDescription(
@@ -38,9 +54,23 @@ EndpointDescription make_endpoint_description_1() {
       "cert",
       MessageSecurityMode::SignAndEncrypt,
       "http://opcfoundation.org/UA/SecurityPolicy#Basic256",
-      std::vector<UserTokenPolicy>(),
+      std::vector<UserTokenPolicy>(
+          {make_user_token_policy_1(), make_user_token_policy_2()}),
       "http://opcfoundation.org/UA-Profile/Transport/https-uabinary",
       0);
+}
+
+EndpointDescription make_endpoint_description_2() {
+  auto server = make_application_description_2();
+  return EndpointDescription(
+      "opc.tcp://opcua.demo-this.com:51210/UA/SampleServerDifferent",
+      server,
+      "cert-different",
+      MessageSecurityMode::SignAndEncrypt,
+      "http://opcfoundation.org/UA/SecurityPolicy#Basic128",
+      std::vector<UserTokenPolicy>({make_user_token_policy_2()}),
+      "http://opcfoundation.org/UA-Profile/Transport/https-uabinary-different",
+      2);
 }
 
 }  // namespace common
