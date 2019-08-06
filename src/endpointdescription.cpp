@@ -13,6 +13,8 @@ class EndpointDescription::impl {
   unsigned char m_security_level;
 
  public:
+  impl(){}
+
   impl(std::string const &endpoint_url,
        ApplicationDescription const &server,
        ByteString const &server_certificate,
@@ -95,7 +97,11 @@ EndpointDescription::EndpointDescription(EndpointDescription const &op)
 EndpointDescription::EndpointDescription(EndpointDescription &&) noexcept =
     default;
 
-EndpointDescription::EndpointDescription() = default;
+EndpointDescription &EndpointDescription::operator=(
+    EndpointDescription &&) noexcept = default;
+
+EndpointDescription::EndpointDescription()
+    : d_ptr{std::make_unique<impl>()} {}
 
 EndpointDescription &EndpointDescription::operator=(
     EndpointDescription const &op) {

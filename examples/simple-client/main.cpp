@@ -24,7 +24,9 @@ int main() {
   client.connect(url);
   auto endpoints = client.get_endpoints(url);
 
-  auto e = endpoints.at(0).server();
 
-  std::cout << e << '\n';
+  EndpointDescription a;
+  EndpointDescription b;
+  b = a;
+
 }

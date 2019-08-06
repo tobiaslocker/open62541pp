@@ -86,6 +86,7 @@ ApplicationDescription make_application_description_2() {
 BOOST_AUTO_TEST_CASE(test_constructor) {
   auto a = make_application_description_1();
 
+  BOOST_TEST(!a.empty());
   BOOST_TEST(a.application_uri() == "app:uri:test:123");
   BOOST_TEST(a.product_uri() == "prod:uri:test:456");
   BOOST_TEST(a.application_name() ==
