@@ -69,11 +69,11 @@ BOOST_AUTO_TEST_CASE(test_constructor) {
 }
 
 BOOST_AUTO_TEST_CASE(test_comparison_operators) {
-    auto a = common::make_endpoint_description_1();
-    auto a1 = common::make_endpoint_description_1();
-    auto b = common::make_endpoint_description_2();
-    BOOST_TEST(a != b);
-    BOOST_TEST(a == a1);
+  auto a = common::make_endpoint_description_1();
+  auto a1 = common::make_endpoint_description_1();
+  auto b = common::make_endpoint_description_2();
+  BOOST_TEST(a != b);
+  BOOST_TEST(a == a1);
 }
 
 #pragma clang diagnostic pop
