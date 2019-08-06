@@ -45,24 +45,9 @@ BOOST_AUTO_TEST_CASE(test_default_constructor) {
   BOOST_TEST(a.empty());
 }
 
-// EndpointDescription make_application_description_1() {
-//  std::string application_uri = "app:uri:test:123";
-//  std::string product_uri = "prod:uri:test:456";
-//  LocalizedText application_name =
-//      LocalizedText(Locale("en"), Text("app-test-name"));
-//  EndpointType application_type = EndpointType::Client;
-//  std::string gateway_server_uri = "gateway:server:uri";
-//  std::string discovery_profile_uri = "discovery:profile:uri";
-//  std::vector<std::string> discovery_urls = {"url-1", "url-2"};
-
-//  return EndpointDescription(application_uri,
-//                                product_uri,
-//                                application_name,
-//                                application_type,
-//                                gateway_server_uri,
-//                                discovery_profile_uri,
-//                                discovery_urls);
-//}
+EndpointDescription make_endpoint_description_1() {
+  return EndpointDescription();
+}
 
 // EndpointDescription make_application_description_2() {
 //  std::string application_uri = "app:uri:test:123:different";

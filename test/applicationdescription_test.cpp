@@ -45,42 +45,24 @@ BOOST_AUTO_TEST_CASE(test_default_constructor) {
 }
 
 ApplicationDescription make_application_description_1() {
-  std::string application_uri = "app:uri:test:123";
-  std::string product_uri = "prod:uri:test:456";
-  LocalizedText application_name =
-      LocalizedText(Locale("en"), Text("app-test-name"));
-  ApplicationType application_type = ApplicationType::Client;
-  std::string gateway_server_uri = "gateway:server:uri";
-  std::string discovery_profile_uri = "discovery:profile:uri";
-  std::vector<std::string> discovery_urls = {"url-1", "url-2"};
-
-  return ApplicationDescription(application_uri,
-                                product_uri,
-                                application_name,
-                                application_type,
-                                gateway_server_uri,
-                                discovery_profile_uri,
-                                discovery_urls);
+  return ApplicationDescription(
+      "app:uri:test:123",
+      "prod:uri:test:456",
+      LocalizedText(Locale("en"), Text("app-test-name")),
+      ApplicationType::Client,
+      "gateway:server:uri",
+      "discovery:profile:uri",
+      {"url-1", "url-2"});
 }
 
 ApplicationDescription make_application_description_2() {
-  std::string application_uri = "app:uri:test:123:different";
-  std::string product_uri = "prod:uri:test:456:different";
-  LocalizedText application_name =
-      LocalizedText(Locale("de"), Text("app-test-name:different"));
-  ApplicationType application_type = ApplicationType::Client;
-  std::string gateway_server_uri = "gateway:server:uri:different";
-  std::string discovery_profile_uri = "discovery:profile:uri:different";
-  std::vector<std::string> discovery_urls = {"url-1:different",
-                                             "url-2:different"};
-
-  return ApplicationDescription(application_uri,
-                                product_uri,
-                                application_name,
-                                application_type,
-                                gateway_server_uri,
-                                discovery_profile_uri,
-                                discovery_urls);
+    return ApplicationDescription("app:uri:test:123:different",
+  "prod:uri:test:456:different",
+  LocalizedText(Locale("de"), Text("app-test-name:different")),
+  ApplicationType::Client,
+  "gateway:server:uri:different",
+  "discovery:profile:uri:different",
+  {"url-1:different", "url-2:different"});
 }
 
 BOOST_AUTO_TEST_CASE(test_constructor) {
