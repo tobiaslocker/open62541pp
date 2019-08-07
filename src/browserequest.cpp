@@ -58,6 +58,8 @@ std::vector<BrowseDescription> BrowseRequest::nodes_to_browse() const {
 
 BrowseRequest::BrowseRequest() : d_ptr{std::make_unique<impl>()} {}
 
+BrowseRequest::~BrowseRequest() = default;
+
 BrowseRequest::BrowseRequest(
     RequestHeader const &request_header,
     ViewDescription const &view,
@@ -66,9 +68,21 @@ BrowseRequest::BrowseRequest(
     : d_ptr{std::make_unique<impl>(
           request_header, view, max_references, nodes_to_browse)} {}
 
-BrowseRequest::~BrowseRequest() = default;
+BrowseRequest &BrowseRequest::operator=(BrowseRequest &&) noexcept =
+    default;
 
-BrowseRequest &BrowseRequest::operator=(BrowseRequest &&) = default;
+BrowseRequest::BrowseRequest(BrowseRequest &&) noexcept = default;
+
+
+BrowseRequest::BrowseRequest(BrowseRequest const &op)
+    : d_ptr(new impl(*op.d_ptr)) {}
+
+BrowseRequest &BrowseRequest::operator=(BrowseRequest const &op) {
+  if (this != &op) {
+    d_ptr.reset(new impl(*op.d_ptr));
+  }
+  return *this;
+}
 
 bool BrowseRequest::operator==(BrowseRequest const &rhs) const {
   return *d_ptr == *rhs.d_ptr;

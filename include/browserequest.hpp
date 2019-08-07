@@ -19,10 +19,10 @@ class BrowseRequest {
   BrowseRequest();
   ~BrowseRequest();
 
-  BrowseRequest(BrowseRequest &&) = default;
-  BrowseRequest &operator=(BrowseRequest &&);
-  BrowseRequest(BrowseRequest const &) = delete;
-  BrowseRequest &operator=(BrowseRequest const &) = delete;
+  BrowseRequest(BrowseRequest &&) noexcept;
+  BrowseRequest &operator=(BrowseRequest &&) noexcept;
+  BrowseRequest(BrowseRequest const &);
+  BrowseRequest &operator=(BrowseRequest const &);
 
   BrowseRequest(RequestHeader const &request_header,
                 ViewDescription const &view,

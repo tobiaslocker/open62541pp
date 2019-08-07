@@ -88,6 +88,11 @@ BrowseDescription make_browse_description_1() {
       make_node_id_2(), BrowseDirection::Forward, make_node_id_1(), true, 0, 0);
 }
 
+BrowseDescription make_browse_description_2() {
+  return BrowseDescription(
+      make_node_id_1(), BrowseDirection::Inverse, make_node_id_2(), true, 3, 4);
+}
+
 }  // namespace common
 
 #endif  // COMMON_H
