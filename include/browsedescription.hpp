@@ -21,9 +21,9 @@ class BrowseDescription {
   BrowseDescription(BrowseDescription const &);
   BrowseDescription &operator=(BrowseDescription const &);
 
-  BrowseDescription(NodeId node_id,
+  BrowseDescription(NodeId const &node_id,
                     BrowseDirection browse_direction,
-                    NodeId reference_type_id,
+                    NodeId const &reference_type_id,
                     bool include_subtypes,
                     uint32_t node_class_mask,
                     uint32_t result_mask);
@@ -35,9 +35,13 @@ class BrowseDescription {
   uint32_t node_class_mask() const;
   uint32_t result_mask() const;
 
+  bool empty() const;
+
   bool operator==(BrowseDescription const &rhs) const;
   bool operator!=(BrowseDescription const &rhs) const;
 };
+
+std::ostream &operator<<(std::ostream &out, BrowseDescription const &op);
 
 }  // namespace open62541
 

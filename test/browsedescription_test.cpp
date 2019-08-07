@@ -34,42 +34,25 @@ BOOST_AUTO_TEST_CASE(test_copy_assignment) {
 }
 
 BOOST_AUTO_TEST_CASE(test_default_constructor) {
-  //  BrowseDescription const a_empty;
-  //  BOOST_TEST(a_empty.empty());
-  //  BOOST_TEST(a_empty.application_uri().empty());
-  //  BOOST_TEST(a_empty.product_uri().empty());
-  //  BOOST_TEST(a_empty.application_name().empty());
-  //  BOOST_TEST(a_empty.application_type() == BrowseType::Server);
-  //  BOOST_TEST(a_empty.gateway_server_uri().empty());
-  //  BOOST_TEST(a_empty.discovery_profile_uri().empty());
-  //  BOOST_TEST(a_empty.discovery_urls().empty());
+  BrowseDescription const a;
+  BOOST_TEST(a.empty());
+  BOOST_TEST(a.node_id().empty());
+  BOOST_TEST(a.browse_direction() == BrowseDirection::Both);
+  BOOST_TEST(a.reference_type_id().empty());
+  BOOST_TEST(!a.include_subtypes());
+  BOOST_TEST(a.node_class_mask() == 0U);
+  BOOST_TEST(a.result_mask() == 0U);
 }
 
 BOOST_AUTO_TEST_CASE(test_constructor) {
-  //  auto a = common::make_application_description_1();
-
-  //  BOOST_TEST(!a.empty());
-  //  BOOST_TEST(a.application_uri() == "app:uri:test:123");
-  //  BOOST_TEST(a.product_uri() == "prod:uri:test:456");
-  //  BOOST_TEST(a.application_name() ==
-  //             LocalizedText(Locale("en"), Text("app-test-name")));
-  //  BOOST_TEST(a.application_type() == BrowseType::Client);
-  //  BOOST_TEST(a.gateway_server_uri() == "gateway:server:uri");
-  //  BOOST_TEST(a.discovery_profile_uri() == "discovery:profile:uri");
-  //  BOOST_TEST(a.discovery_urls().size() == 2U);
-  //  BOOST_TEST(a.discovery_urls().at(0) == "url-1");
-
-  //  BOOST_TEST(a.discovery_urls().at(1) != "url-2-not");
-  //  BOOST_TEST(a.application_uri() != "app:uri:test:123-not");
-  //  BOOST_TEST(a.product_uri() != "prod:uri:test:456-not");
-  //  BOOST_TEST(a.application_name() !=
-  //             LocalizedText(Locale("en-not"), Text("app-test-name-not")));
-  //  BOOST_TEST(a.application_type() != BrowseType::Server);
-  //  BOOST_TEST(a.gateway_server_uri() != "gateway:server:uri-not");
-  //  BOOST_TEST(a.discovery_profile_uri() != "discovery:profile:uri-not");
-  //  BOOST_TEST(a.discovery_urls().size() != 1U);
-  //  BOOST_TEST(a.discovery_urls().at(0) != "url-1-not");
-  //  BOOST_TEST(a.discovery_urls().at(1) != "url-2-not");
+  auto a = common::make_browse_description_1();
+  BOOST_TEST(!a.empty());
+  BOOST_TEST(a.node_id() == common::make_node_id_2());
+  BOOST_TEST(a.browse_direction() == BrowseDirection::Forward);
+  BOOST_TEST(a.reference_type_id() == common::make_node_id_1());
+  BOOST_TEST(a.include_subtypes() == true);
+  BOOST_TEST(a.node_class_mask() == 0U);
+  BOOST_TEST(a.result_mask() == 0U);
 }
 
 BOOST_AUTO_TEST_CASE(test_comparison_operators) {

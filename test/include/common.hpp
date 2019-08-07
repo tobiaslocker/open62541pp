@@ -2,7 +2,9 @@
 #define COMMON_H
 
 #include "applicationdescription.hpp"
+#include "browsedescription.hpp"
 #include "endpointdescription.hpp"
+#include "nodeid.hpp"
 
 namespace common {
 
@@ -71,6 +73,19 @@ EndpointDescription make_endpoint_description_2() {
       std::vector<UserTokenPolicy>({make_user_token_policy_2()}),
       "http://opcfoundation.org/UA-Profile/Transport/https-uabinary-different",
       2);
+}
+
+NodeId make_node_id_1() {
+  return NodeId(0, Identifier(1234), IdentifierType::Numeric);
+}
+
+NodeId make_node_id_2() {
+  return NodeId(4, Identifier("my-node"), IdentifierType::String);
+}
+
+BrowseDescription make_browse_description_1() {
+  return BrowseDescription(
+      make_node_id_2(), BrowseDirection::Forward, make_node_id_1(), true, 0, 0);
 }
 
 }  // namespace common

@@ -28,7 +28,6 @@ class Identifier {
   std::string byte_string() const;
   Guid guid() const;
   uint32_t numeric() const;
-  std::string str() const;
 
   bool operator==(Identifier const &rhs) const;
   bool operator!=(Identifier const &rhs) const;

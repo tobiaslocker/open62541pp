@@ -6,16 +6,17 @@ class BrowseDescription::impl {
   NodeId m_node_id;
   BrowseDirection m_browse_direction;
   NodeId m_reference_type_id;
-  bool m_include_subtypes;
-  uint32_t m_node_class_mask;
-  uint32_t m_result_mask;
+  bool m_include_subtypes = false;
+  uint32_t m_node_class_mask = 0;
+  uint32_t m_result_mask = 0;
+  bool m_empty = false;
 
  public:
-  impl() {}
+  impl() : m_browse_direction{BrowseDirection::Both}, m_empty{true} {}
 
-  impl(NodeId node_id,
+  impl(NodeId const &node_id,
        BrowseDirection browse_direction,
-       NodeId reference_type_id,
+       NodeId const &reference_type_id,
        bool include_subtypes,
        uint32_t node_class_mask,
        uint32_t result_mask)
@@ -37,6 +38,8 @@ class BrowseDescription::impl {
   uint32_t node_class_mask() const { return m_node_class_mask; }
 
   uint32_t result_mask() const { return m_result_mask; }
+
+  bool empty() const { return m_empty; }
 
   bool operator==(impl const &rhs) const {
     return node_id() == rhs.node_id() &&
@@ -64,9 +67,9 @@ BrowseDescription &BrowseDescription::operator=(BrowseDescription &&) noexcept =
 
 BrowseDescription::BrowseDescription(BrowseDescription &&) noexcept = default;
 
-BrowseDescription::BrowseDescription(NodeId node_id,
+BrowseDescription::BrowseDescription(NodeId const &node_id,
                                      BrowseDirection browse_direction,
-                                     NodeId reference_type_id,
+                                     NodeId const &reference_type_id,
                                      bool include_subtypes,
                                      uint32_t node_class_mask,
                                      uint32_t result_mask)
@@ -109,6 +112,8 @@ uint32_t BrowseDescription::node_class_mask() const {
 
 uint32_t BrowseDescription::result_mask() const { return d_ptr->result_mask(); }
 
+bool BrowseDescription::empty() const { return d_ptr->empty(); }
+
 bool BrowseDescription::operator==(BrowseDescription const &rhs) const {
   return *d_ptr == *rhs.d_ptr;
 }
@@ -117,4 +122,10 @@ bool BrowseDescription::operator!=(BrowseDescription const &rhs) const {
   return *d_ptr != *rhs.d_ptr;
 }
 
+std::ostream &operator<<(std::ostream &out, const BrowseDescription &op) {
+  out << "{" << op.node_id() << ", " << op.browse_direction() << ", "
+      << op.reference_type_id() << ", " << op.include_subtypes() << ", "
+      << op.node_class_mask() << ", " << op.result_mask() << "}";
+  return out;
+}
 }  // namespace open62541

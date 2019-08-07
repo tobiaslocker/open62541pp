@@ -27,9 +27,13 @@ class NodeId {
   Identifier identifier() const;
   IdentifierType identifier_type() const;
 
+  bool empty() const;
+
   bool operator==(NodeId const &rhs) const;
   bool operator!=(NodeId const &rhs) const;
 };
+
+std::ostream &operator<<(std::ostream &out, NodeId const &op);
 
 }  // namespace open62541
 
