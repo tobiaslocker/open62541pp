@@ -80,7 +80,6 @@ BrowseDescription &BrowseDescription::operator=(BrowseDescription &&) noexcept =
 
 BrowseDescription::BrowseDescription(BrowseDescription &&) noexcept = default;
 
-
 BrowseDescription::BrowseDescription(BrowseDescription const &op)
     : d_ptr(new impl(*op.d_ptr)) {}
 

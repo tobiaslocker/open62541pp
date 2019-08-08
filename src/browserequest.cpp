@@ -5,11 +5,14 @@ namespace open62541 {
 class BrowseRequest::impl {
   RequestHeader m_request_header;
   ViewDescription m_view;
-  uint32_t m_max_references;
+  uint32_t m_max_references = 0;
   std::vector<BrowseDescription> m_nodes_to_browse;
 
+  bool m_empty = false;
+
  public:
-  impl() {}
+  impl() : m_empty{true} {}
+
   impl(RequestHeader const &request_header,
        ViewDescription const &view,
        uint32_t max_references,
@@ -28,6 +31,8 @@ class BrowseRequest::impl {
   std::vector<BrowseDescription> nodes_to_browse() const {
     return m_nodes_to_browse;
   }
+
+  bool empty() const { return m_empty; }
 
   bool operator==(impl const &rhs) const {
     return request_header() == rhs.request_header() && view() == rhs.view() &&
@@ -68,11 +73,9 @@ BrowseRequest::BrowseRequest(
     : d_ptr{std::make_unique<impl>(
           request_header, view, max_references, nodes_to_browse)} {}
 
-BrowseRequest &BrowseRequest::operator=(BrowseRequest &&) noexcept =
-    default;
+BrowseRequest &BrowseRequest::operator=(BrowseRequest &&) noexcept = default;
 
 BrowseRequest::BrowseRequest(BrowseRequest &&) noexcept = default;
-
 
 BrowseRequest::BrowseRequest(BrowseRequest const &op)
     : d_ptr(new impl(*op.d_ptr)) {}
@@ -83,6 +86,8 @@ BrowseRequest &BrowseRequest::operator=(BrowseRequest const &op) {
   }
   return *this;
 }
+
+bool BrowseRequest::empty() const { return d_ptr->empty(); }
 
 bool BrowseRequest::operator==(BrowseRequest const &rhs) const {
   return *d_ptr == *rhs.d_ptr;
