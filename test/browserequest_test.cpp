@@ -35,13 +35,11 @@ BOOST_AUTO_TEST_CASE(test_copy_assignment) {
 
 BOOST_AUTO_TEST_CASE(test_default_constructor) {
   BrowseRequest const a;
-  //  BOOST_TEST(a.empty());
-  //  BOOST_TEST(a.node_id().empty());
-  //  BOOST_TEST(a.browse_direction() == BrowseDirection::Both);
-  //  BOOST_TEST(a.reference_type_id().empty());
-  //  BOOST_TEST(!a.include_subtypes());
-  //  BOOST_TEST(a.node_class_mask() == 0U);
-  //  BOOST_TEST(a.result_mask() == 0U);
+  BOOST_TEST(a.empty());
+  BOOST_TEST(a.request_header().empty());
+  BOOST_TEST(a.view().empty());
+  BOOST_TEST(a.max_references() == 0U);
+  BOOST_TEST(a.nodes_to_browse().empty());
 }
 
 BOOST_AUTO_TEST_CASE(test_constructor) {

@@ -30,6 +30,8 @@ class ViewDescription {
   DateTime timestamp() const;
   uint32_t view_version() const;
 
+  bool empty() const;
+
   bool operator==(ViewDescription const &rhs) const;
   bool operator!=(ViewDescription const &rhs) const;
 };

@@ -5,10 +5,11 @@ namespace open62541 {
 class ViewDescription::impl {
   NodeId m_view_id;
   DateTime m_timestamp;
-  uint32_t m_view_version;
+  uint32_t m_view_version = 0;
+  bool m_empty = false;
 
  public:
-  impl() {}
+  impl() : m_empty{true} {}
 
   impl(NodeId const &view_id,
        DateTime const &timestamp,
@@ -22,6 +23,8 @@ class ViewDescription::impl {
   DateTime timestamp() const { return m_timestamp; }
 
   uint32_t view_version() const { return m_view_version; }
+
+  bool empty() const { return m_empty; }
 
   bool operator==(impl const &rhs) const {
     return view_id() == rhs.view_id() && timestamp() == rhs.timestamp() &&
@@ -60,6 +63,8 @@ NodeId ViewDescription::view_id() const { return d_ptr->view_id(); }
 DateTime ViewDescription::timestamp() const { return d_ptr->timestamp(); }
 
 uint32_t ViewDescription::view_version() const { return d_ptr->view_version(); }
+
+bool ViewDescription::empty() const { return d_ptr->empty(); }
 
 bool ViewDescription::operator==(ViewDescription const &rhs) const {
   return *d_ptr == *rhs.d_ptr;

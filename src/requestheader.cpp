@@ -5,14 +5,15 @@ namespace open62541 {
 class RequestHeader::impl {
   NodeId m_authentication_token;
   DateTime m_timestamp;
-  uint32_t m_request_handle;
-  uint32_t m_return_diagnostics;
+  uint32_t m_request_handle = 0;
+  uint32_t m_return_diagnostics = 0;
   std::string m_audit_entry_id;
-  uint32_t m_timeout_hint;
+  uint32_t m_timeout_hint = 0;
   ExtensionObject m_additional_header;
+  bool m_empty = false;
 
  public:
-  impl() {}
+  impl() : m_empty{true} {}
 
   impl(NodeId const &authentication_token,
        DateTime const &timestamp,
@@ -42,6 +43,8 @@ class RequestHeader::impl {
   uint32_t timeout_hint() const { return m_timeout_hint; }
 
   ExtensionObject additional_header() const { return m_additional_header; }
+
+  bool empty() const { return m_empty; }
 
   bool operator==(impl const &rhs) const {
     return authentication_token() == rhs.authentication_token() &&
@@ -118,6 +121,8 @@ uint32_t RequestHeader::timeout_hint() const { return d_ptr->timeout_hint(); }
 ExtensionObject RequestHeader::additional_header() const {
   return d_ptr->additional_header();
 }
+
+bool RequestHeader::empty() const { return d_ptr->empty(); }
 
 bool RequestHeader::operator==(RequestHeader const &rhs) const {
   return *d_ptr == *rhs.d_ptr;

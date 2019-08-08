@@ -39,6 +39,8 @@ class RequestHeader {
   uint32_t timeout_hint() const;
   ExtensionObject additional_header() const;
 
+  bool empty() const;
+
   bool operator==(RequestHeader const &rhs) const;
   bool operator!=(RequestHeader const &rhs) const;
 };
