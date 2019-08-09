@@ -68,8 +68,12 @@ class ExtensionObject {
     return m_encoded;
   }
 
-  bool operator==(ExtensionObject const &rhs) const { return true; }
-  bool operator!=(ExtensionObject const &rhs) const { return false; }
+  bool operator==(ExtensionObject const &rhs) const {
+    return content() == rhs.content();
+  }
+  bool operator!=(ExtensionObject const &rhs) const {
+    return content() == rhs.content();
+  }
 };
 
 }  // namespace open62541
