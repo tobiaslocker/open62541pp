@@ -3,8 +3,12 @@
 
 #include "applicationdescription.hpp"
 #include "browsedescription.hpp"
+#include "browserequest.hpp"
+#include "datetime.hpp"
 #include "endpointdescription.hpp"
 #include "nodeid.hpp"
+#include "requestheader.hpp"
+#include "viewdescription.hpp"
 
 namespace common {
 
@@ -92,6 +96,29 @@ BrowseDescription make_browse_description_2() {
   return BrowseDescription(
       make_node_id_1(), BrowseDirection::Inverse, make_node_id_2(), true, 3, 4);
 }
+
+DateTime make_date_time_1() {
+  // Date and time (GMT): Thursday, August 8, 2019 7:26:35 PM
+  int64_t t = 132097659950000000;
+  return DateTime(t);
+}
+
+ViewDescription make_view_desccription_1() {
+  return ViewDescription(make_node_id_1(), make_date_time_1(), 42);
+}
+
+RequestHeader make_request_header_1() {
+  return RequestHeader(
+      make_node_id_1(), make_date_time_1(), 7, 13, "this-audit-entry", 1888)
+}
+
+//(NodeId const &authentication_token,
+//               DateTime const &timestamp,
+//               uint32_t const &request_handle,}
+//               uint32_t const &return_diagnostics,
+//               std::string const &audit_entry_id,
+//               uint32_t const &timeout_hint,
+//               ExtensionObject const &additional_header);
 
 }  // namespace common
 

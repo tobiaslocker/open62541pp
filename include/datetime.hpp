@@ -21,6 +21,7 @@ class DateTime {
   DateTime &operator=(DateTime const &);
 
   DateTime(int64_t ldap_timestamp);
+
   DateTime(uint16_t nano_sec,
            uint16_t micro_sec,
            uint16_t milli_sec,
