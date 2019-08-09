@@ -27,7 +27,7 @@ struct DataType {
   uint16_t m_type_index;
   std::byte m_members_size;
   bool m_builtin;
-  bool m_pointerFree;
+  bool m_pointer_free;
   bool m_overlayable;
   uint16_t m_binary_encoding_id;
   // uint16_t  xml_encoding_id;  /* NodeId of datatype when encoded as XML */
@@ -51,10 +51,15 @@ class ExtensionObject {
 
   bool decoded = false;
 
+  ExtensionObjectEncoding m_encoding;
+
  public:
-  ExtensionObject(std::pair<NodeId, ByteString> encoded) : m_encoded{encoded} {}
-  ExtensionObject(std::pair<DataType, std::any> decoded)
-      : m_decoded{decoded}, decoded{true} {}
+  ExtensionObject(std::pair<NodeId, ByteString> encoded,
+                  ExtensionObjectEncoding encoding)
+      : m_encoded{encoded}, m_encoding{encoding} {}
+  ExtensionObject(std::pair<DataType, std::any> decoded,
+                  ExtensionObjectEncoding encoding)
+      : m_decoded{decoded}, decoded{true}, m_encoding{encoding} {}
 
   std::variant<encoded_t, decoded_t> content() const {
     if (decoded) {
