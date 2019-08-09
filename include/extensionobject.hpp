@@ -2,8 +2,10 @@
 #define OPEN6541_CPP_WRAPPER_EXTENSION_OBJECT_H
 
 // STL
+#include <any>
 #include <cstddef>
 #include <string>
+#include <variant>
 #include <vector>
 
 #include "nodeid.hpp"
@@ -32,8 +34,35 @@ struct DataType {
   std::vector<DataTypeMember> m_members;
 };
 
+enum class ExtensionObjectEncoding {
+  Nobody = 0,
+  ByteString = 1,
+  Xml = 2,
+  Decoded = 3,
+  DecodedNodelete = 4
+};
+
 class ExtensionObject {
+  using encoded_t = std::pair<NodeId, ByteString>;
+  using decoded_t = std::pair<DataType, std::any>;
+
+  encoded_t m_encoded;
+  decoded_t m_decoded;
+
+  bool decoded = false;
+
  public:
+  ExtensionObject(std::pair<NodeId, ByteString> encoded) : m_encoded{encoded} {}
+  ExtensionObject(std::pair<DataType, std::any> decoded)
+      : m_decoded{decoded}, decoded{true} {}
+
+  std::variant<encoded_t, decoded_t> content() const {
+    if (decoded) {
+      return m_decoded;
+    }
+    return m_encoded;
+  }
+
   bool operator==(ExtensionObject const &rhs) const { return true; }
   bool operator!=(ExtensionObject const &rhs) const { return false; }
 };
