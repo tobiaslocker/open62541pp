@@ -108,17 +108,14 @@ ViewDescription make_view_desccription_1() {
 }
 
 RequestHeader make_request_header_1() {
-  return RequestHeader(
-      make_node_id_1(), make_date_time_1(), 7, 13, "this-audit-entry", 1888)
+  return RequestHeader(make_node_id_1(),
+                       make_date_time_1(),
+                       7,
+                       13,
+                       "this-audit-entry",
+                       1888,
+                       ExtensionObject());
 }
-
-//(NodeId const &authentication_token,
-//               DateTime const &timestamp,
-//               uint32_t const &request_handle,}
-//               uint32_t const &return_diagnostics,
-//               std::string const &audit_entry_id,
-//               uint32_t const &timeout_hint,
-//               ExtensionObject const &additional_header);
 
 }  // namespace common
 

@@ -50,6 +50,8 @@ struct DataType {
   uint16_t m_binary_encoding_id;
   // uint16_t  xml_encoding_id;  /* NodeId of datatype when encoded as XML */
   std::vector<DataTypeMember> m_members;
+  bool operator==(DataType const &rhs) const { return true; }
+  bool operator!=(DataType const &rhs) const { return false; }
 };
 
 enum class ExtensionObjectEncoding {
@@ -62,7 +64,7 @@ enum class ExtensionObjectEncoding {
 
 class ExtensionObject {
   using encoded_t = std::pair<NodeId, ByteString>;
-  using decoded_t = std::pair<DataType, std::any>;
+  using decoded_t = std::pair<DataType, std::shared_ptr<void>>;
 
   encoded_t m_encoded;
   decoded_t m_decoded;
@@ -72,10 +74,11 @@ class ExtensionObject {
   ExtensionObjectEncoding m_encoding;
 
  public:
+  ExtensionObject() = default;
   ExtensionObject(std::pair<NodeId, ByteString> encoded,
                   ExtensionObjectEncoding encoding)
       : m_encoded{encoded}, m_encoding{encoding} {}
-  ExtensionObject(std::pair<DataType, std::any> decoded,
+  ExtensionObject(std::pair<DataType, std::shared_ptr<void>> decoded,
                   ExtensionObjectEncoding encoding)
       : m_decoded{decoded}, decoded{true}, m_encoding{encoding} {}
 
