@@ -12,12 +12,30 @@
 
 namespace open62541 {
 
-struct DataTypeMember {
-  std::string m_member_name;
-  uint16_t m_member_type_index;
-  std::byte m_padding;
-  bool m_namespace_zero;
-  bool m_is_array;
+class DataTypeMember {
+  class impl;
+  std::unique_ptr<impl> d_ptr;
+
+ public:
+  DataTypeMember();
+  ~DataTypeMember();
+
+  DataTypeMember(DataTypeMember &&) noexcept;
+  DataTypeMember &operator=(DataTypeMember &&) noexcept;
+  DataTypeMember(DataTypeMember const &);
+  DataTypeMember &operator=(DataTypeMember const &);
+
+  DataTypeMember(std::string member_name,
+                 uint16_t member_type_index,
+                 std::byte padding,
+                 bool namespace_zero,
+                 bool is_array);
+
+  std::string member_name() const;
+  uint16_t member_type_index() const;
+  std::byte padding() const;
+  bool namespace_zero() const;
+  bool is_array() const;
 };
 
 struct DataType {
@@ -60,6 +78,8 @@ class ExtensionObject {
   ExtensionObject(std::pair<DataType, std::any> decoded,
                   ExtensionObjectEncoding encoding)
       : m_decoded{decoded}, decoded{true}, m_encoding{encoding} {}
+
+  ExtensionObjectEncoding encoding() const { return m_encoding; }
 
   std::variant<encoded_t, decoded_t> content() const {
     if (decoded) {

@@ -47,6 +47,7 @@ set(
     src/viewdescription.cpp
     src/datetime.cpp
     src/log.cpp
+    src/extensionobject.cpp
 )
 
 add_library(${PROJECT_NAME} SHARED ${SOURCES})
