@@ -43,20 +43,46 @@ class DataTypeMember {
   bool operator!=(DataTypeMember const &rhs) const;
 };
 
-struct DataType {
-  std::string m_type_name;
-  NodeId m_type_id;
-  uint16_t m_mem_size;
-  uint16_t m_type_index;
-  std::byte m_members_size;
-  bool m_builtin;
-  bool m_pointer_free;
-  bool m_overlayable;
-  uint16_t m_binary_encoding_id;
-  // uint16_t  xml_encoding_id;  /* NodeId of datatype when encoded as XML */
-  std::vector<DataTypeMember> m_members;
-  bool operator==(DataType const &rhs) const { return true; }
-  bool operator!=(DataType const &rhs) const { return false; }
+class DataType {
+  class impl;
+  std::unique_ptr<impl> d_ptr;
+
+ public:
+  DataType();
+  ~DataType();
+
+  DataType(DataType &&) noexcept;
+  DataType &operator=(DataType &&) noexcept;
+  DataType(DataType const &);
+  DataType &operator=(DataType const &);
+
+  DataType(std::string const &type_name,
+           NodeId const &type_id,
+           uint16_t mem_size,
+           uint16_t type_index,
+           std::byte const &members_size,
+           bool builtin,
+           bool pointer_free,
+           bool overlayable,
+           uint16_t binary_encoding_id,
+           std::vector<DataTypeMember> const &members);
+
+  std::string type_name() const;
+  NodeId type_id() const;
+  uint16_t mem_size() const;
+  uint16_t type_index() const;
+  std::byte members_size() const;
+  bool builtin() const;
+  bool pointer_free() const;
+  bool overlayable() const;
+  uint16_t binary_encoding_id() const;
+  // uint16_t  xml_encoding_id() const;
+  std::vector<DataTypeMember> members() const;
+
+  bool empty() const;
+
+  bool operator==(DataType const &rhs) const;
+  bool operator!=(DataType const &rhs) const;
 };
 
 enum class ExtensionObjectEncoding {

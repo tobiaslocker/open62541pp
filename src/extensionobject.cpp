@@ -100,4 +100,134 @@ bool DataTypeMember::operator!=(DataTypeMember const &rhs) const {
   return *d_ptr != *rhs.d_ptr;
 }
 
+class DataType::impl {
+  std::string m_type_name;
+  NodeId m_type_id;
+  uint16_t m_mem_size;
+  uint16_t m_type_index;
+  std::byte m_members_size;
+  bool m_builtin;
+  bool m_pointer_free;
+  bool m_overlayable;
+  uint16_t m_binary_encoding_id;
+  // uint16_t  xml_encoding_id;  /* NodeId of datatype when encoded as XML */
+  std::vector<DataTypeMember> m_members;
+
+  bool m_empty = false;
+
+ public:
+  impl() : m_empty{true} {}
+
+  impl(std::string const &type_name,
+       NodeId const &type_id,
+       uint16_t mem_size,
+       uint16_t type_index,
+       std::byte const &members_size,
+       bool builtin,
+       bool pointer_free,
+       bool overlayable,
+       uint16_t binary_encoding_id,
+       std::vector<DataTypeMember> const &members)
+      : m_type_name{type_name},
+        m_type_id{type_id},
+        m_mem_size{mem_size},
+        m_type_index{type_index},
+        m_members_size{members_size},
+        m_builtin{builtin},
+        m_pointer_free{pointer_free},
+        m_overlayable{overlayable},
+        m_binary_encoding_id{binary_encoding_id},
+        m_members{members} {}
+
+  std::string type_name() const { return m_type_name; }
+
+  NodeId type_id() const { return m_type_id; }
+
+  uint16_t mem_size() const { return m_mem_size; }
+
+  uint16_t type_index() const { return m_type_index; }
+
+  std::byte members_size() const { return m_members_size; }
+
+  bool builtin() const { return m_builtin; }
+
+  bool pointer_free() const { return m_pointer_free; }
+
+  bool overlayable() const { return m_overlayable; }
+
+  uint16_t binary_encoding_id() const { return m_binary_encoding_id; }
+
+  std::vector<DataTypeMember> members() const { return m_members; }
+
+  bool empty() const { return m_empty; }
+
+  bool operator==(impl const &rhs) const {
+    return type_name() == rhs.type_name() && type_id() == rhs.type_id() &&
+           mem_size() == rhs.mem_size() && type_index() == rhs.type_index() &&
+           members_size() == rhs.members_size() && builtin() == rhs.builtin() &&
+           pointer_free() == rhs.pointer_free() &&
+           overlayable() == rhs.overlayable() &&
+           binary_encoding_id() == rhs.binary_encoding_id() &&
+           members() == rhs.members();
+  }
+
+  bool operator!=(impl const &rhs) const {
+    return type_name() != rhs.type_name() || type_id() != rhs.type_id() ||
+           mem_size() != rhs.mem_size() || type_index() != rhs.type_index() ||
+           members_size() != rhs.members_size() || builtin() != rhs.builtin() ||
+           pointer_free() != rhs.pointer_free() ||
+           overlayable() != rhs.overlayable() ||
+           binary_encoding_id() != rhs.binary_encoding_id() ||
+           members() != rhs.members();
+  }
+};
+
+DataType::DataType(std::string const &type_name,
+                   NodeId const &type_id,
+                   uint16_t mem_size,
+                   uint16_t type_index,
+                   std::byte const &members_size,
+                   bool builtin,
+                   bool pointer_free,
+                   bool overlayable,
+                   uint16_t binary_encoding_id,
+                   std::vector<DataTypeMember> const &members)
+    : d_ptr{std::make_unique<impl>(type_name,
+                                   type_id,
+                                   mem_size,
+                                   type_index,
+                                   members_size,
+                                   builtin,
+                                   pointer_free,
+                                   overlayable,
+                                   binary_encoding_id,
+                                   members)} {}
+
+DataType::DataType() : d_ptr{std::make_unique<impl>()} {}
+
+DataType::~DataType() = default;
+
+DataType &DataType::operator=(DataType &&) noexcept = default;
+
+DataType::DataType(DataType &&) noexcept = default;
+
+DataType::DataType(DataType const &op) : d_ptr(new impl(*op.d_ptr)) {}
+
+DataType &DataType::operator=(DataType const &op) {
+  if (this != &op) {
+    d_ptr.reset(new impl(*op.d_ptr));
+  }
+  return *this;
+}
+
+bool DataType::empty() const { return d_ptr->empty(); }
+
+bool DataType::operator==(DataType const &rhs) const {
+  return *d_ptr == *rhs.d_ptr;
+}
+
+bool DataType::operator!=(DataType const &rhs) const {
+  return *d_ptr != *rhs.d_ptr;
+}
+
 }  // namespace open62541
