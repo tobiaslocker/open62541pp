@@ -60,7 +60,6 @@ class BrowseDescription::impl {
   }
 };
 
-
 BrowseDescription::BrowseDescription(NodeId const &node_id,
                                      BrowseDirection browse_direction,
                                      NodeId const &reference_type_id,

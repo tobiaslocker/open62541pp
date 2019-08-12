@@ -25,9 +25,9 @@ class DataTypeMember {
   DataTypeMember(DataTypeMember const &);
   DataTypeMember &operator=(DataTypeMember const &);
 
-  DataTypeMember(std::string member_name,
+  DataTypeMember(std::string const &member_name,
                  uint16_t member_type_index,
-                 std::byte padding,
+                 std::byte const &padding,
                  bool namespace_zero,
                  bool is_array);
 
