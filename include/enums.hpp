@@ -379,6 +379,14 @@ inline std::ostream &operator<<(std::ostream &out, ClientState const &op) {
   return out;
 }
 
+enum class ExtensionObjectEncoding {
+  Nobody = 0,
+  ByteString = 1,
+  Xml = 2,
+  Decoded = 3,
+  DecodedNodelete = 4
+};
+
 }  // namespace open62541
 
 #endif  // OPEN62541_CPP_WRAPPER_ENUMS_H

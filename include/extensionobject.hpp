@@ -1,5 +1,5 @@
-#ifndef OPEN6541_CPP_WRAPPER_EXTENSION_OBJECT_H
-#define OPEN6541_CPP_WRAPPER_EXTENSION_OBJECT_H
+#ifndef OPEN62541PP_EXTENSION_OBJECT_H
+#define OPEN62541PP_EXTENSION_OBJECT_H
 
 // STL
 #include <any>
@@ -9,6 +9,7 @@
 #include <vector>
 
 #include "nodeid.hpp"
+#include "enums.hpp"
 
 namespace open62541 {
 
@@ -85,14 +86,6 @@ class DataType {
   bool operator!=(DataType const &rhs) const;
 };
 
-enum class ExtensionObjectEncoding {
-  Nobody = 0,
-  ByteString = 1,
-  Xml = 2,
-  Decoded = 3,
-  DecodedNodelete = 4
-};
-
 class ExtensionObject {
   class impl;
   std::unique_ptr<impl> d_ptr;
@@ -127,4 +120,4 @@ class ExtensionObject {
 
 }  // namespace open62541
 
-#endif  // OPEN6541_CPP_WRAPPER_REQUEST_HEADER_H
+#endif  // OPEN62541PP_EXTENSION_OBJECT_H
