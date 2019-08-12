@@ -8,8 +8,8 @@
 #include <variant>
 #include <vector>
 
-#include "nodeid.hpp"
 #include "enums.hpp"
+#include "nodeid.hpp"
 
 namespace open62541 {
 
@@ -61,7 +61,6 @@ class DataType {
            NodeId const &type_id,
            uint16_t mem_size,
            uint16_t type_index,
-           std::byte const &members_size,
            bool builtin,
            bool pointer_free,
            bool overlayable,
@@ -72,7 +71,6 @@ class DataType {
   NodeId type_id() const;
   uint16_t mem_size() const;
   uint16_t type_index() const;
-  std::byte members_size() const;
   bool builtin() const;
   bool pointer_free() const;
   bool overlayable() const;
@@ -105,7 +103,15 @@ class ExtensionObject {
   ExtensionObject(std::pair<NodeId, ByteString> encoded,
                   ExtensionObjectEncoding encoding);
 
+  ExtensionObject(NodeId const &type_id,
+                  ByteString const &body,
+                  ExtensionObjectEncoding encoding);
+
   ExtensionObject(std::pair<DataType, std::shared_ptr<void>> decoded,
+                  ExtensionObjectEncoding encoding);
+
+  ExtensionObject(DataType const &type,
+                  std::shared_ptr<void> const &data,
                   ExtensionObjectEncoding encoding);
 
   ExtensionObjectEncoding encoding() const;

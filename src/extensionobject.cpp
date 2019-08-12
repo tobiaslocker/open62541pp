@@ -105,7 +105,6 @@ class DataType::impl {
   NodeId m_type_id;
   uint16_t m_mem_size;
   uint16_t m_type_index;
-  std::byte m_members_size;
   bool m_builtin;
   bool m_pointer_free;
   bool m_overlayable;
@@ -122,7 +121,6 @@ class DataType::impl {
        NodeId const &type_id,
        uint16_t mem_size,
        uint16_t type_index,
-       std::byte const &members_size,
        bool builtin,
        bool pointer_free,
        bool overlayable,
@@ -132,7 +130,6 @@ class DataType::impl {
         m_type_id{type_id},
         m_mem_size{mem_size},
         m_type_index{type_index},
-        m_members_size{members_size},
         m_builtin{builtin},
         m_pointer_free{pointer_free},
         m_overlayable{overlayable},
@@ -146,8 +143,6 @@ class DataType::impl {
   uint16_t mem_size() const { return m_mem_size; }
 
   uint16_t type_index() const { return m_type_index; }
-
-  std::byte members_size() const { return m_members_size; }
 
   bool builtin() const { return m_builtin; }
 
@@ -164,8 +159,7 @@ class DataType::impl {
   bool operator==(impl const &rhs) const {
     return type_name() == rhs.type_name() && type_id() == rhs.type_id() &&
            mem_size() == rhs.mem_size() && type_index() == rhs.type_index() &&
-           members_size() == rhs.members_size() && builtin() == rhs.builtin() &&
-           pointer_free() == rhs.pointer_free() &&
+           builtin() == rhs.builtin() && pointer_free() == rhs.pointer_free() &&
            overlayable() == rhs.overlayable() &&
            binary_encoding_id() == rhs.binary_encoding_id() &&
            members() == rhs.members();
@@ -174,8 +168,7 @@ class DataType::impl {
   bool operator!=(impl const &rhs) const {
     return type_name() != rhs.type_name() || type_id() != rhs.type_id() ||
            mem_size() != rhs.mem_size() || type_index() != rhs.type_index() ||
-           members_size() != rhs.members_size() || builtin() != rhs.builtin() ||
-           pointer_free() != rhs.pointer_free() ||
+           builtin() != rhs.builtin() || pointer_free() != rhs.pointer_free() ||
            overlayable() != rhs.overlayable() ||
            binary_encoding_id() != rhs.binary_encoding_id() ||
            members() != rhs.members();
@@ -186,7 +179,6 @@ DataType::DataType(std::string const &type_name,
                    NodeId const &type_id,
                    uint16_t mem_size,
                    uint16_t type_index,
-                   std::byte const &members_size,
                    bool builtin,
                    bool pointer_free,
                    bool overlayable,
@@ -196,7 +188,6 @@ DataType::DataType(std::string const &type_name,
                                    type_id,
                                    mem_size,
                                    type_index,
-                                   members_size,
                                    builtin,
                                    pointer_free,
                                    overlayable,
@@ -277,6 +268,19 @@ ExtensionObject::ExtensionObject(
     std::pair<DataType, std::shared_ptr<void>> decoded,
     ExtensionObjectEncoding encoding)
     : d_ptr{std::make_unique<impl>(decoded, encoding)} {}
+
+ExtensionObject::ExtensionObject(NodeId const &type_id,
+                                 ByteString const &body,
+                                 ExtensionObjectEncoding encoding)
+    : d_ptr{std::make_unique<impl>(std::pair<NodeId, ByteString>(type_id, body),
+                                   encoding)} {}
+
+ExtensionObject::ExtensionObject(DataType const &type,
+                                 std::shared_ptr<void> const &user_data,
+                                 ExtensionObjectEncoding encoding)
+    : d_ptr{std::make_unique<impl>(
+          std::pair<DataType, std::shared_ptr<void>>(type, user_data),
+          encoding)} {}
 
 ExtensionObjectEncoding ExtensionObject::encoding() const {
   return d_ptr->encoding();

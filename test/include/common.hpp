@@ -107,6 +107,15 @@ ViewDescription make_view_desccription_1() {
   return ViewDescription(make_node_id_1(), make_date_time_1(), 42);
 }
 
+ByteString make_byte_string_1() {
+  return ByteString("this-is-byte-string-content");
+}
+
+ExtensionObject make_extension_object_1() {
+  return ExtensionObject(
+      make_node_id_1(), make_byte_string_1(), ExtensionObjectEncoding::Nobody);
+}
+
 RequestHeader make_request_header_1() {
   return RequestHeader(make_node_id_1(),
                        make_date_time_1(),
