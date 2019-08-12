@@ -94,40 +94,35 @@ enum class ExtensionObjectEncoding {
 };
 
 class ExtensionObject {
+  class impl;
+  std::unique_ptr<impl> d_ptr;
+
   using encoded_t = std::pair<NodeId, ByteString>;
   using decoded_t = std::pair<DataType, std::shared_ptr<void>>;
 
-  encoded_t m_encoded;
-  decoded_t m_decoded;
-
-  bool decoded = false;
-
-  ExtensionObjectEncoding m_encoding;
-
  public:
-  ExtensionObject() = default;
+  ExtensionObject();
+  ~ExtensionObject();
+
+  ExtensionObject(ExtensionObject &&) noexcept;
+  ExtensionObject &operator=(ExtensionObject &&) noexcept;
+  ExtensionObject(ExtensionObject const &);
+  ExtensionObject &operator=(ExtensionObject const &);
+
   ExtensionObject(std::pair<NodeId, ByteString> encoded,
-                  ExtensionObjectEncoding encoding)
-      : m_encoded{encoded}, m_encoding{encoding} {}
+                  ExtensionObjectEncoding encoding);
+
   ExtensionObject(std::pair<DataType, std::shared_ptr<void>> decoded,
-                  ExtensionObjectEncoding encoding)
-      : m_decoded{decoded}, decoded{true}, m_encoding{encoding} {}
+                  ExtensionObjectEncoding encoding);
 
-  ExtensionObjectEncoding encoding() const { return m_encoding; }
+  ExtensionObjectEncoding encoding() const;
 
-  std::variant<encoded_t, decoded_t> content() const {
-    if (decoded) {
-      return m_decoded;
-    }
-    return m_encoded;
-  }
+  std::variant<encoded_t, decoded_t> content() const;
 
-  bool operator==(ExtensionObject const &rhs) const {
-    return content() == rhs.content();
-  }
-  bool operator!=(ExtensionObject const &rhs) const {
-    return content() == rhs.content();
-  }
+  bool empty() const;
+
+  bool operator==(ExtensionObject const &rhs) const;
+  bool operator!=(ExtensionObject const &rhs) const;
 };
 
 }  // namespace open62541

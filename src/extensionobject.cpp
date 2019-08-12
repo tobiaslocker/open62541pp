@@ -230,4 +230,88 @@ bool DataType::operator!=(DataType const &rhs) const {
   return *d_ptr != *rhs.d_ptr;
 }
 
+class ExtensionObject::impl {
+  using encoded_t = std::pair<NodeId, ByteString>;
+  using decoded_t = std::pair<DataType, std::shared_ptr<void>>;
+
+  encoded_t m_encoded;
+  decoded_t m_decoded;
+
+  bool decoded = false;
+
+  ExtensionObjectEncoding m_encoding;
+
+  bool m_empty = false;
+
+ public:
+  impl() : m_empty{true} {}
+
+  impl(std::pair<NodeId, ByteString> encoded, ExtensionObjectEncoding encoding)
+      : m_encoded{encoded}, m_encoding{encoding} {}
+  impl(std::pair<DataType, std::shared_ptr<void>> decoded,
+       ExtensionObjectEncoding encoding)
+      : m_decoded{decoded}, decoded{true}, m_encoding{encoding} {}
+
+  ExtensionObjectEncoding encoding() const { return m_encoding; }
+
+  std::variant<encoded_t, decoded_t> content() const {
+    if (decoded) {
+      return m_decoded;
+    }
+    return m_encoded;
+  }
+
+  bool empty() const { return m_empty; }
+
+  bool operator==(impl const &rhs) const { return content() == rhs.content(); }
+  bool operator!=(impl const &rhs) const { return content() == rhs.content(); }
+};
+
+ExtensionObject::ExtensionObject() : d_ptr{std::make_unique<impl>()} {}
+
+ExtensionObject::ExtensionObject(std::pair<NodeId, ByteString> encoded,
+                                 ExtensionObjectEncoding encoding)
+    : d_ptr{std::make_unique<impl>(encoded, encoding)} {}
+
+ExtensionObject::ExtensionObject(
+    std::pair<DataType, std::shared_ptr<void>> decoded,
+    ExtensionObjectEncoding encoding)
+    : d_ptr{std::make_unique<impl>(decoded, encoding)} {}
+
+ExtensionObjectEncoding ExtensionObject::encoding() const {
+  return d_ptr->encoding();
+}
+
+std::variant<ExtensionObject::encoded_t, ExtensionObject::decoded_t>
+ExtensionObject::content() const {
+  return d_ptr->content();
+}
+
+ExtensionObject::~ExtensionObject() = default;
+
+ExtensionObject &ExtensionObject::operator=(ExtensionObject &&) noexcept =
+    default;
+
+ExtensionObject::ExtensionObject(ExtensionObject &&) noexcept = default;
+
+ExtensionObject::ExtensionObject(ExtensionObject const &op)
+    : d_ptr(new impl(*op.d_ptr)) {}
+
+ExtensionObject &ExtensionObject::operator=(ExtensionObject const &op) {
+  if (this != &op) {
+    d_ptr.reset(new impl(*op.d_ptr));
+  }
+  return *this;
+}
+
+bool ExtensionObject::empty() const { return d_ptr->empty(); }
+
+bool ExtensionObject::operator==(ExtensionObject const &rhs) const {
+  return *d_ptr == *rhs.d_ptr;
+}
+
+bool ExtensionObject::operator!=(ExtensionObject const &rhs) const {
+  return *d_ptr != *rhs.d_ptr;
+}
+
 }  // namespace open62541
