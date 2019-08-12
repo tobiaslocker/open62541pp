@@ -10,9 +10,27 @@ class DataTypeMember::impl {
   bool m_is_array;
 
  public:
-  impl();
+  impl(){}
 
-  ~impl();
 };
+
+DataTypeMember::DataTypeMember() : d_ptr{std::make_unique<impl>()} {}
+
+DataTypeMember::~DataTypeMember() = default;
+
+DataTypeMember &DataTypeMember::operator=(DataTypeMember &&) noexcept =
+    default;
+
+DataTypeMember::DataTypeMember(DataTypeMember &&) noexcept = default;
+
+DataTypeMember::DataTypeMember(DataTypeMember const &op)
+    : d_ptr(new impl(*op.d_ptr)) {}
+
+DataTypeMember &DataTypeMember::operator=(DataTypeMember const &op) {
+  if (this != &op) {
+    d_ptr.reset(new impl(*op.d_ptr));
+  }
+  return *this;
+}
 
 }  // namespace open62541

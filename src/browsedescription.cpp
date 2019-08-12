@@ -60,7 +60,6 @@ class BrowseDescription::impl {
   }
 };
 
-BrowseDescription::BrowseDescription() : d_ptr{std::make_unique<impl>()} {}
 
 BrowseDescription::BrowseDescription(NodeId const &node_id,
                                      BrowseDirection browse_direction,
@@ -74,6 +73,10 @@ BrowseDescription::BrowseDescription(NodeId const &node_id,
                                    include_subtypes,
                                    node_class_mask,
                                    result_mask)} {}
+
+BrowseDescription::BrowseDescription() : d_ptr{std::make_unique<impl>()} {}
+
+BrowseDescription::~BrowseDescription() = default;
 
 BrowseDescription &BrowseDescription::operator=(BrowseDescription &&) noexcept =
     default;
@@ -89,8 +92,6 @@ BrowseDescription &BrowseDescription::operator=(BrowseDescription const &op) {
   }
   return *this;
 }
-
-BrowseDescription::~BrowseDescription() = default;
 
 NodeId BrowseDescription::node_id() const { return d_ptr->node_id(); }
 
