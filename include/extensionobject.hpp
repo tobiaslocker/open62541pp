@@ -36,6 +36,11 @@ class DataTypeMember {
   std::byte padding() const;
   bool namespace_zero() const;
   bool is_array() const;
+
+  bool empty() const;
+
+  bool operator==(DataTypeMember const &rhs) const;
+  bool operator!=(DataTypeMember const &rhs) const;
 };
 
 struct DataType {

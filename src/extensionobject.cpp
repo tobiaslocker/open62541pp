@@ -35,9 +35,32 @@ class DataTypeMember::impl {
   bool is_array() const { return m_is_array; }
 
   bool empty() const { return m_empty; }
+
+  bool operator==(impl const &rhs) const {
+    return member_name() == rhs.member_name() &&
+           member_type_index() == rhs.member_type_index() &&
+           padding() == rhs.padding() &&
+           namespace_zero() == rhs.namespace_zero() &&
+           is_array() == rhs.is_array();
+  }
+  bool operator!=(impl const &rhs) const {
+    return member_name() != rhs.member_name() ||
+           member_type_index() != rhs.member_type_index() ||
+           padding() != rhs.padding() ||
+           namespace_zero() != rhs.namespace_zero() ||
+           is_array() != rhs.is_array();
+  }
 };
 
 DataTypeMember::DataTypeMember() : d_ptr{std::make_unique<impl>()} {}
+
+DataTypeMember::DataTypeMember(std::string const &member_name,
+                               uint16_t member_type_index,
+                               std::byte const &padding,
+                               bool namespace_zero,
+                               bool is_array)
+    : d_ptr{std::make_unique<impl>(
+          member_name, member_type_index, padding, namespace_zero, is_array)} {}
 
 DataTypeMember::~DataTypeMember() = default;
 
@@ -53,6 +76,28 @@ DataTypeMember &DataTypeMember::operator=(DataTypeMember const &op) {
     d_ptr.reset(new impl(*op.d_ptr));
   }
   return *this;
+}
+
+std::string DataTypeMember::member_name() const { return d_ptr->member_name(); }
+
+uint16_t DataTypeMember::member_type_index() const {
+  return d_ptr->member_type_index();
+}
+
+std::byte DataTypeMember::padding() const { return d_ptr->padding(); }
+
+bool DataTypeMember::namespace_zero() const { return d_ptr->namespace_zero(); }
+
+bool DataTypeMember::is_array() const { return d_ptr->is_array(); }
+
+bool DataTypeMember::empty() const { return d_ptr->empty(); }
+
+bool DataTypeMember::operator==(DataTypeMember const &rhs) const {
+  return *d_ptr == *rhs.d_ptr;
+}
+
+bool DataTypeMember::operator!=(DataTypeMember const &rhs) const {
+  return *d_ptr != *rhs.d_ptr;
 }
 
 }  // namespace open62541
