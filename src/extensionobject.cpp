@@ -206,6 +206,28 @@ DataType::DataType(std::string const &type_name,
                                    binary_encoding_id,
                                    members)} {}
 
+std::string DataType::type_name() const { return d_ptr->type_name(); }
+
+NodeId DataType::type_id() const { return d_ptr->type_id(); }
+
+uint16_t DataType::mem_size() const { return d_ptr->mem_size(); }
+
+uint16_t DataType::type_index() const { return d_ptr->type_index(); }
+
+bool DataType::builtin() const { return d_ptr->builtin(); }
+
+bool DataType::pointer_free() const { return d_ptr->pointer_free(); }
+
+bool DataType::overlayable() const { return d_ptr->overlayable(); }
+
+uint16_t DataType::binary_encoding_id() const {
+  return d_ptr->binary_encoding_id();
+}
+
+std::vector<DataTypeMember> DataType::members() const {
+  return d_ptr->members();
+}
+
 DataType::DataType() : d_ptr{std::make_unique<impl>()} {}
 
 DataType::~DataType() = default;

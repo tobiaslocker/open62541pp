@@ -124,4 +124,11 @@ bool ReferenceDescription::operator!=(ReferenceDescription const &rhs) const {
   return *d_ptr != *rhs.d_ptr;
 }
 
+std::ostream &operator<<(std::ostream &out, ReferenceDescription const &op) {
+  out << "ReferenceDescription(" << op.reference_type_id() << ", "
+      << op.is_forward() << ", " << op.node_id() << ", " << op.browse_name()
+      << ", " << op.display_name() << ", " << op.node_class() << ", "
+      << op.type_definition() << ')';
+  return out;
+}
 }  // namespace open62541

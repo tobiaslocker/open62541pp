@@ -1,5 +1,8 @@
 #include "qualifiedname.hpp"
 
+#include <iomanip>
+#include <iostream>
+
 namespace open62541 {
 
 class QualifiedName::impl {
@@ -55,9 +58,9 @@ bool QualifiedName::operator!=(QualifiedName const &rhs) const {
   return *d_ptr != *rhs.d_ptr;
 }
 
-std::ostream &operator<<(std::ostream &out, QualifiedName const &name) {
-  auto s = name.name();
-  out << s;
+std::ostream &operator<<(std::ostream &out, QualifiedName const &op) {
+  out << "QualifiedName(" << std::quoted(op.name()) << op.namespace_index()
+      << ')';
   return out;
 }
 

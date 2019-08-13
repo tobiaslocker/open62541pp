@@ -83,7 +83,7 @@ bool Locale::operator!=(const Locale &rhs) const {
 }
 
 std::ostream &operator<<(std::ostream &out, const Locale &op) {
-  out << op.str();
+  out << "Locale(" << std::quoted(op.str()) << ')';
   return out;
 }
 
@@ -100,13 +100,12 @@ bool Text::operator==(const Text &rhs) const { return m_data == rhs.m_data; }
 bool Text::operator!=(const Text &rhs) const { return m_data != rhs.m_data; }
 
 std::ostream &operator<<(std::ostream &out, const Text &op) {
-  out << op.str();
+  out << "Text(" << std::quoted(op.str()) << ')';
   return out;
 }
 
 std::ostream &operator<<(std::ostream &out, const LocalizedText &op) {
-  out << '{' << std::quoted(op.locale().str()) << ", "
-      << std::quoted(op.text().str()) << '}';
+  out << "LocalizedText(" << op.locale() << ", " << op.text() << ')';
   return out;
 }
 

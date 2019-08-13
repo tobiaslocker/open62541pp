@@ -74,4 +74,10 @@ bool ViewDescription::operator!=(ViewDescription const &rhs) const {
   return *d_ptr != *rhs.d_ptr;
 }
 
+std::ostream &operator<<(std::ostream &out, ViewDescription const &op) {
+  out << "ViewDescription(" << op.view_id() << ", " << op.timestamp() << ", "
+      << op.view_version() << ')';
+  return out;
+}
+
 }  // namespace open62541

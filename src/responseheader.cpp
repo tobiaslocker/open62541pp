@@ -1,5 +1,8 @@
 #include "responseheader.hpp"
 
+#include <algorithm>
+#include <iomanip>
+
 namespace open62541 {
 
 class ResponseHeader::impl {
@@ -116,4 +119,15 @@ bool ResponseHeader::operator!=(ResponseHeader const &rhs) const {
   return *d_ptr != *rhs.d_ptr;
 }
 
+std::ostream &operator<<(std::ostream &out, ResponseHeader const &op) {
+  out << "ResponseHeader(" << op.timestamp() << ", " << op.request_handle()
+      << ", " << op.service_result() << ", " << op.service_diagnostics()
+      << ", [";
+  std::for_each(op.string_table().begin(),
+                op.string_table().end() - 1,
+                [&](auto const &u) { out << std::quoted(u) << ", "; });
+  out << std::quoted(op.string_table().back());
+  out << "], " << op.additional_header() << ')';
+  return out;
+}
 }  // namespace open62541

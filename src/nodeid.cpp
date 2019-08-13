@@ -84,15 +84,15 @@ std::ostream &operator<<(std::ostream &out, const NodeId &op) {
   std::string id;
   if (op.identifier_type() == IdentifierType::String ||
       op.identifier_type() == IdentifierType::ByteString) {
-    out << "{" << op.namespace_index() << ", "
+    out << "NodeId(" << op.namespace_index() << ", "
         << std::quoted(op.identifier().string()) << ", " << op.identifier_type()
-        << "}";
+        << ")";
   } else if (op.identifier_type() == IdentifierType::Numeric) {
-    out << "{" << op.namespace_index() << ", " << op.identifier().numeric()
-        << ", " << op.identifier_type() << "}";
+    out << "NodeId(" << op.namespace_index() << ", "
+        << op.identifier().numeric() << ", " << op.identifier_type() << ")";
   } else if (op.identifier_type() == IdentifierType::Guid) {
-    out << "{" << op.namespace_index() << ", " << op.identifier().guid() << ", "
-        << op.identifier_type() << "}";
+    out << "NodeId(" << op.namespace_index() << ", " << op.identifier().guid()
+        << ", " << op.identifier_type() << ")";
   }
   return out;
 }

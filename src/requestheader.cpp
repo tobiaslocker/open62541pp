@@ -1,5 +1,7 @@
 #include "requestheader.hpp"
 
+#include <iomanip>
+
 namespace open62541 {
 
 class RequestHeader::impl {
@@ -130,6 +132,14 @@ bool RequestHeader::operator==(RequestHeader const &rhs) const {
 
 bool RequestHeader::operator!=(RequestHeader const &rhs) const {
   return *d_ptr != *rhs.d_ptr;
+}
+
+std::ostream &operator<<(std::ostream &out, RequestHeader const &op) {
+  out << "RequestHeader(" << op.authentication_token() << ", " << op.timestamp()
+      << ", " << op.request_handle() << ", " << op.return_diagnostics() << ", "
+      << std::quoted(op.audit_entry_id()) << ", " << op.timeout_hint() << ", "
+      << op.additional_header() << ')';
+  return out;
 }
 
 }  // namespace open62541
