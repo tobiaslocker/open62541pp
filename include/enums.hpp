@@ -263,8 +263,467 @@ enum class StatusCode : uint32_t {
   BadMaxconnectionsreached = 0x80b70000,
 };
 
-inline std::ostream &operator<<(std::ostream &out, StatusCode const &op) {
-  // TODO
+inline std::ostream &operator<<(std::ostream &out, StatusCode op) {
+    switch (op) {
+
+  case StatusCode::Good:
+  case StatusCode::BadUnexpectedError:
+        break;
+  case StatusCode::BadInternalError:
+break;
+  case StatusCode::BadOutOfMemory:
+break;
+  case StatusCode::BadResourceUnavailable:
+break;
+  case StatusCode::BadCommunicationError:
+break;
+  case StatusCode::BadEncodingError:
+break;
+  case StatusCode::BadDecodingError:
+break;
+  case StatusCode::BadEncodingLimitsExceeded:
+break;
+  case StatusCode::BadRequestTooLarge:
+break;
+  case StatusCode::BadResponseTooLarge:
+break;
+  case StatusCode::BadUnknownResponse:
+break;
+  case StatusCode::BadTimeout:
+break;
+  case StatusCode::BadServiceUnsupported:
+break;
+  case StatusCode::BadShutdown:
+break;
+  case StatusCode::BadServerNotConnected:
+break;
+  case StatusCode::BadServerHalted:
+break;
+  case StatusCode::BadNothingToDo:
+break;
+  case StatusCode::BadTooManyOperations:
+break;
+  case StatusCode::BadTooManyMonitoredItems:
+break;
+  case StatusCode::BadDataTypeIdUnknown:
+break;
+  case StatusCode::BadCertificateInvalid:
+break;
+  case StatusCode::BadSecurityChecksFailed:
+break;
+  case StatusCode::BadCertificateTimeInvalid:
+break;
+  case StatusCode::BadCertificateIssuerTimeInvalid:
+break;
+  case StatusCode::BadCertificateHostnameInvalid:
+break;
+  case StatusCode::BadCertificateUriInvalid:
+break;
+  case StatusCode::BadCertificateUseNotAllowed:
+break;
+  case StatusCode::BadCertificateIssuerUseNotAllowed:
+break;
+  case StatusCode::BadCertificateUntrusted:
+break;
+  case StatusCode::BadCertificateRevocationUnknown:
+break;
+  case StatusCode::BadCertificateIssuerRevocationUnknown:
+break;
+  case StatusCode::BadCertificateRevoked:
+break;
+  case StatusCode::BadCertificateIssuerRevoked:
+break;
+  case StatusCode::BadCertificateChainIncomplete:
+break;
+  case StatusCode::BadUserAccessDenied:
+break;
+  case StatusCode::BadIdentityTokenInvalid:
+break;
+  case StatusCode::BadIdentityTokenRejected:
+break;
+  case StatusCode::BadSecureChannelIdInvalid:
+break;
+  case StatusCode::BadInvalidTimeStamp:
+break;
+  case StatusCode::BadNonceInvalid:
+break;
+  case StatusCode::BadSessionIdInvalid:
+break;
+  case StatusCode::BadSessionClosed:
+break;
+  case StatusCode::BadSessionNotActivated:
+break;
+  case StatusCode::BadSubscriptionIdInvalid:
+break;
+  case StatusCode::BadRequestHeaderInvalid:
+break;
+  case StatusCode::BadTimestampStoreTurnInvalid:
+break;
+  case StatusCode::BadRequestCancelledByClient:
+break;
+  case StatusCode::BadTooManyArguments:
+break;
+  case StatusCode::BadLicenseExpired:
+break;
+  case StatusCode::BadLicenseLimitsExceeded:
+break;
+  case StatusCode::BadLicenseNotAvailable:
+break;
+  case StatusCode::GoodSubscriptionTransferred:
+break;
+  case StatusCode::GoodCompletesAsynchronously:
+break;
+  case StatusCode::GoodOverload:
+break;
+  case StatusCode::GoodClamped:
+break;
+  case StatusCode::BadNoCommunication:
+break;
+  case StatusCode::BadWaitingForInitialData:
+break;
+  case StatusCode::BadNodeIdInvalid:
+break;
+  case StatusCode::BadNodeIdUnknown:
+break;
+  case StatusCode::BadAttributeIdInvalid:
+break;
+  case StatusCode::BadIndexRangeInvalid:
+break;
+  case StatusCode::BadIndexRangeNoData:
+break;
+  case StatusCode::BadDataEncodingInvalid:
+break;
+  case StatusCode::BadDataEncodingUnsupported:
+break;
+  case StatusCode::BadNotReadable:
+break;
+  case StatusCode::BadNotWritable:
+break;
+  case StatusCode::BadOutofRange:
+break;
+  case StatusCode::BadNotSupported:
+break;
+  case StatusCode::BadNotFound:
+break;
+  case StatusCode::BadObjectDeleted:
+break;
+  case StatusCode::BadNotImplemented:
+break;
+  case StatusCode::BadMonitoringModeInvalid:
+break;
+  case StatusCode::BadMonitoredItemIdInvalid:
+break;
+  case StatusCode::BadMonitoredItemFilterInvalid:
+break;
+  case StatusCode::BadMonitoredItemFilterUnsupported:
+break;
+  case StatusCode::BadFilterNotAllowed:
+break;
+  case StatusCode::BadStructureMissing:
+break;
+  case StatusCode::BadEventFilterInvalid:
+break;
+  case StatusCode::BadContentFilterInvalid:
+break;
+  case StatusCode::BadFilterOperatorInvalid:
+break;
+  case StatusCode::BadFilterOperatorUnsupported:
+break;
+  case StatusCode::BadFilterOperandCountMismatch:
+break;
+  case StatusCode::BadFilterOperandInvalid:
+break;
+  case StatusCode::BadFilterElementInvalid:
+break;
+  case StatusCode::BadFilterLiteralInvalid:
+break;
+  case StatusCode::BadContinuationPointInvalid:
+break;
+  case StatusCode::BadNoContinuationPoints:
+break;
+  case StatusCode::BadReferenceTypeIdInvalid:
+break;
+  case StatusCode::BadBrowseDirectionInvalid:
+break;
+  case StatusCode::BadNodeNotInView:
+break;
+  case StatusCode::BadServerUriInvalid:
+break;
+  case StatusCode::BadSempahoreFileMissing:
+break;
+  case StatusCode::BadRequestTypeInvalid:
+break;
+  case StatusCode::BadSecurityModeRejected:
+break;
+  case StatusCode::BadSecurityPolicyRejected:
+break;
+  case StatusCode::BadTooManySessions:
+break;
+  case StatusCode::BadUserSignatureInvalid:
+break;
+  case StatusCode::BadApplicationSignatureInvalid:
+break;
+  case StatusCode::BadNoValidCertificates:
+break;
+  case StatusCode::BadIdentityChangeNotSupported:
+break;
+  case StatusCode::BadRequestCancelledByRequest:
+break;
+  case StatusCode::BadParentNodeIdInvalid:
+break;
+  case StatusCode::BadReferenceNotAllowed:
+break;
+  case StatusCode::BadNodeIdRejected:
+break;
+  case StatusCode::BadNodeIdExists:
+break;
+  case StatusCode::BadNodeClassInvalid:
+break;
+  case StatusCode::BadBrowsenameInvalid:
+break;
+  case StatusCode::BadBrowsenameDuplicated:
+break;
+  case StatusCode::BadNodeAttributesInvalid:
+break;
+  case StatusCode::BadTypeDefinitionInvalid:
+break;
+  case StatusCode::BadSourceNodeidInvalid:
+break;
+  case StatusCode::BadTargetNodeidInvalid:
+break;
+  case StatusCode::BadDuplicateReferenceNotAllowed:
+break;
+  case StatusCode::BadInvalidSelfReference:
+break;
+  case StatusCode::BadReferenceLocalOnly:
+break;
+  case StatusCode::BadNoDeleteRights:
+break;
+  case StatusCode::UncertainReferenceNotDeleted:
+break;
+  case StatusCode::BadServerIndexInvalid:
+break;
+  case StatusCode::BadViewIdUnknown:
+break;
+  case StatusCode::BadViewTimestampInvalid:
+break;
+  case StatusCode::BadViewParameterMismatch:
+break;
+  case StatusCode::BadViewVersionInvalid:
+break;
+  case StatusCode::UncertainNotAllNodesAvailable:
+break;
+  case StatusCode::GoodResultsMaybeIncomplete:
+break;
+  case StatusCode::BadNotTypeDefinition:
+break;
+  case StatusCode::UncertainReferenceOutOfServer:
+break;
+  case StatusCode::BadTooManyMatches:
+break;
+  case StatusCode::BadQueryTooComplex:
+break;
+  case StatusCode::BadNoMatch:
+break;
+  case StatusCode::BadMaxageInvalid:
+break;
+  case StatusCode::BadSecurityModeInsufficient:
+break;
+  case StatusCode::BadHistoryOperationInvalid:
+break;
+  case StatusCode::BadHistoryOperationUnsupported:
+break;
+  case StatusCode::BadInvalidTimestampArgument:
+break;
+  case StatusCode::BadWriteNotSupported:
+break;
+  case StatusCode::BadTypeMismatch:
+break;
+  case StatusCode::BadMethodInvalid:
+break;
+  case StatusCode::BadArgumentsMissing:
+break;
+  case StatusCode::BadTooManySubscriptions:
+break;
+  case StatusCode::BadTooManyPublishrequests:
+break;
+  case StatusCode::BadNoSubscription:
+break;
+  case StatusCode::BadSequenceNumberUnknown:
+break;
+  case StatusCode::BadMessageNotAvailable:
+break;
+  case StatusCode::BadInsufficientClientProfile:
+break;
+  case StatusCode::BadStateNotActive:
+break;
+  case StatusCode::BadTcpServerTooBusy:
+break;
+  case StatusCode::BadTcpMessageTypeInvalid:
+break;
+  case StatusCode::BadTcpSecureChannelUnknown:
+break;
+  case StatusCode::BadTcpMessageTooLarge:
+break;
+  case StatusCode::BadTcpNotEnoughResources:
+break;
+  case StatusCode::BadTcpInternalError:
+break;
+  case StatusCode::BadTcpEndpointUrlInvalid:
+break;
+  case StatusCode::BadRequestInterrupted:
+break;
+  case StatusCode::BadRequestTimeout:
+break;
+  case StatusCode::BadSecureChannelClosed:
+break;
+  case StatusCode::BadSecureChannelTokenUnknown:
+break;
+  case StatusCode::BadSequenceNumberInvalid:
+break;
+  case StatusCode::BadProtocolVersionUnsupported:
+break;
+  case StatusCode::BadConfigurationError:
+break;
+  case StatusCode::BadNotConnected:
+break;
+  case StatusCode::BadDeviceFailure:
+break;
+  case StatusCode::BadSensorFailure:
+break;
+  case StatusCode::BadOutOfService:
+break;
+  case StatusCode::BadDeadBandFilterInvalid:
+break;
+  case StatusCode::UncertainNoCommunicationLastUsableValue:
+break;
+  case StatusCode::UncertainLastUsableValue:
+break;
+  case StatusCode::UncertainSubstituteValue:
+break;
+  case StatusCode::UncertainInitialValue:
+break;
+  case StatusCode::UncertainSensorNotAccurate:
+break;
+  case StatusCode::UncertainEngineeringUnitsExceeded:
+break;
+  case StatusCode::UncertainSubnormal:
+break;
+  case StatusCode::GoodLocalOverride:
+break;
+  case StatusCode::BadRefreshinProgress:
+break;
+  case StatusCode::BadConditionalReadyDisabled:
+break;
+  case StatusCode::BadConditionalReadyEnabled:
+break;
+  case StatusCode::BadConditionDisabled:
+break;
+  case StatusCode::BadEventIdUnknown:
+break;
+  case StatusCode::BadEventNotAcknowledgeable:
+break;
+  case StatusCode::BadDialogNotActive:
+break;
+  case StatusCode::BadDialogResponseInvalid:
+break;
+  case StatusCode::BadConditionBranchAlReadyAcked:
+break;
+  case StatusCode::BadConditionBranchAlReadyConfirmed:
+break;
+  case StatusCode::BadConditionalReadyshelved:
+break;
+  case StatusCode::BadConditionNotShelved:
+break;
+  case StatusCode::BadShelvingTimeOutOfRange:
+break;
+  case StatusCode::BadNoData:
+break;
+  case StatusCode::BadBoundNotFound:
+break;
+  case StatusCode::BadBoundNotSupported:
+break;
+  case StatusCode::BadDataLost:
+break;
+  case StatusCode::BadDataUnavailable:
+break;
+  case StatusCode::BadEntryExists:
+break;
+  case StatusCode::BadNoentryExists:
+break;
+  case StatusCode::BadTimestampNotSupported:
+break;
+  case StatusCode::GoodEntryInserted:
+break;
+  case StatusCode::GoodEntryReplaced:
+break;
+  case StatusCode::UncertainDataSubnormal:
+break;
+  case StatusCode::GoodNoData:
+break;
+  case StatusCode::GoodMoreData:
+break;
+  case StatusCode::BadAggregateListMismatch:
+break;
+  case StatusCode::BadAggregateNotSupported:
+break;
+  case StatusCode::BadAggregateInvalidInputs:
+break;
+  case StatusCode::BadAggregateConfigurationRejected:
+break;
+  case StatusCode::GoodDataIgnored:
+break;
+  case StatusCode::BadRequestNotAllowed:
+break;
+  case StatusCode::GoodEdited:
+break;
+  case StatusCode::GoodPostActionFailed:
+break;
+  case StatusCode::UncertainDominantValueChanged:
+break;
+  case StatusCode::GoodDependentValueChanged:
+break;
+  case StatusCode::BadDominantValueChanged:
+break;
+  case StatusCode::UncertainDependentValueChanged:
+break;
+  case StatusCode::BadDependentValueChanged:
+break;
+  case StatusCode::GoodCommunicationEvent:
+break;
+  case StatusCode::GoodShutdownEvent:
+break;
+  case StatusCode::GoodCallAgain:
+break;
+  case StatusCode::GoodNonCriticalTimeout:
+break;
+  case StatusCode::BadInvalidArgument:
+break;
+  case StatusCode::BadConnectionRejected:
+break;
+  case StatusCode::BadDisconnect:
+break;
+  case StatusCode::BadConnectionClosed:
+break;
+  case StatusCode::BadInvalidState:
+break;
+  case StatusCode::BadEndofStream:
+break;
+  case StatusCode::BadNoDataAvailable:
+break;
+  case StatusCode::BadWaitingForResponse:
+break;
+  case StatusCode::BadOperationAbandoned:
+break;
+  case StatusCode::BadExpectedStreamToBlock:
+break;
+  case StatusCode::BadWouldBlock:
+break;
+  case StatusCode::BadSyntaxError:
+break;
+  case StatusCode::BadMaxconnectionsreached:
+break;
+    }
 }
 
 enum class IdentifierType : uint32_t { Numeric, String, Guid, ByteString };
