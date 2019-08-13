@@ -13,19 +13,19 @@ enum class UserTokenType : uint32_t {
   IssuedToken = 3
 };
 
-inline std::ostream &operator<<(std::ostream &out, UserTokenType const &op) {
+inline std::ostream &operator<<(std::ostream &out, UserTokenType op) {
   switch (op) {
     case UserTokenType::Anonymous:
-      out << "Anonymous";
+      out << "UserTokenType::Anonymous";
       break;
     case UserTokenType::UserName:
-      out << "UserName";
+      out << "UserTokenType::UserName";
       break;
     case UserTokenType::Certificate:
-      out << "Certificate";
+      out << "UserTokenType::Certificate";
       break;
     case UserTokenType::IssuedToken:
-      out << "IssuedToken";
+      out << "UserTokenType::IssuedToken";
       break;
   }
   return out;
@@ -958,19 +958,19 @@ inline std::ostream &operator<<(std::ostream &out, StatusCode op) {
 
 enum class IdentifierType : uint32_t { Numeric, String, Guid, ByteString };
 
-inline std::ostream &operator<<(std::ostream &out, IdentifierType const &op) {
+inline std::ostream &operator<<(std::ostream &out, IdentifierType op) {
   switch (op) {
     case IdentifierType::Numeric:
-      out << "Numeric";
+      out << "IdentifierType::Numeric";
       break;
     case IdentifierType::String:
-      out << "String";
+      out << "IdentifierType::String";
       break;
     case IdentifierType::Guid:
       out << "IdentifierType::Guid";
       break;
     case IdentifierType::ByteString:
-      out << "ByteString";
+      out << "IdentifierType::ByteString";
       break;
   }
   return out;
@@ -983,20 +983,19 @@ enum class MessageSecurityMode : uint32_t {
   SignAndEncrypt = 3
 };
 
-inline std::ostream &operator<<(std::ostream &out,
-                                MessageSecurityMode const &op) {
+inline std::ostream &operator<<(std::ostream &out, MessageSecurityMode op) {
   switch (op) {
     case MessageSecurityMode::Invalid:
-      out << "Invalid";
+      out << "MessageSecurityMode::Invalid";
       break;
     case MessageSecurityMode::None:
-      out << "None";
+      out << "MessageSecurityMode::None";
       break;
     case MessageSecurityMode::Sign:
-      out << "Sign";
+      out << "MessageSecurityMode::Sign";
       break;
     case MessageSecurityMode::SignAndEncrypt:
-      out << "SignAndEncrypt";
+      out << "MessageSecurityMode::SignAndEncrypt";
       break;
   }
   return out;
@@ -1008,19 +1007,19 @@ enum class ApplicationType : uint32_t {
   DiscoveryServer = 3,
 };
 
-inline std::ostream &operator<<(std::ostream &out, const ApplicationType &op) {
+inline std::ostream &operator<<(std::ostream &out, ApplicationType op) {
   switch (op) {
     case ApplicationType::Server:
-      out << "Server";
+      out << "ApplicationType::Server";
       break;
     case ApplicationType::Client:
-      out << "Client";
+      out << "ApplicationType::Client";
       break;
     case ApplicationType::ClientAndServer:
-      out << "ClientAndServer";
+      out << "ApplicationType::ClientAndServer";
       break;
     case ApplicationType::DiscoveryServer:
-      out << "DiscoveryServer";
+      out << "ApplicationType::DiscoveryServer";
       break;
   }
   return out;
@@ -1033,19 +1032,19 @@ enum class BrowseDirection : uint32_t {
   Invalid = 3,
 };
 
-inline std::ostream &operator<<(std::ostream &out, BrowseDirection const &op) {
+inline std::ostream &operator<<(std::ostream &out, BrowseDirection op) {
   switch (op) {
     case BrowseDirection::Forward:
-      out << "Forward";
+      out << "BrowseDirection::Forward";
       break;
     case BrowseDirection::Inverse:
-      out << "Inverse";
+      out << "BrowseDirection::Inverse";
       break;
     case BrowseDirection::Both:
-      out << "Both";
+      out << "BrowseDirection::Both";
       break;
     case BrowseDirection::Invalid:
-      out << "Invalid";
+      out << "BrowseDirection::Invalid";
       break;
   }
   return out;
@@ -1064,37 +1063,37 @@ enum class BrowseResultMask : uint32_t {
   TargetInfo = 6,
 };
 
-inline std::ostream &operator<<(std::ostream &out, BrowseResultMask const &op) {
+inline std::ostream &operator<<(std::ostream &out, BrowseResultMask op) {
   switch (op) {
     case BrowseResultMask::None:
-      out << "None";
+      out << "BrowseResultMask::None";
       break;
     case BrowseResultMask::ReferenceTypeId:
-      out << "ReferenceTypeId";
+      out << "BrowseResultMask::ReferenceTypeId";
       break;
     case BrowseResultMask::IsForward:
-      out << "IsForward";
+      out << "BrowseResultMask::IsForward";
       break;
     case BrowseResultMask::NodeClass:
-      out << "NodeClass";
+      out << "BrowseResultMask::NodeClass";
       break;
     case BrowseResultMask::QualifiedName:
-      out << "QualifiedName";
+      out << "BrowseResultMask::QualifiedName";
       break;
     case BrowseResultMask::LocalizedText:
-      out << "LocalizedText ";
+      out << "BrowseResultMask::LocalizedText";
       break;
     case BrowseResultMask::TypeDefinition:
-      out << "TypeDefinition ";
+      out << "BrowseResultMask::TypeDefinition";
       break;
     case BrowseResultMask::All:
-      out << "All ";
+      out << "BrowseResultMask::All";
       break;
     case BrowseResultMask::ReferencetypeInfo:
-      out << "ReferencetypeInfo";
+      out << "BrowseResultMask::ReferencetypeInfo";
       break;
     case BrowseResultMask::TargetInfo:
-      out << "TargetInfo";
+      out << "BrowseResultMask::TargetInfo";
       break;
   }
   return out;
@@ -1132,91 +1131,91 @@ enum class ReferenceTypeIdentifier : uint32_t {
 };
 
 inline std::ostream &operator<<(std::ostream &out,
-                                ReferenceTypeIdentifier const &op) {
+                                ReferenceTypeIdentifier op) {
   switch (op) {
     case ReferenceTypeIdentifier::Unspecified:
-      out << "Unspecified";
+      out << "ReferenceTypeIdentifier::Unspecified";
       break;
     case ReferenceTypeIdentifier::References:
-      out << "References ";
+      out << "ReferenceTypeIdentifier::References";
       break;
     case ReferenceTypeIdentifier::NonHierarchicalReferences:
-      out << "NonHierarchicalReferences";
+      out << "ReferenceTypeIdentifier::NonHierarchicalReferences";
       break;
     case ReferenceTypeIdentifier::HierarchicalReferences:
-      out << "HierarchicalReferences";
+      out << "ReferenceTypeIdentifier::HierarchicalReferences";
       break;
     case ReferenceTypeIdentifier::HasChild:
-      out << "HasChild";
+      out << "ReferenceTypeIdentifier::HasChild";
       break;
     case ReferenceTypeIdentifier::Organizes:
-      out << "Organizes";
+      out << "ReferenceTypeIdentifier::Organizes";
       break;
     case ReferenceTypeIdentifier::HasEventSource:
-      out << "HasEventSource";
+      out << "ReferenceTypeIdentifier::HasEventSource";
       break;
     case ReferenceTypeIdentifier::HasModellingRule:
-      out << "HasModellingRule";
+      out << "ReferenceTypeIdentifier::HasModellingRule";
       break;
     case ReferenceTypeIdentifier::HasEncoding:
-      out << "HasEncoding";
+      out << "ReferenceTypeIdentifier::HasEncoding";
       break;
     case ReferenceTypeIdentifier::HasDescription:
-      out << "HasDescription";
+      out << "ReferenceTypeIdentifier::HasDescription";
       break;
     case ReferenceTypeIdentifier::HasTypeDefinition:
-      out << "HasTypeDefinition";
+      out << "ReferenceTypeIdentifier::HasTypeDefinition";
       break;
     case ReferenceTypeIdentifier::GeneratesEvent:
-      out << "GeneratesEvent";
+      out << "ReferenceTypeIdentifier::GeneratesEvent";
       break;
     case ReferenceTypeIdentifier::Aggregates:
-      out << "Aggregates";
+      out << "ReferenceTypeIdentifier::Aggregates";
       break;
     case ReferenceTypeIdentifier::HasSubtype:
-      out << "HasSubtype";
+      out << "ReferenceTypeIdentifier::HasSubtype";
       break;
     case ReferenceTypeIdentifier::HasProperty:
-      out << "HasProperty";
+      out << "ReferenceTypeIdentifier::HasProperty";
       break;
     case ReferenceTypeIdentifier::HasComponent:
-      out << "HasComponent";
+      out << "ReferenceTypeIdentifier::HasComponent";
       break;
     case ReferenceTypeIdentifier::HasNotifier:
-      out << "HasNotifier";
+      out << "ReferenceTypeIdentifier::HasNotifier";
       break;
     case ReferenceTypeIdentifier::HasOrderedComponent:
-      out << "HasOrderedComponent";
+      out << "ReferenceTypeIdentifier::HasOrderedComponent";
       break;
     case ReferenceTypeIdentifier::FromState:
-      out << "FromState";
+      out << "ReferenceTypeIdentifier::FromState";
       break;
     case ReferenceTypeIdentifier::ToState:
-      out << "ToState";
+      out << "ReferenceTypeIdentifier::ToState";
       break;
     case ReferenceTypeIdentifier::HasCause:
-      out << "HasCause";
+      out << "ReferenceTypeIdentifier::HasCause";
       break;
     case ReferenceTypeIdentifier::HasEffect:
-      out << "HasEffect";
+      out << "ReferenceTypeIdentifier::HasEffect";
       break;
     case ReferenceTypeIdentifier::HasHistoricalConfiguration:
-      out << "HasHistoricalConfiguration";
+      out << "ReferenceTypeIdentifier::HasHistoricalConfiguration";
       break;
     case ReferenceTypeIdentifier::HasSubStateMachine:
-      out << "HasSubStateMachine";
+      out << "ReferenceTypeIdentifier::HasSubStateMachine";
       break;
     case ReferenceTypeIdentifier::AlwaysGeneratesEvent:
-      out << "AlwaysGeneratesEvent";
+      out << "ReferenceTypeIdentifier::AlwaysGeneratesEvent";
       break;
     case ReferenceTypeIdentifier::HasTrueSubState:
-      out << "HasTrueSubState";
+      out << "ReferenceTypeIdentifier::HasTrueSubState";
       break;
     case ReferenceTypeIdentifier::HasFalseSubState:
-      out << "HasFalseSubState";
+      out << "ReferenceTypeIdentifier::HasFalseSubState";
       break;
     case ReferenceTypeIdentifier::HasCondition:
-      out << "HasCondition";
+      out << "ReferenceTypeIdentifier::HasCondition";
       break;
   }
   return out;
@@ -1235,37 +1234,37 @@ enum class NodeClass : uint32_t {
   All = 255
 };
 
-inline std::ostream &operator<<(std::ostream &out, NodeClass const &op) {
+inline std::ostream &operator<<(std::ostream &out, NodeClass op) {
   switch (op) {
     case NodeClass::Unspecified:
-      out << "Unspecified";
+      out << "NodeClass::Unspecified";
       break;
     case NodeClass::Object:
-      out << "Object";
+      out << "NodeClass::Object";
       break;
     case NodeClass::Variable:
-      out << "Variable";
+      out << "NodeClass::Variable";
       break;
     case NodeClass::Method:
-      out << "Method";
+      out << "NodeClass::Method";
       break;
     case NodeClass::ObjectType:
-      out << "ObjectType";
+      out << "NodeClass::ObjectType";
       break;
     case NodeClass::VariableType:
-      out << "VariableType";
+      out << "NodeClass::VariableType";
       break;
     case NodeClass::ReferenceType:
-      out << "ReferenceType";
+      out << "NodeClass::ReferenceType";
       break;
     case NodeClass::DataType:
-      out << "DataType";
+      out << "NodeClass::DataType";
       break;
     case NodeClass::View:
-      out << "View";
+      out << "NodeClass::View";
       break;
     case NodeClass::All:
-      out << "All";
+      out << "NodeClass::All";
       break;
   }
   return out;
@@ -1279,22 +1278,22 @@ enum class ClientState : uint32_t {
   SessionRenewed = 4
 };
 
-inline std::ostream &operator<<(std::ostream &out, ClientState const &op) {
+inline std::ostream &operator<<(std::ostream &out, ClientState op) {
   switch (op) {
     case ClientState::Disconnected:
-      out << "Disconnected";
+      out << "ClientState::Disconnected";
       break;
     case ClientState::Connected:
-      out << "Connected";
+      out << "ClientState::Connected";
       break;
     case ClientState::SecureChannel:
-      out << "SecureChannel";
+      out << "ClientState::SecureChannel";
       break;
     case ClientState::Session:
-      out << "Session";
+      out << "ClientState::Session";
       break;
     case ClientState::SessionRenewed:
-      out << "SessionRenewed";
+      out << "ClientState::SessionRenewed";
       break;
   }
   return out;
