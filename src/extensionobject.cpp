@@ -1,5 +1,6 @@
 #include "extensionobject.hpp"
 
+#include <algorithm>
 #include <iomanip>
 #include <iostream>
 
@@ -237,9 +238,10 @@ std::ostream &operator<<(std::ostream &out, const DataType &op) {
       << ", " << op.mem_size() << ", " << op.type_index() << ", "
       << op.builtin() << ", " << op.pointer_free() << ", " << op.overlayable()
       << ", " << op.binary_encoding_id() << ", [";
-  for (auto const &m : op.members()) {
-    out << m << ", ";
-  }
+  std::for_each(op.members().begin(),
+                op.members().end() - 1,
+                [&](auto const &u) { out << u << ", "; });
+  out << op.members().back();
   out << ')';
   return out;
 }
@@ -339,6 +341,19 @@ bool ExtensionObject::operator==(ExtensionObject const &rhs) const {
 
 bool ExtensionObject::operator!=(ExtensionObject const &rhs) const {
   return *d_ptr != *rhs.d_ptr;
+}
+
+std::ostream &operator<<(std::ostream &out, const ExtensionObject &op) {
+  out << "ExtensionObject(" << op.encoding();
+  auto c = op.content();
+  if (auto v = std::get_if<std::pair<NodeId, ByteString>>(&c)) {
+    out << v->first << ", " << v->second;
+  } else if (auto v =
+                 std::get_if<std::pair<DataType, std::shared_ptr<void>>>(&c)) {
+    out << v->first << ", " << v->second;
+  }
+  out << ')';
+  return out;
 }
 
 }  // namespace open62541

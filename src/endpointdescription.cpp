@@ -1,8 +1,8 @@
 #include "endpointdescription.hpp"
 
+#include <algorithm>
 #include <iomanip>
 #include <iostream>
-#include <algorithm>
 
 namespace open62541 {
 

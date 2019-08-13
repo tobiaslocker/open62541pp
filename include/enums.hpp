@@ -391,6 +391,26 @@ enum class ExtensionObjectEncoding {
   DecodedNodelete = 4
 };
 
+inline std::ostream &operator<<(std::ostream &out, ExtensionObjectEncoding op) {
+  switch (op) {
+    case ExtensionObjectEncoding::Nobody:
+      out << "ExtensionObjectEncoding::Nobody";
+      break;
+    case ExtensionObjectEncoding::ByteString:
+      out << "ExtensionObjectEncoding::ByteString";
+      break;
+    case ExtensionObjectEncoding::Xml:
+      out << "ExtensionObjectEncoding::Xml";
+      break;
+    case ExtensionObjectEncoding::Decoded:
+      out << "ExtensionObjectEncoding::Decoded";
+      break;
+    case ExtensionObjectEncoding::DecodedNodelete:
+      out << "ExtensionObjectEncoding::DecodedNodelete";
+      break;
+  }
+  return out;
+}
 }  // namespace open62541
 
 #endif  // OPEN62541_CPP_WRAPPER_ENUMS_H
