@@ -20,17 +20,17 @@ class DateTime {
   DateTime(DateTime const &);
   DateTime &operator=(DateTime const &);
 
-  DateTime(int64_t ldap_timestamp);
+  explicit DateTime(int64_t ldap_timestamp);
 
-  DateTime(uint16_t nano_sec,
-           uint16_t micro_sec,
-           uint16_t milli_sec,
-           uint16_t sec,
-           uint16_t min,
-           uint16_t hour,
-           uint16_t day,
-           uint16_t month,
-           uint16_t year);
+  explicit DateTime(uint16_t nano_sec,
+                    uint16_t micro_sec,
+                    uint16_t milli_sec,
+                    uint16_t sec,
+                    uint16_t min,
+                    uint16_t hour,
+                    uint16_t day,
+                    uint16_t month,
+                    uint16_t year);
 
   uint16_t nano_sec() const;
   uint16_t micro_sec() const;
@@ -47,6 +47,7 @@ class DateTime {
   bool operator!=(DateTime const &rhs) const;
 };
 
+std::ostream &operator<<(std::ostream &out, DateTime const &op);
 }  // namespace open62541
 
 #endif  // OPEN6541_CPP_WRAPPER_DATE_TIME_H

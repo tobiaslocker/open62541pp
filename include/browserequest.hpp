@@ -40,6 +40,7 @@ class BrowseRequest {
   bool operator!=(BrowseRequest const &rhs) const;
 };
 
+std::ostream &operator<<(std::ostream &out, BrowseRequest const &op);
 }  // namespace open62541
 
 #endif  // OPEN62541_CPP_WRAPPER_BROWSE_REQUEST_H

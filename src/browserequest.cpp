@@ -97,4 +97,10 @@ bool BrowseRequest::operator!=(BrowseRequest const &rhs) const {
   return *d_ptr != *rhs.d_ptr;
 }
 
+std::ostream &operator<<(std::ostream &out, const BrowseRequest &op) {
+  out << "BrowseRequest(" << op.request_header() << ", " << op.view() << ", "
+      << op.max_references() << ')';
+  return out;
+}
+
 }  // namespace open62541

@@ -45,6 +45,8 @@ class RequestHeader {
   bool operator!=(RequestHeader const &rhs) const;
 };
 
+std::ostream &operator<<(std::ostream &out, RequestHeader const &op);
+
 }  // namespace open62541
 
 #endif  // OPEN6541_CPP_WRAPPER_REQUEST_HEADER_H

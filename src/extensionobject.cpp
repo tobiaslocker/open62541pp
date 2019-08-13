@@ -1,5 +1,8 @@
 #include "extensionobject.hpp"
 
+#include <iomanip>
+#include <iostream>
+
 namespace open62541 {
 
 class DataTypeMember::impl {
@@ -98,6 +101,14 @@ bool DataTypeMember::operator==(DataTypeMember const &rhs) const {
 
 bool DataTypeMember::operator!=(DataTypeMember const &rhs) const {
   return *d_ptr != *rhs.d_ptr;
+}
+
+std::ostream &operator<<(std::ostream &out, const DataTypeMember &op) {
+  out << "DataTypeMember(" << std::quoted(op.member_name()) << ", "
+      << op.member_type_index() << ", "
+      << static_cast<unsigned int>(op.padding()) << ", " << op.namespace_zero()
+      << ", " << op.is_array() << ')';
+  return out;
 }
 
 class DataType::impl {
@@ -219,6 +230,18 @@ bool DataType::operator==(DataType const &rhs) const {
 
 bool DataType::operator!=(DataType const &rhs) const {
   return *d_ptr != *rhs.d_ptr;
+}
+
+std::ostream &operator<<(std::ostream &out, const DataType &op) {
+  out << "DataType(" << std::quoted(op.type_name()) << ", " << op.type_id()
+      << ", " << op.mem_size() << ", " << op.type_index() << ", "
+      << op.builtin() << ", " << op.pointer_free() << ", " << op.overlayable()
+      << ", " << op.binary_encoding_id() << ", [";
+  for (auto const &m : op.members()) {
+    out << m << ", ";
+  }
+  out << ')';
+  return out;
 }
 
 class ExtensionObject::impl {

@@ -1,5 +1,7 @@
 #include "browseresponse.hpp"
 
+#include <algorithm>
+
 namespace open62541 {
 
 class BrowseResponse::impl {
@@ -51,12 +53,40 @@ BrowseResponse::BrowseResponse(
     : d_ptr{
           std::make_unique<impl>(response_header, results, diagnostic_infos)} {}
 
+ResponseHeader BrowseResponse::response_header() const {
+  return d_ptr->response_header();
+}
+
+std::vector<BrowseResult> BrowseResponse::results() const {
+  return d_ptr->results();
+}
+
+std::vector<DiagnosticInfo> BrowseResponse::diagnostic_infos() const {
+  return d_ptr->diagnostic_infos();
+}
+
 bool BrowseResponse::operator==(BrowseResponse const &rhs) const {
   return *d_ptr == *rhs.d_ptr;
 }
 
 bool BrowseResponse::operator!=(BrowseResponse const &rhs) const {
   return *d_ptr != *rhs.d_ptr;
+}
+
+std::ostream &operator<<(std::ostream &out, const BrowseResponse &op) {
+  out << "BrowseResponse(" << op.response_header() << ", [";
+  std::for_each(op.results().begin(),
+                op.results().end() - 1,
+                [&](BrowseResult const &u) { out << u << ", "; });
+  out << op.results().back();
+
+  out << "], [";
+  std::for_each(op.diagnostic_infos().begin(),
+                op.diagnostic_infos().end() - 1,
+                [&](auto const &u) { out << u << ", "; });
+  out << op.diagnostic_infos().back();
+  out << "])";
+  return out;
 }
 
 }  // namespace open62541

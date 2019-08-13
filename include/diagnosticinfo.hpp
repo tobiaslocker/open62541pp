@@ -57,6 +57,7 @@ class DiagnosticInfo {
   bool operator!=(DiagnosticInfo const &rhs) const;
 };
 
+std::ostream &operator<<(std::ostream &out, DiagnosticInfo const &op);
 }  // namespace open62541
 
 #endif  // OPEN6541_CPP_WRAPPER_DIAGNOSTIC_INFO_H

@@ -36,6 +36,7 @@ class ViewDescription {
   bool operator!=(ViewDescription const &rhs) const;
 };
 
+std::ostream &operator<<(std::ostream &out, ViewDescription const &op);
 }  // namespace open62541
 
 #endif  // OPEN62541PP_VIEW_DESCRIPTION_H

@@ -44,6 +44,8 @@ class ResponseHeader {
   bool operator!=(ResponseHeader const &rhs) const;
 };
 
+std::ostream &operator<<(std::ostream &out, ResponseHeader const &op);
+
 }  // namespace open62541
 
 #endif  // OPEN6541_CPP_WRAPPER_RESPONSE_HEADER_H

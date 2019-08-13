@@ -35,6 +35,10 @@ enum class StatusCode : uint32_t {
   // TODO
 };
 
+inline std::ostream &operator<<(std::ostream &out, StatusCode const &op) {
+  // TODO
+}
+
 enum class IdentifierType : uint32_t { Numeric, String, Guid, ByteString };
 
 inline std::ostream &operator<<(std::ostream &out, IdentifierType const &op) {

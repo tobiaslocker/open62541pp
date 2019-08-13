@@ -36,6 +36,7 @@ class BrowseResponse {
   bool operator!=(BrowseResponse const &rhs) const;
 };
 
+std::ostream &operator<<(std::ostream &out, BrowseResponse const &op);
 }  // namespace open62541
 
 #endif  // OPEN62541_CPP_WRAPPER_BROWSE_RESPONSE_H

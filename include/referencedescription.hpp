@@ -42,6 +42,7 @@ class ReferenceDescription {
   bool operator!=(ReferenceDescription const &rhs) const;
 };
 
+std::ostream &operator<<(std::ostream &out, ReferenceDescription const &op);
 }  // namespace open62541
 
 #endif  // OPEN62541_CPP_WRAPPER_REFERENCE_DESCRIPTION_H

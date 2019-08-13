@@ -2,6 +2,7 @@
 #include "parser.hpp"
 
 #include <iomanip>
+#include <iostream>
 
 namespace open62541 {
 
@@ -147,14 +148,16 @@ bool ApplicationDescription::operator!=(
 }
 
 std::ostream &operator<<(std::ostream &out, const ApplicationDescription &op) {
-  out << '{' << std::quoted(op.application_uri()) << ", "
+  out << "ApplicationDescription(" << std::quoted(op.application_uri()) << ", "
       << std::quoted(op.product_uri()) << ", " << op.application_name() << ", "
       << op.application_type() << ", " << std::quoted(op.gateway_server_uri())
       << ", " << std::quoted(op.discovery_profile_uri()) << ", [";
-  for (auto const &url : op.discovery_urls()) {
-    out << std::quoted(url) << ", ";
-  }
-  out << "]}";
+
+  std::for_each(op.discovery_urls().begin(),
+                op.discovery_urls().end() - 1,
+                [&](auto const &u) { out << std::quoted(u) << ", "; });
+  out << std::quoted(op.discovery_urls().back());
+  out << "])";
   return out;
 }
 

@@ -26,10 +26,9 @@ class QualifiedName {
 
   bool operator==(QualifiedName const &rhs) const;
   bool operator!=(QualifiedName const &rhs) const;
-
-  friend std::ostream &operator<<(std::ostream &out, QualifiedName const &name);
 };
 
+std::ostream &operator<<(std::ostream &out, QualifiedName const &op);
 }  // namespace open62541
 
 #endif  // OPEN62541_CPP_WRAPPER_QUALIFIED_NAME_H

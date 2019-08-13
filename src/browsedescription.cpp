@@ -123,9 +123,9 @@ bool BrowseDescription::operator!=(BrowseDescription const &rhs) const {
 }
 
 std::ostream &operator<<(std::ostream &out, const BrowseDescription &op) {
-  out << "{" << op.node_id() << ", " << op.browse_direction() << ", "
-      << op.reference_type_id() << ", " << op.include_subtypes() << ", "
-      << op.node_class_mask() << ", " << op.result_mask() << "}";
+  out << "BrowseDescription(" << op.node_id() << ", " << op.browse_direction()
+      << ", " << op.reference_type_id() << ", " << op.include_subtypes() << ", "
+      << op.node_class_mask() << ", " << op.result_mask() << ')';
   return out;
 }
 }  // namespace open62541

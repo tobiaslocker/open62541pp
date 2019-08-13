@@ -43,14 +43,12 @@ BOOST_AUTO_TEST_CASE(test_default_constructor) {
 }
 
 BOOST_AUTO_TEST_CASE(test_constructor) {
-  //  auto a = common::make_browse_description_1();
-  //  BOOST_TEST(!a.empty());
-  //  BOOST_TEST(a.node_id() == common::make_node_id_2());
-  //  BOOST_TEST(a.browse_direction() == BrowseDirection::Forward);
-  //  BOOST_TEST(a.reference_type_id() == common::make_node_id_1());
-  //  BOOST_TEST(a.include_subtypes() == true);
-  //  BOOST_TEST(a.node_class_mask() == 0U);
-  //  BOOST_TEST(a.result_mask() == 0U);
+  auto a = common::make_browse_request_1();
+  BOOST_TEST(!a.empty());
+  BOOST_TEST(a.request_header() == common::make_request_header_1());
+  BOOST_TEST(a.view() == common::make_view_description_1());
+  BOOST_TEST(a.max_references() == 34U);
+  BOOST_TEST(a.nodes_to_browse().size() == 2U);
 }
 
 BOOST_AUTO_TEST_CASE(test_comparison_operators) {

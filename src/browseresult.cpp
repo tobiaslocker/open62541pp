@@ -1,5 +1,7 @@
 #include "browseresult.hpp"
 
+#include <algorithm>
+
 namespace open62541 {
 
 class BrowseResult::impl {
@@ -72,6 +74,17 @@ bool BrowseResult::operator==(const BrowseResult &rhs) const {
 
 bool BrowseResult::operator!=(const BrowseResult &rhs) const {
   return *d_ptr != *rhs.d_ptr;
+}
+
+std::ostream &operator<<(std::ostream &out, const BrowseResult &op) {
+  out << "BrowseResult(" << op.status_code() << ", " << op.continuation_point()
+      << ", [";
+  std::for_each(op.references().begin(),
+                op.references().end() - 1,
+                [&](auto const &u) { out << u << ", "; });
+  out << op.references().back();
+  out << "])";
+  return out;
 }
 
 }  // namespace open62541

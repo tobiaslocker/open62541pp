@@ -2,6 +2,7 @@
 
 #include <chrono>
 #include <ctime>
+#include <iostream>
 
 namespace open62541 {
 
@@ -158,6 +159,10 @@ bool DateTime::operator==(DateTime const &rhs) const {
 
 bool DateTime::operator!=(DateTime const &rhs) const {
   return *d_ptr != *rhs.d_ptr;
+}
+
+std::ostream &operator<<(std::ostream &out, const DateTime &op) {
+  return out << "DateTime(" << op.ldap_timestamp() << ')';
 }
 
 }  // namespace open62541

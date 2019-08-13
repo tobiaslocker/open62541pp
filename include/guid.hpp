@@ -25,8 +25,9 @@ class Guid {
   std::string str() const;
   bool operator==(Guid const &rhs) const;
   bool operator!=(Guid const &rhs) const;
-  friend std::ostream &operator<<(std::ostream &out, Guid const &guid);
 };
+
+std::ostream &operator<<(std::ostream &out, Guid const &op);
 
 }  // namespace open62541
 

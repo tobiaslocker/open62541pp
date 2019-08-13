@@ -44,6 +44,8 @@ class DataTypeMember {
   bool operator!=(DataTypeMember const &rhs) const;
 };
 
+std::ostream &operator<<(std::ostream &out, DataTypeMember const &op);
+
 class DataType {
   class impl;
   std::unique_ptr<impl> d_ptr;
@@ -83,6 +85,8 @@ class DataType {
   bool operator==(DataType const &rhs) const;
   bool operator!=(DataType const &rhs) const;
 };
+
+std::ostream &operator<<(std::ostream &out, DataType const &op);
 
 class ExtensionObject {
   class impl;
@@ -124,6 +128,7 @@ class ExtensionObject {
   bool operator!=(ExtensionObject const &rhs) const;
 };
 
+std::ostream &operator<<(std::ostream &out, ExtensionObject const &op);
 }  // namespace open62541
 
 #endif  // OPEN62541PP_EXTENSION_OBJECT_H

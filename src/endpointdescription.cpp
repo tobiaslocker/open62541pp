@@ -1,5 +1,9 @@
 #include "endpointdescription.hpp"
 
+#include <iomanip>
+#include <iostream>
+#include <algorithm>
+
 namespace open62541 {
 
 class EndpointDescription::impl {
@@ -156,19 +160,15 @@ bool EndpointDescription::operator!=(EndpointDescription const &rhs) const {
 }
 
 std::ostream &operator<<(std::ostream &out, const EndpointDescription &op) {
-  out << "{\n"
-      << "    endpoint_url -> " << op.endpoint_url() << '\n'
-      << "    security_mode -> " << op.security_mode() << '\n'
-      << "    security_level -> "
-      << static_cast<unsigned int>(op.security_level()) << '\n'
-      << "    security_policy_uri -> " << op.security_policy_uri() << '\n'
-      << "    transport_profile_uri -> " << op.transport_profile_uri() << '\n'
-      << "    user_identity_tokens ->\n    [\n";
-  for (auto const &token : op.user_identity_tokens()) {
-    out << token;
-  }
-
-  out << "    ]\n}";
+  out << "EndpointDescription(" << std::quoted(op.endpoint_url()) << ", "
+      << op.security_mode() << ", " << op.security_level() << ", "
+      << std::quoted(op.security_policy_uri()) << ", "
+      << std::quoted(op.transport_profile_uri()) << ", [";
+  std::for_each(op.user_identity_tokens().begin(),
+                op.user_identity_tokens().end() - 1,
+                [&](auto const &u) { out << u << ", "; });
+  out << op.user_identity_tokens().back();
+  out << "])";
   return out;
 }
 

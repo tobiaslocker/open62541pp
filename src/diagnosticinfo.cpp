@@ -1,5 +1,7 @@
 #include "diagnosticinfo.hpp"
 
+#include <iostream>
+
 namespace open62541 {
 
 class DiagnosticInfo::impl {
@@ -215,6 +217,17 @@ bool DiagnosticInfo::operator==(DiagnosticInfo const &rhs) const {
 
 bool DiagnosticInfo::operator!=(DiagnosticInfo const &rhs) const {
   return *d_ptr != *rhs.d_ptr;
+}
+
+std::ostream &operator<<(std::ostream &out, const DiagnosticInfo &op) {
+  return out << "DiagnosticInfo(" << op.has_symbolic_id() << ", "
+             << op.has_namespace_uri() << ", " << op.has_localized_text()
+             << ", " << op.has_locale() << ", " << op.has_additional_info()
+             << ", " << op.has_inner_status_code() << ", " << op.symbolic_id()
+             << ", " << op.namespace_uri() << ", " << op.localized_text()
+             << ", " << op.locale() << ", " << op.additional_info() << ", "
+             << op.inner_status_code() << ", " << op.inner_diagnostic_info()
+             << ')';
 }
 
 }  // namespace open62541

@@ -70,4 +70,10 @@ bool ExpandedNodeId::operator!=(ExpandedNodeId const &rhs) const {
   return *d_ptr != *rhs.d_ptr;
 }
 
+std::ostream &operator<<(std::ostream &out, const ExpandedNodeId &op) {
+  out << "ExpandedNodeId(" << op.node_id() << ", " << op.namespace_uri() << ", "
+      << op.server_index() << ')';
+  return out;
+}
+
 }  // namespace open62541

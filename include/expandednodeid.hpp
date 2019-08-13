@@ -33,6 +33,7 @@ class ExpandedNodeId {
   bool operator!=(ExpandedNodeId const &rhs) const;
 };
 
+std::ostream &operator<<(std::ostream &out, ExpandedNodeId const &op);
 }  // namespace open62541
 
 #endif  // OPEN62541_CPP_WRAPPER_EXPANDED_NODE_ID_H
