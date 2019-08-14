@@ -47,6 +47,10 @@ class BrowseResult::impl {
 
 BrowseResult::BrowseResult() : d_ptr{std::make_unique<impl>()} {}
 
+BrowseResult &BrowseResult::operator=(BrowseResult &&) noexcept = default;
+
+BrowseResult::BrowseResult(BrowseResult &&) noexcept = default;
+
 BrowseResult::BrowseResult(StatusCode status_code,
                            const ByteString &continuation_point,
                            const std::vector<ReferenceDescription> &references)

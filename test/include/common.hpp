@@ -252,18 +252,13 @@ ResponseHeader make_response_header_2() {
                         77,
                         StatusCode::Good,
                         make_diagnostic_info_2(),
-                        {"string-table-entry-1", "string-table-entry-2"},
-//                        {"string-table-entry-2"},
+                        {"string-table-entry-2"},
                         make_extension_object_2());
 }
 
-BrowseResult make_browse_result_1() {
-    return BrowseResult();
-}
+BrowseResult make_browse_result_1() { return BrowseResult(); }
 
-BrowseResult make_browse_result_2() {
-    return BrowseResult();
-}
+BrowseResult make_browse_result_2() { return BrowseResult(); }
 
 BrowseResponse make_browse_response_1() {
   return BrowseResponse(make_response_header_1(),

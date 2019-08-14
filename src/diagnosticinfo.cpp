@@ -5,20 +5,20 @@
 namespace open62541 {
 
 class DiagnosticInfo::impl {
-  bool m_has_symbolic_id;
-  bool m_has_namespace_uri;
-  bool m_has_localized_text;
-  bool m_has_locale;
-  bool m_has_additional_info;
-  bool m_has_inner_status_code;
-  bool m_has_inner_diagnostic_info;
-  uint32_t m_symbolic_id;
-  uint32_t m_namespace_uri;
-  uint32_t m_localized_text;
-  uint32_t m_locale;
+  bool m_has_symbolic_id = false;
+  bool m_has_namespace_uri = false;
+  bool m_has_localized_text = false;
+  bool m_has_locale = false;
+  bool m_has_additional_info = false;
+  bool m_has_inner_status_code = false;
+  bool m_has_inner_diagnostic_info = false;
+  uint32_t m_symbolic_id = 0;
+  uint32_t m_namespace_uri = 0;
+  uint32_t m_localized_text = 0;
+  uint32_t m_locale = 0;
   std::string m_additional_info;
   StatusCode m_inner_status_code;
-  std::shared_ptr<DiagnosticInfo> m_inner_diagnostic_info;
+  std::shared_ptr<DiagnosticInfo> m_inner_diagnostic_info = nullptr;
 
  public:
   impl() {}
@@ -81,6 +81,12 @@ class DiagnosticInfo::impl {
     return m_inner_diagnostic_info;
   }
   bool operator==(impl const &rhs) const {
+    bool b = false;
+    if (inner_diagnostic_info() && rhs.inner_diagnostic_info()) {
+      b = *inner_diagnostic_info() == *rhs.inner_diagnostic_info();
+    } else {
+      b = true;
+    }
     return has_symbolic_id() == rhs.has_symbolic_id() &&
            has_namespace_uri() == rhs.has_namespace_uri() &&
            has_localized_text() == rhs.has_localized_text() &&
@@ -93,11 +99,16 @@ class DiagnosticInfo::impl {
            localized_text() == rhs.localized_text() &&
            locale() == rhs.locale() &&
            additional_info() == rhs.additional_info() &&
-           inner_status_code() == rhs.inner_status_code() &&
-           inner_diagnostic_info() == rhs.inner_diagnostic_info();
+           inner_status_code() == rhs.inner_status_code() && b;
   }
 
   bool operator!=(impl const &rhs) const {
+    bool b = false;
+    if (inner_diagnostic_info() && rhs.inner_diagnostic_info()) {
+      b = *inner_diagnostic_info() == *rhs.inner_diagnostic_info();
+    } else {
+      b = true;
+    }
     return has_symbolic_id() != rhs.has_symbolic_id() ||
            has_namespace_uri() != rhs.has_namespace_uri() ||
            has_localized_text() != rhs.has_localized_text() ||
@@ -111,7 +122,7 @@ class DiagnosticInfo::impl {
            locale() != rhs.locale() ||
            additional_info() != rhs.additional_info() ||
            inner_status_code() != rhs.inner_status_code() ||
-           inner_diagnostic_info() != rhs.inner_diagnostic_info();
+           inner_diagnostic_info() != rhs.inner_diagnostic_info() || !b;
   }
 };
 
