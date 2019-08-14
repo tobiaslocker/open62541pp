@@ -1130,8 +1130,7 @@ enum class ReferenceTypeIdentifier : uint32_t {
   HasCondition = 9006
 };
 
-inline std::ostream &operator<<(std::ostream &out,
-                                ReferenceTypeIdentifier op) {
+inline std::ostream &operator<<(std::ostream &out, ReferenceTypeIdentifier op) {
   switch (op) {
     case ReferenceTypeIdentifier::Unspecified:
       out << "ReferenceTypeIdentifier::Unspecified";

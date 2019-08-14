@@ -103,8 +103,18 @@ DateTime make_date_time_1() {
   return DateTime(t);
 }
 
+DateTime make_date_time_2() {
+  // Date and time (GMT): Wednesday, August 14, 2019 7:54:10 AM
+  int64_t t = 132102428500000000;
+  return DateTime(t);
+}
+
 ViewDescription make_view_description_1() {
   return ViewDescription(make_node_id_1(), make_date_time_1(), 42);
+}
+
+ViewDescription make_view_description_2() {
+  return ViewDescription(make_node_id_2(), make_date_time_2(), 79);
 }
 
 ByteString make_byte_string_1() {
@@ -167,7 +177,25 @@ RequestHeader make_request_header_1() {
                        make_extension_object_1());
 }
 
+RequestHeader make_request_header_2() {
+  return RequestHeader(make_node_id_2(),
+                       make_date_time_2(),
+                       28,
+                       3,
+                       "this-audit-entry-2",
+                       5,
+                       make_extension_object_2());
+}
+
 BrowseRequest make_browse_request_1() {
+  return BrowseRequest(
+      make_request_header_1(),
+      make_view_description_1(),
+      34,
+      {make_browse_description_1(), make_browse_description_2()});
+}
+
+BrowseRequest make_browse_request_2() {
   return BrowseRequest(
       make_request_header_1(),
       make_view_description_1(),
