@@ -22,20 +22,21 @@ class DiagnosticInfo {
   DiagnosticInfo(DiagnosticInfo const &);
   DiagnosticInfo &operator=(DiagnosticInfo const &);
 
-  DiagnosticInfo(bool has_symbolic_id,
-                 bool has_namespace_uri,
-                 bool has_localized_text,
-                 bool has_locale,
-                 bool has_additional_info,
-                 bool has_inner_status_code,
-                 bool has_inner_diagnostic_info,
-                 uint32_t symbolic_id,
-                 uint32_t namespace_uri,
-                 uint32_t localized_text,
-                 uint32_t locale,
-                 std::string additional_info,
-                 StatusCode inner_status_code,
-                 std::shared_ptr<DiagnosticInfo> inner_diagnostic_info);
+  explicit DiagnosticInfo(
+      bool has_symbolic_id,
+      bool has_namespace_uri,
+      bool has_localized_text,
+      bool has_locale,
+      bool has_additional_info,
+      bool has_inner_status_code,
+      bool has_inner_diagnostic_info,
+      uint32_t symbolic_id,
+      uint32_t namespace_uri,
+      uint32_t localized_text,
+      uint32_t locale,
+      std::string additional_info,
+      StatusCode inner_status_code,
+      std::shared_ptr<DiagnosticInfo> inner_diagnostic_info = nullptr);
 
   bool has_symbolic_id() const;
   bool has_namespace_uri() const;

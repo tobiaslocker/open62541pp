@@ -7,14 +7,16 @@ namespace open62541 {
 
 class ResponseHeader::impl {
   DateTime m_timestamp;
-  uint32_t m_request_handle;
+  uint32_t m_request_handle = 0;
   StatusCode m_service_result;
   std::vector<std::string> m_string_table;
   DiagnosticInfo m_service_diagnostics;
   ExtensionObject m_additional_header;
 
+  bool m_empty = false;
+
  public:
-  impl() {}
+  impl() : m_empty{true} {}
 
   impl(DateTime const &timestamp,
        uint32_t const &request_handle,
@@ -40,6 +42,8 @@ class ResponseHeader::impl {
   std::vector<std::string> string_table() const { return m_string_table; }
 
   ExtensionObject additional_header() const { return m_additional_header; }
+
+  bool empty() const { return m_empty; }
 
   bool operator==(impl const &rhs) const {
     return timestamp() == rhs.timestamp() &&
@@ -110,6 +114,8 @@ std::vector<std::string> ResponseHeader::string_table() const {
 ExtensionObject ResponseHeader::additional_header() const {
   return d_ptr->additional_header();
 }
+
+bool ResponseHeader::empty() const { return d_ptr->empty(); }
 
 bool ResponseHeader::operator==(ResponseHeader const &rhs) const {
   return *d_ptr == *rhs.d_ptr;

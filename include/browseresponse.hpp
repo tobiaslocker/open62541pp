@@ -19,10 +19,10 @@ class BrowseResponse {
   BrowseResponse();
   ~BrowseResponse();
 
-  BrowseResponse(BrowseResponse &&) = default;
-  BrowseResponse(BrowseResponse const &) = delete;
-  BrowseResponse &operator=(BrowseResponse &&);
-  BrowseResponse &operator=(BrowseResponse const &) = delete;
+  BrowseResponse(BrowseResponse &&) noexcept;
+  BrowseResponse &operator=(BrowseResponse &&) noexcept;
+  BrowseResponse(BrowseResponse const &);
+  BrowseResponse &operator=(BrowseResponse const &);
 
   BrowseResponse(ResponseHeader const &response_header,
                  std::vector<BrowseResult> const &results,
@@ -31,6 +31,8 @@ class BrowseResponse {
   ResponseHeader response_header() const;
   std::vector<BrowseResult> results() const;
   std::vector<DiagnosticInfo> diagnostic_infos() const;
+
+  bool empty() const;
 
   bool operator==(BrowseResponse const &rhs) const;
   bool operator!=(BrowseResponse const &rhs) const;

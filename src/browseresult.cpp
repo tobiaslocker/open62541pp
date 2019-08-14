@@ -10,7 +10,7 @@ class BrowseResult::impl {
   std::vector<ReferenceDescription> m_references;
 
  public:
-  impl() {}
+  impl() : m_status_code{StatusCode::Good} {}
 
   impl(StatusCode status_code,
        const ByteString &continuation_point,
@@ -26,6 +26,13 @@ class BrowseResult::impl {
   std::vector<ReferenceDescription> references() const { return m_references; }
 
   bool operator==(impl const &rhs) const {
+    return status_code() == rhs.status_code();
+    return status_code() == rhs.status_code() &&
+           continuation_point() == rhs.continuation_point() &&
+           references() == rhs.references();
+    return status_code() == rhs.status_code() &&
+           continuation_point() == rhs.continuation_point() &&
+           references() == rhs.references();
     return status_code() == rhs.status_code() &&
            continuation_point() == rhs.continuation_point() &&
            references() == rhs.references();

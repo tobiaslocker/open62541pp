@@ -4,6 +4,7 @@
 #include "applicationdescription.hpp"
 #include "browsedescription.hpp"
 #include "browserequest.hpp"
+#include "browseresponse.hpp"
 #include "datetime.hpp"
 #include "endpointdescription.hpp"
 #include "nodeid.hpp"
@@ -203,6 +204,78 @@ BrowseRequest make_browse_request_2() {
       {make_browse_description_1(), make_browse_description_2()});
 }
 
+DiagnosticInfo make_diagnostic_info_1() {
+  return DiagnosticInfo(true,
+                        false,
+                        true,
+                        false,
+                        true,
+                        false,
+                        true,
+                        1,
+                        2,
+                        3,
+                        4,
+                        "additional-info",
+                        StatusCode::Good);
+}
+
+DiagnosticInfo make_diagnostic_info_2() {
+  return DiagnosticInfo(
+      true,
+      true,
+      false,
+      true,
+      false,
+      true,
+      false,
+      11,
+      22,
+      33,
+      44,
+      "more-additional-info",
+      StatusCode::Good,
+      std::make_shared<DiagnosticInfo>(make_diagnostic_info_1()));
+}
+
+ResponseHeader make_response_header_1() {
+  return ResponseHeader(make_date_time_1(),
+                        31,
+                        StatusCode::GoodNoData,
+                        make_diagnostic_info_1(),
+                        {"string-table-entry-1", "string-table-entry-2"},
+                        make_extension_object_1());
+}
+
+ResponseHeader make_response_header_2() {
+  return ResponseHeader(make_date_time_2(),
+                        77,
+                        StatusCode::Good,
+                        make_diagnostic_info_2(),
+                        {"string-table-entry-1", "string-table-entry-2"},
+//                        {"string-table-entry-2"},
+                        make_extension_object_2());
+}
+
+BrowseResult make_browse_result_1() {
+    return BrowseResult();
+}
+
+BrowseResult make_browse_result_2() {
+    return BrowseResult();
+}
+
+BrowseResponse make_browse_response_1() {
+  return BrowseResponse(make_response_header_1(),
+                        {make_browse_result_1(), make_browse_result_2()},
+                        {make_diagnostic_info_1(), make_diagnostic_info_2()});
+}
+
+BrowseResponse make_browse_response_2() {
+  return BrowseResponse(make_response_header_2(),
+                        {make_browse_result_2()},
+                        {make_diagnostic_info_2()});
+}
 }  // namespace common
 
 #endif  // COMMON_H

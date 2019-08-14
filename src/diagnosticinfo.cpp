@@ -199,6 +199,10 @@ std::shared_ptr<DiagnosticInfo> DiagnosticInfo::inner_diagnostic_info() const {
 
 DiagnosticInfo::DiagnosticInfo() : d_ptr{std::make_unique<impl>()} {}
 
+DiagnosticInfo &DiagnosticInfo::operator=(DiagnosticInfo &&) noexcept = default;
+
+DiagnosticInfo::DiagnosticInfo(DiagnosticInfo &&) noexcept = default;
+
 DiagnosticInfo::~DiagnosticInfo() = default;
 
 DiagnosticInfo::DiagnosticInfo(DiagnosticInfo const &op)

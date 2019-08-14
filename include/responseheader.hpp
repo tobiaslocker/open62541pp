@@ -40,6 +40,8 @@ class ResponseHeader {
   std::vector<std::string> string_table() const;
   ExtensionObject additional_header() const;
 
+  bool empty() const;
+
   bool operator==(ResponseHeader const &rhs) const;
   bool operator!=(ResponseHeader const &rhs) const;
 };
