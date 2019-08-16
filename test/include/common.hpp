@@ -256,7 +256,9 @@ ResponseHeader make_response_header_2() {
                         make_extension_object_2());
 }
 
-BrowseResult make_browse_result_1() { return BrowseResult(); }
+BrowseResult make_browse_result_1() {
+    return BrowseResult(StatusCode::BadShutdown, "xyz-1234", );
+}
 
 BrowseResult make_browse_result_2() { return BrowseResult(); }
 

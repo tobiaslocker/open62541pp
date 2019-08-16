@@ -53,6 +53,13 @@ BOOST_AUTO_TEST_CASE(test_constructor) {
   BOOST_TEST(a.include_subtypes() == true);
   BOOST_TEST(a.node_class_mask() == 0U);
   BOOST_TEST(a.result_mask() == 0U);
+
+  BOOST_TEST(a.node_id() != common::make_node_id_1());
+  BOOST_TEST(a.browse_direction() != BrowseDirection::Inverse);
+  BOOST_TEST(a.reference_type_id() != common::make_node_id_2());
+  BOOST_TEST(a.include_subtypes() != false);
+  BOOST_TEST(a.node_class_mask() != 3U);
+  BOOST_TEST(a.result_mask() != 4U);
 }
 
 BOOST_AUTO_TEST_CASE(test_comparison_operators) {

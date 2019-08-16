@@ -49,6 +49,15 @@ BOOST_AUTO_TEST_CASE(test_constructor) {
   BOOST_TEST(a.view() == common::make_view_description_1());
   BOOST_TEST(a.max_references() == 34U);
   BOOST_TEST(a.nodes_to_browse().size() == 2U);
+  BOOST_TEST(a.nodes_to_browse().at(0) == common::make_browse_description_1());
+  BOOST_TEST(a.nodes_to_browse().at(1) == common::make_browse_description_2());
+
+  BOOST_TEST(a.request_header() != common::make_request_header_2());
+  BOOST_TEST(a.view() != common::make_view_description_2());
+  BOOST_TEST(a.max_references() != 3U);
+  BOOST_TEST(a.nodes_to_browse().size() != 22U);
+  BOOST_TEST(a.nodes_to_browse().at(0) != common::make_browse_description_2());
+  BOOST_TEST(a.nodes_to_browse().at(1) != common::make_browse_description_1());
 }
 
 BOOST_AUTO_TEST_CASE(test_comparison_operators) {
