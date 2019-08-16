@@ -17,7 +17,7 @@ class DiagnosticInfo::impl {
   uint32_t m_localized_text = 0;
   uint32_t m_locale = 0;
   std::string m_additional_info;
-  StatusCode m_inner_status_code;
+  StatusCode m_inner_status_code = StatusCode::Unitialized;
   std::shared_ptr<DiagnosticInfo> m_inner_diagnostic_info = nullptr;
 
  public:

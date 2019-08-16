@@ -5,12 +5,12 @@
 namespace open62541 {
 
 class BrowseResult::impl {
-  StatusCode m_status_code;
+  StatusCode m_status_code = StatusCode::Unitialized;
   ByteString m_continuation_point;
   std::vector<ReferenceDescription> m_references;
 
  public:
-  impl() : m_status_code{StatusCode::Good} {}
+  impl() {}
 
   impl(StatusCode status_code,
        const ByteString &continuation_point,
@@ -83,10 +83,12 @@ bool BrowseResult::operator!=(const BrowseResult &rhs) const {
 std::ostream &operator<<(std::ostream &out, const BrowseResult &op) {
   out << "BrowseResult(" << op.status_code() << ", " << op.continuation_point()
       << ", [";
-  std::for_each(op.references().begin(),
-                op.references().end() - 1,
-                [&](auto const &u) { out << u << ", "; });
-  out << op.references().back();
+  if (!op.references().empty()) {
+    std::for_each(op.references().begin(),
+                  op.references().end() - 1,
+                  [&](auto const &u) { out << u << ", "; });
+    out << op.references().back();
+  }
   out << "])";
   return out;
 }

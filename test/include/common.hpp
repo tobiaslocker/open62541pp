@@ -256,8 +256,19 @@ ResponseHeader make_response_header_2() {
                         make_extension_object_2());
 }
 
+ReferenceDescription make_reference_description_1() {
+  return ReferenceDescription();
+}
+
+ReferenceDescription make_reference_description_2() {
+  return ReferenceDescription();
+}
+
 BrowseResult make_browse_result_1() {
-    return BrowseResult(StatusCode::BadShutdown, "xyz-1234", );
+  return BrowseResult(
+      StatusCode::BadShutdown,
+      "xyz-1234",
+      {make_reference_description_1(), make_reference_description_2()});
 }
 
 BrowseResult make_browse_result_2() { return BrowseResult(); }

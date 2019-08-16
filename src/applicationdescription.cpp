@@ -147,16 +147,15 @@ bool ApplicationDescription::operator!=(
   return *d_ptr != *rhs.d_ptr;
 }
 
+#include "streamutil.hpp"
+
 std::ostream &operator<<(std::ostream &out, const ApplicationDescription &op) {
   out << "ApplicationDescription(" << std::quoted(op.application_uri()) << ", "
       << std::quoted(op.product_uri()) << ", " << op.application_name() << ", "
       << op.application_type() << ", " << std::quoted(op.gateway_server_uri())
       << ", " << std::quoted(op.discovery_profile_uri()) << ", [";
 
-  std::for_each(op.discovery_urls().begin(),
-                op.discovery_urls().end() - 1,
-                [&](auto const &u) { out << std::quoted(u) << ", "; });
-  out << std::quoted(op.discovery_urls().back());
+  streamutil::print_container(out, op.discovery_urls());
   out << "])";
   return out;
 }

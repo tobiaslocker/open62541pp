@@ -31,7 +31,7 @@ inline std::ostream &operator<<(std::ostream &out, UserTokenType op) {
   return out;
 }
 
-enum class StatusCode : uint32_t {
+enum class StatusCode : uint64_t {
   Good = 0x00,
   BadUnexpectedError = 0x80010000,
   BadInternalError = 0x80020000,
@@ -261,6 +261,8 @@ enum class StatusCode : uint32_t {
   BadWouldBlock = 0x80b50000,
   BadSyntaxError = 0x80b60000,
   BadMaxConnectionsReached = 0x80b70000,
+  // For internal use
+  Unitialized = 0xffffffff
 };
 
 inline std::ostream &operator<<(std::ostream &out, StatusCode op) {

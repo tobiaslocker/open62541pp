@@ -260,10 +260,13 @@ std::ostream &operator<<(std::ostream &out, const DataType &op) {
       << ", " << op.mem_size() << ", " << op.type_index() << ", "
       << op.builtin() << ", " << op.pointer_free() << ", " << op.overlayable()
       << ", " << op.binary_encoding_id() << ", [";
-  std::for_each(op.members().begin(),
-                op.members().end() - 1,
-                [&](auto const &u) { out << u << ", "; });
-  out << op.members().back();
+
+  if (!op.members().empty()) {
+    std::for_each(op.members().begin(),
+                  op.members().end() - 1,
+                  [&](auto const &u) { out << u << ", "; });
+    out << op.members().back();
+  }
   out << ')';
   return out;
 }

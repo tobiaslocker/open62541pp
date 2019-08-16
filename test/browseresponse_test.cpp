@@ -54,8 +54,8 @@ BOOST_AUTO_TEST_CASE(test_constructor) {
 
   BOOST_TEST(a.response_header() != common::make_response_header_2());
   BOOST_TEST(a.results().size() != 0U);
-//  BOOST_TEST(a.results().at(0) != common::make_browse_result_2());
-//  BOOST_TEST(a.results().at(1) != common::make_browse_result_1());
+  //  BOOST_TEST(a.results().at(0) != common::make_browse_result_2());
+  //  BOOST_TEST(a.results().at(1) != common::make_browse_result_1());
   BOOST_TEST(a.diagnostic_infos().size() != 4U);
   BOOST_TEST(a.diagnostic_infos().at(0) != common::make_diagnostic_info_2());
   BOOST_TEST(a.diagnostic_infos().at(1) != common::make_diagnostic_info_1());

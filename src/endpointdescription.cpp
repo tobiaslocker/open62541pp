@@ -164,10 +164,13 @@ std::ostream &operator<<(std::ostream &out, const EndpointDescription &op) {
       << op.security_mode() << ", " << op.security_level() << ", "
       << std::quoted(op.security_policy_uri()) << ", "
       << std::quoted(op.transport_profile_uri()) << ", [";
-  std::for_each(op.user_identity_tokens().begin(),
-                op.user_identity_tokens().end() - 1,
-                [&](auto const &u) { out << u << ", "; });
-  out << op.user_identity_tokens().back();
+
+  if (!op.user_identity_tokens().empty()) {
+    std::for_each(op.user_identity_tokens().begin(),
+                  op.user_identity_tokens().end() - 1,
+                  [&](auto const &u) { out << u << ", "; });
+    out << op.user_identity_tokens().back();
+  }
   out << "])";
   return out;
 }

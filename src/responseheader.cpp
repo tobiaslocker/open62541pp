@@ -8,7 +8,7 @@ namespace open62541 {
 class ResponseHeader::impl {
   DateTime m_timestamp;
   uint32_t m_request_handle = 0;
-  StatusCode m_service_result;
+  StatusCode m_service_result = StatusCode::Unitialized;
   std::vector<std::string> m_string_table;
   DiagnosticInfo m_service_diagnostics;
   ExtensionObject m_additional_header;
@@ -129,10 +129,15 @@ std::ostream &operator<<(std::ostream &out, ResponseHeader const &op) {
   out << "ResponseHeader(" << op.timestamp() << ", " << op.request_handle()
       << ", " << op.service_result() << ", " << op.service_diagnostics()
       << ", [";
-  std::for_each(op.string_table().begin(),
-                op.string_table().end() - 1,
-                [&](auto const &u) { out << std::quoted(u) << ", "; });
-  out << std::quoted(op.string_table().back());
+
+  if (!op.string_table().empty()) {
+    std::for_each(op.string_table().begin(),
+                  op.string_table().end() - 1,
+//                  [&](std::string const &u) { out << std::quoted(u) << ", "; });
+                  [&](std::string const &u) { out << u << ", "; });
+//    out << std::quoted(op.string_table().back());
+    out << op.string_table().back();
+  }
   out << "], " << op.additional_header() << ')';
   return out;
 }
