@@ -7,7 +7,7 @@ namespace open62541 {
 
 class QualifiedName::impl {
   std::string m_name;
-  uint16_t m_namespace_index;
+  uint16_t m_namespace_index = 0;
 
  public:
   impl() {}

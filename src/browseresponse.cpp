@@ -31,10 +31,6 @@ class BrowseResponse::impl {
   bool empty() const { return m_empty; }
 
   bool operator==(impl const &rhs) const {
-    return results() == rhs.results();
-    return response_header() == rhs.response_header() &&
-           results() == rhs.results() &&
-           diagnostic_infos() == rhs.diagnostic_infos();
     return response_header() == rhs.response_header() &&
            results() == rhs.results() &&
            diagnostic_infos() == rhs.diagnostic_infos();

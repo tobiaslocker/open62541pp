@@ -1,6 +1,7 @@
 #include <sstream>
 
 #include "guid.hpp"
+#include "ostr.hpp"
 
 namespace open62541 {
 
@@ -49,12 +50,10 @@ std::string Guid::str() const { return d_ptr->str(); }
 
 bool Guid::operator==(Guid const &rhs) const { return *d_ptr == *rhs.d_ptr; }
 
-bool Guid::operator!=(Guid const &rhs) const { return *d_ptr == *rhs.d_ptr; }
+bool Guid::operator!=(Guid const &rhs) const { return *d_ptr != *rhs.d_ptr; }
 
 std::ostream &operator<<(std::ostream &out, Guid const &guid) {
-  auto s = guid.str();
-  out << s;
-  return out;
+  return out << "Guid(" << ostr::fmt(guid.str()) << ')';
 }
 
 }  // namespace open62541
