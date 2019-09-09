@@ -4,3 +4,6 @@
 [submodule "externals/base64"]
 	path = third-party/base64
 	url = https://github.com/tobiaslocker/base64.git
+[submodule "third-party/ostr"]
+	path = third-party/ostr
+	url = https://github.com/tobiaslocker/ostr.git

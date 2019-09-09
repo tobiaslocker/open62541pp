@@ -954,6 +954,9 @@ inline std::ostream &operator<<(std::ostream &out, StatusCode op) {
     case StatusCode::BadMaxConnectionsReached:
       out << "StatusCode::BadMaxConnectionsReached";
       break;
+    case StatusCode::Unitialized:
+      out << "StatusCode::Unitialized";
+      break;
   }
   return out;
 }

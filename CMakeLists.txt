@@ -22,7 +22,7 @@ find_package(open62541 REQUIRED)
 
 
 #include_directories(include third-party/open62541/build/include third-party/base64/include)
-include_directories(include staging/include/open62541 third-party/base64/include)
+include_directories(include staging/include/open62541 third-party/ostr/include)
 
 set(
     SOURCES

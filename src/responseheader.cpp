@@ -133,9 +133,10 @@ std::ostream &operator<<(std::ostream &out, ResponseHeader const &op) {
   if (!op.string_table().empty()) {
     std::for_each(op.string_table().begin(),
                   op.string_table().end() - 1,
-//                  [&](std::string const &u) { out << std::quoted(u) << ", "; });
+                  //                  [&](std::string const &u) { out <<
+                  //                  std::quoted(u) << ", "; });
                   [&](std::string const &u) { out << u << ", "; });
-//    out << std::quoted(op.string_table().back());
+    //    out << std::quoted(op.string_table().back());
     out << op.string_table().back();
   }
   out << "], " << op.additional_header() << ')';

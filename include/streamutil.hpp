@@ -1,14 +1,13 @@
-#include <iostream>
 #include <algorithm>
+#include <iostream>
 
 namespace streamutil {
 
 template <typename T>
 inline void print_container(std::ostream &out, const T &op) {
   if (!op.empty()) {
-    std::for_each(op.begin(),
-                  op.end() - 1,
-                  [&](auto const &u) { out << u << ", "; });
+    std::for_each(
+        op.begin(), op.end() - 1, [&](auto const &u) { out << u << ", "; });
     out << op.back();
   }
 }
@@ -16,11 +15,10 @@ inline void print_container(std::ostream &out, const T &op) {
 template <typename T>
 inline void print_container_quoted(std::ostream &out, const T &op) {
   if (!op.empty()) {
-    std::for_each(op.begin(),
-                  op.end() - 1,
-                  [&](auto const &u) { out << u << ", "; });
+    std::for_each(
+        op.begin(), op.end() - 1, [&](auto const &u) { out << u << ", "; });
     out << op.back();
   }
 }
 
-}
+}  // namespace streamutil
