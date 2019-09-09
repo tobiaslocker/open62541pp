@@ -127,6 +127,11 @@ bool ResponseHeader::operator!=(ResponseHeader const &rhs) const {
 }
 
 std::ostream &operator<<(std::ostream &out, ResponseHeader const &op) {
-  return out << "ResponseHeader(" << ostr::fmt(op.timestamp(), op.request_handle(), op.string_table(), op.additional_header()) << ')';
+  return out << "ResponseHeader("
+             << ostr::fmt(op.timestamp(),
+                          op.request_handle(),
+                          op.string_table(),
+                          op.additional_header())
+             << ')';
 }
 }  // namespace open62541

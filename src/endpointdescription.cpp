@@ -1,8 +1,5 @@
 #include "endpointdescription.hpp"
-
-#include <algorithm>
-#include <iomanip>
-#include <iostream>
+#include "ostr.hpp"
 
 namespace open62541 {
 
@@ -159,20 +156,15 @@ bool EndpointDescription::operator!=(EndpointDescription const &rhs) const {
   return *d_ptr != *rhs.d_ptr;
 }
 
-std::ostream &operator<<(std::ostream &out, const EndpointDescription &op) {
-  out << "EndpointDescription(" << std::quoted(op.endpoint_url()) << ", "
-      << op.security_mode() << ", " << op.security_level() << ", "
-      << std::quoted(op.security_policy_uri()) << ", "
-      << std::quoted(op.transport_profile_uri()) << ", [";
-
-  if (!op.user_identity_tokens().empty()) {
-    std::for_each(op.user_identity_tokens().begin(),
-                  op.user_identity_tokens().end() - 1,
-                  [&](auto const &u) { out << u << ", "; });
-    out << op.user_identity_tokens().back();
-  }
-  out << "])";
-  return out;
+std::ostream &operator<<(std::ostream &out, EndpointDescription const &op) {
+  return out << "EndpointDescription("
+             << ostr::fmt(op.endpoint_url(),
+                          op.security_mode(),
+                          op.security_level(),
+                          op.security_policy_uri(),
+                          op.transport_profile_uri(),
+                          op.user_identity_tokens())
+             << ')';
 }
 
 }  // namespace open62541

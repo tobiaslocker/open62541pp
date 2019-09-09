@@ -60,7 +60,8 @@ ReferenceDescription::ReferenceDescription()
 
 ReferenceDescription::~ReferenceDescription() = default;
 
-ReferenceDescription &ReferenceDescription::operator=(ReferenceDescription &&) noexcept = default;
+ReferenceDescription &ReferenceDescription::operator=(
+    ReferenceDescription &&) noexcept = default;
 
 ReferenceDescription::ReferenceDescription(ReferenceDescription &&) noexcept =
     default;

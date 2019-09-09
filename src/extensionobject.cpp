@@ -1,4 +1,5 @@
 #include "extensionobject.hpp"
+#include "ostr.hpp"
 
 #include <algorithm>
 #include <iomanip>
@@ -369,15 +370,15 @@ bool ExtensionObject::operator!=(ExtensionObject const &rhs) const {
 }
 
 std::ostream &operator<<(std::ostream &out, const ExtensionObject &op) {
-  out << "ExtensionObject(" << op.encoding();
   auto c = op.content();
   if (auto v = std::get_if<std::pair<NodeId, ByteString>>(&c)) {
-    out << v->first << ", " << v->second;
+    return out << "ExtensionObject("
+               << ostr::fmt(op.encoding(), v->first, v->second) << ')';
   } else if (auto v =
                  std::get_if<std::pair<DataType, std::shared_ptr<void>>>(&c)) {
-    out << v->first << ", " << v->second;
+    return out << "ExtensionObject("
+               << ostr::fmt(op.encoding(), v->first, v->second) << ')';
   }
-  out << ')';
   return out;
 }
 

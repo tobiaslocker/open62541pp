@@ -2,9 +2,6 @@
 #include "ostr.hpp"
 #include "parser.hpp"
 
-#include <iomanip>
-#include <iostream>
-
 namespace open62541 {
 
 class ApplicationDescription::impl {

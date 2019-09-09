@@ -1,6 +1,5 @@
 #include "browseresult.hpp"
-
-#include <algorithm>
+#include "ostr.hpp"
 
 namespace open62541 {
 
@@ -81,16 +80,10 @@ bool BrowseResult::operator!=(const BrowseResult &rhs) const {
 }
 
 std::ostream &operator<<(std::ostream &out, const BrowseResult &op) {
-  out << "BrowseResult(" << op.status_code() << ", " << op.continuation_point()
-      << ", [";
-  if (!op.references().empty()) {
-    std::for_each(op.references().begin(),
-                  op.references().end() - 1,
-                  [&](auto const &u) { out << u << ", "; });
-    out << op.references().back();
-  }
-  out << "])";
-  return out;
+  return out << "BrowseResult("
+             << ostr::fmt(
+                    op.status_code(), op.continuation_point(), op.references())
+             << ')';
 }
 
 }  // namespace open62541

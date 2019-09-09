@@ -1,4 +1,5 @@
 #include "expandednodeid.hpp"
+#include "ostr.hpp"
 
 namespace open62541 {
 
@@ -71,9 +72,9 @@ bool ExpandedNodeId::operator!=(ExpandedNodeId const &rhs) const {
 }
 
 std::ostream &operator<<(std::ostream &out, const ExpandedNodeId &op) {
-  out << "ExpandedNodeId(" << op.node_id() << ", " << op.namespace_uri() << ", "
-      << op.server_index() << ')';
-  return out;
+  return out << "ExpandedNodeId("
+             << ostr::fmt(op.node_id(), op.namespace_uri(), op.server_index())
+             << ')';
 }
 
 }  // namespace open62541
