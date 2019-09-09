@@ -376,8 +376,8 @@ std::ostream &operator<<(std::ostream &out, const ExtensionObject &op) {
                << ostr::fmt(op.encoding(), v->first, v->second) << ')';
   } else if (auto v =
                  std::get_if<std::pair<DataType, std::shared_ptr<void>>>(&c)) {
-    return out << "ExtensionObject("
-               << ostr::fmt(op.encoding(), v->first, v->second) << ')';
+//    return out << "ExtensionObject("
+//               << ostr::fmt(op.encoding(), v->first, v->second) << ')';
   }
   return out;
 }
