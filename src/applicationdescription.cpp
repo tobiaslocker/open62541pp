@@ -149,16 +149,15 @@ bool ApplicationDescription::operator!=(
 }
 
 std::ostream &operator<<(std::ostream &out, const ApplicationDescription &op) {
-  out << "ApplicationDescription(";
-  out << ostr::fmt(op.application_uri(),
-                   op.product_uri(),
-                   op.application_name(),
-                   op.application_type(),
-                   op.gateway_server_uri(),
-                   op.discovery_profile_uri(),
-                   op.discovery_urls());
-  out << ")";
-  return out;
+  return out << "ApplicationDescription("
+             << ostr::fmt(op.application_uri(),
+                          op.product_uri(),
+                          op.application_name(),
+                          op.application_type(),
+                          op.gateway_server_uri(),
+                          op.discovery_profile_uri(),
+                          op.discovery_urls())
+             << ")";
 }
 
 }  // namespace open62541

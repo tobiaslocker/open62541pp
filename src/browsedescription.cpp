@@ -1,4 +1,5 @@
 #include "browsedescription.hpp"
+#include "ostr.hpp"
 
 namespace open62541 {
 
@@ -123,9 +124,13 @@ bool BrowseDescription::operator!=(BrowseDescription const &rhs) const {
 }
 
 std::ostream &operator<<(std::ostream &out, const BrowseDescription &op) {
-  out << "BrowseDescription(" << op.node_id() << ", " << op.browse_direction()
-      << ", " << op.reference_type_id() << ", " << op.include_subtypes() << ", "
-      << op.node_class_mask() << ", " << op.result_mask() << ')';
-  return out;
+  return out << "BrowseDescription("
+             << ostr::fmt(op.node_id(),
+                          op.browse_direction(),
+                          op.reference_type_id(),
+                          op.include_subtypes(),
+                          op.node_class_mask(),
+                          op.result_mask())
+             << ")";
 }
 }  // namespace open62541
