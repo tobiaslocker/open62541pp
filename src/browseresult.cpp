@@ -71,15 +71,15 @@ BrowseResult &BrowseResult::operator=(BrowseResult const &op) {
 
 BrowseResult::~BrowseResult() = default;
 
-bool BrowseResult::operator==(const BrowseResult &rhs) const {
+bool BrowseResult::operator==(BrowseResult const &rhs) const {
   return *d_ptr == *rhs.d_ptr;
 }
 
-bool BrowseResult::operator!=(const BrowseResult &rhs) const {
+bool BrowseResult::operator!=(BrowseResult const &rhs) const {
   return *d_ptr != *rhs.d_ptr;
 }
 
-std::ostream &operator<<(std::ostream &out, const BrowseResult &op) {
+std::ostream &operator<<(std::ostream &out, BrowseResult const &op) {
   return out << "BrowseResult("
              << ostr::fmt(
                     op.status_code(), op.continuation_point(), op.references())
