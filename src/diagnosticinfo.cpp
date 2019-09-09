@@ -247,7 +247,7 @@ std::ostream &operator<<(std::ostream &out, const DiagnosticInfo &op) {
                           op.locale(),
                           op.additional_info(),
                           op.inner_status_code())
-//                          op.inner_diagnostic_info())
+             //                          op.inner_diagnostic_info())
              << ')';
 }
 

@@ -374,11 +374,7 @@ std::ostream &operator<<(std::ostream &out, const ExtensionObject &op) {
   if (auto v = std::get_if<std::pair<NodeId, ByteString>>(&c)) {
     return out << "ExtensionObject("
                << ostr::fmt(op.encoding(), v->first, v->second) << ')';
-  } else if (auto v =
-                 std::get_if<std::pair<DataType, std::shared_ptr<void>>>(&c)) {
-//    return out << "ExtensionObject("
-//               << ostr::fmt(op.encoding(), v->first, v->second) << ')';
-  }
+  }  // TODO handle void pointer
   return out;
 }
 
