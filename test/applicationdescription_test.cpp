@@ -80,4 +80,16 @@ BOOST_AUTO_TEST_CASE(test_comparison_operators) {
   BOOST_TEST(a == a1);
 }
 
+BOOST_AUTO_TEST_CASE(test_stream_operator) {
+  auto s =
+      "ApplicationDescription(\"app:uri:test:123\", \"prod:uri:test:456\", "
+      "LocalizedText(Locale(\"en\"), Text(\"app-test-name\")), "
+      "ApplicationType::Client, \"gateway:server:uri\", "
+      "\"discovery:profile:uri\", [\"url-1\", \"url-2\"])";
+  auto a = common::make_application_description_1();
+  std::stringstream ss;
+  ss << a;
+  BOOST_TEST(s == ss.str());
+}
+
 #pragma clang diagnostic pop

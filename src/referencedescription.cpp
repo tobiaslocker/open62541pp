@@ -58,10 +58,12 @@ class ReferenceDescription::impl {
 ReferenceDescription::ReferenceDescription()
     : d_ptr{std::make_unique<impl>()} {}
 
+ReferenceDescription::~ReferenceDescription() = default;
+
+ReferenceDescription &ReferenceDescription::operator=(ReferenceDescription &&) noexcept = default;
+
 ReferenceDescription::ReferenceDescription(ReferenceDescription &&) noexcept =
     default;
-
-ReferenceDescription::~ReferenceDescription() = default;
 
 ReferenceDescription::ReferenceDescription(ReferenceDescription const &op)
     : d_ptr(new impl(*op.d_ptr)) {}

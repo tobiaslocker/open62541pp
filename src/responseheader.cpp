@@ -1,4 +1,5 @@
 #include "responseheader.hpp"
+#include "ostr.hpp"
 
 #include <algorithm>
 #include <iomanip>
@@ -126,20 +127,6 @@ bool ResponseHeader::operator!=(ResponseHeader const &rhs) const {
 }
 
 std::ostream &operator<<(std::ostream &out, ResponseHeader const &op) {
-  out << "ResponseHeader(" << op.timestamp() << ", " << op.request_handle()
-      << ", " << op.service_result() << ", " << op.service_diagnostics()
-      << ", [";
-
-  if (!op.string_table().empty()) {
-    std::for_each(op.string_table().begin(),
-                  op.string_table().end() - 1,
-                  //                  [&](std::string const &u) { out <<
-                  //                  std::quoted(u) << ", "; });
-                  [&](std::string const &u) { out << u << ", "; });
-    //    out << std::quoted(op.string_table().back());
-    out << op.string_table().back();
-  }
-  out << "], " << op.additional_header() << ')';
-  return out;
+  return out << "ResponseHeader(" << ostr::fmt(op.timestamp(), op.request_handle(), op.string_table(), op.additional_header()) << ')';
 }
 }  // namespace open62541

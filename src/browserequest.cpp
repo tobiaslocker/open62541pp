@@ -1,4 +1,5 @@
 #include "browserequest.hpp"
+#include "ostr.hpp"
 
 namespace open62541 {
 
@@ -98,9 +99,9 @@ bool BrowseRequest::operator!=(BrowseRequest const &rhs) const {
 }
 
 std::ostream &operator<<(std::ostream &out, const BrowseRequest &op) {
-  out << "BrowseRequest(" << op.request_header() << ", " << op.view() << ", "
-      << op.max_references() << ')';
-  return out;
+  return out << "BrowseRequest("
+             << ostr::fmt(op.request_header(), op.view(), op.max_references())
+             << ')';
 }
 
 }  // namespace open62541

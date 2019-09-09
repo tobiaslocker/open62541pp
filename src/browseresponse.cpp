@@ -1,4 +1,5 @@
 #include "browseresponse.hpp"
+#include "ostr.hpp"
 
 #include <algorithm>
 
@@ -96,25 +97,26 @@ bool BrowseResponse::operator!=(BrowseResponse const &rhs) const {
 }
 
 std::ostream &operator<<(std::ostream &out, const BrowseResponse &op) {
-  out << "BrowseResponse(" << op.response_header() << ", [";
+  return out << "BrowseResponse(" << ostr::fmt(op.response_header(), op.results(), op.diagnostic_infos()) << ')';
+//  out << "BrowseResponse(" << op.response_header() << ", [";
 
-  if (!op.results().empty()) {
-    std::for_each(op.results().begin(),
-                  op.results().end() - 1,
-                  [&](BrowseResult const &u) { out << u << ", "; });
-    out << op.results().back();
-  }
+//  if (!op.results().empty()) {
+//    std::for_each(op.results().begin(),
+//                  op.results().end() - 1,
+//                  [&](BrowseResult const &u) { out << u << ", "; });
+//    out << op.results().back();
+//  }
 
-  out << "], [";
+//  out << "], [";
 
-  if (!op.diagnostic_infos().empty()) {
-    std::for_each(op.diagnostic_infos().begin(),
-                  op.diagnostic_infos().end() - 1,
-                  [&](auto const &u) { out << u << ", "; });
-    out << op.diagnostic_infos().back();
-  }
-  out << "])";
-  return out;
+//  if (!op.diagnostic_infos().empty()) {
+//    std::for_each(op.diagnostic_infos().begin(),
+//                  op.diagnostic_infos().end() - 1,
+//                  [&](auto const &u) { out << u << ", "; });
+//    out << op.diagnostic_infos().back();
+//  }
+//  out << "])";
+//  return out;
 }
 
 }  // namespace open62541
