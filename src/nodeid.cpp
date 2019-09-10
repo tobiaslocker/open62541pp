@@ -80,7 +80,7 @@ bool NodeId::operator!=(NodeId const &rhs) const {
   return *d_ptr != *rhs.d_ptr;
 }
 
-std::ostream &operator<<(std::ostream &out, const NodeId &op) {
+std::ostream &operator<<(std::ostream &out, NodeId const &op) {
   std::string id;
   if (op.identifier_type() == IdentifierType::String ||
       op.identifier_type() == IdentifierType::ByteString) {

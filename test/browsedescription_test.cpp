@@ -70,4 +70,15 @@ BOOST_AUTO_TEST_CASE(test_comparison_operators) {
   BOOST_TEST(a == a1);
 }
 
+BOOST_AUTO_TEST_CASE(test_stream_operator) {
+  auto s =
+      "BrowseDescription(NodeId(4, \"my-node\", IdentifierType::String), "
+      "BrowseDirection::Forward, NodeId(0, 1234, IdentifierType::Numeric), "
+      "true, 0, 0)";
+  auto a = common::make_browse_description_1();
+  std::stringstream ss;
+  ss << a;
+  BOOST_TEST(s == ss.str());
+}
+
 #pragma clang diagnostic pop
