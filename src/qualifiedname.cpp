@@ -1,7 +1,5 @@
 #include "qualifiedname.hpp"
-
-#include <iomanip>
-#include <iostream>
+#include "ostr.hpp"
 
 namespace open62541 {
 
@@ -59,9 +57,8 @@ bool QualifiedName::operator!=(QualifiedName const &rhs) const {
 }
 
 std::ostream &operator<<(std::ostream &out, QualifiedName const &op) {
-  out << "QualifiedName(" << std::quoted(op.name()) << op.namespace_index()
-      << ')';
-  return out;
+  return out << "QualifiedName(" << ostr::fmt(op.name(), op.namespace_index())
+             << ')';
 }
 
 }  // namespace open62541

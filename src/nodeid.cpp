@@ -1,6 +1,5 @@
-#include <iomanip>
-
 #include "nodeid.hpp"
+#include "ostr.hpp"
 #include "parser.hpp"
 
 namespace open62541 {
@@ -84,15 +83,23 @@ std::ostream &operator<<(std::ostream &out, NodeId const &op) {
   std::string id;
   if (op.identifier_type() == IdentifierType::String ||
       op.identifier_type() == IdentifierType::ByteString) {
-    out << "NodeId(" << op.namespace_index() << ", "
-        << std::quoted(op.identifier().string()) << ", " << op.identifier_type()
-        << ")";
+    return out << "NodeId("
+               << ostr::fmt(op.namespace_index(),
+                            op.identifier().string(),
+                            op.identifier_type())
+               << ")";
   } else if (op.identifier_type() == IdentifierType::Numeric) {
-    out << "NodeId(" << op.namespace_index() << ", "
-        << op.identifier().numeric() << ", " << op.identifier_type() << ")";
+    return out << "NodeId("
+               << ostr::fmt(op.namespace_index(),
+                            op.identifier().numeric(),
+                            op.identifier_type())
+               << ")";
   } else if (op.identifier_type() == IdentifierType::Guid) {
-    out << "NodeId(" << op.namespace_index() << ", " << op.identifier().guid()
-        << ", " << op.identifier_type() << ")";
+    return out << "NodeId("
+               << ostr::fmt(op.namespace_index(),
+                            op.identifier().guid(),
+                            op.identifier_type())
+               << ")";
   }
   return out;
 }
