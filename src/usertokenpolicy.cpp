@@ -1,6 +1,5 @@
 #include "usertokenpolicy.hpp"
-
-#include <iomanip>
+#include "ostr.hpp"
 
 namespace open62541 {
 
@@ -104,10 +103,13 @@ bool UserTokenPolicy::operator!=(UserTokenPolicy const &rhs) const {
 }
 
 std::ostream &operator<<(std::ostream &out, const UserTokenPolicy &op) {
-  out << "UserTokenPolicy(" << op.policy_id() << ", " << op.token_type() << ", "
-      << std::quoted(op.issued_token_type()) << ", "
-      << std::quoted(op.issuer_endpoint_url()) << ", "
-      << std::quoted(op.security_policy_uri()) << ")";
+  out << "UserTokenPolicy("
+      << ostr::fmt(op.policy_id(),
+                   op.token_type(),
+                   op.issued_token_type(),
+                   op.issuer_endpoint_url(),
+                   op.security_policy_uri())
+      << ')';
   return out;
 }
 }  // namespace open62541
