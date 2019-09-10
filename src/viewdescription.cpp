@@ -1,4 +1,5 @@
 #include "viewdescription.hpp"
+#include "ostr.hpp"
 
 namespace open62541 {
 
@@ -75,8 +76,8 @@ bool ViewDescription::operator!=(ViewDescription const &rhs) const {
 }
 
 std::ostream &operator<<(std::ostream &out, ViewDescription const &op) {
-  out << "ViewDescription(" << op.view_id() << ", " << op.timestamp() << ", "
-      << op.view_version() << ')';
+  out << "ViewDescription("
+      << ostr::fmt(op.view_id(), op.timestamp(), op.view_version()) << ')';
   return out;
 }
 
