@@ -1,6 +1,5 @@
 #include "localizedtext.hpp"
-
-#include <iomanip>
+#include "ostr.hpp"
 
 namespace open62541 {
 
@@ -68,45 +67,43 @@ bool LocalizedText::operator!=(LocalizedText const &rhs) const {
 
 Locale::Locale() : m_empty{true} {}
 
-Locale::Locale(const std::string &locale) : m_data{locale} {}
+Locale::Locale(std::string const &locale) : m_data{locale} {}
 
 std::string Locale::str() const { return m_data; }
 
 bool Locale::empty() const { return m_empty; }
 
-bool Locale::operator==(const Locale &rhs) const {
+bool Locale::operator==(Locale const &rhs) const {
   return m_data == rhs.m_data;
 }
 
-bool Locale::operator!=(const Locale &rhs) const {
+bool Locale::operator!=(Locale const &rhs) const {
   return m_data != rhs.m_data;
 }
 
-std::ostream &operator<<(std::ostream &out, const Locale &op) {
-  out << "Locale(" << std::quoted(op.str()) << ')';
-  return out;
+std::ostream &operator<<(std::ostream &out, Locale const &op) {
+  return out << "Locale(" << std::quoted(op.str()) << ')';
 }
 
 Text::Text() : m_empty{true} {}
 
-Text::Text(const std::string &text) : m_data{text} {}
+Text::Text(std::string const &text) : m_data{text} {}
 
 std::string Text::str() const { return m_data; }
 
 bool Text::empty() const { return m_empty; }
 
-bool Text::operator==(const Text &rhs) const { return m_data == rhs.m_data; }
+bool Text::operator==(Text const &rhs) const { return m_data == rhs.m_data; }
 
-bool Text::operator!=(const Text &rhs) const { return m_data != rhs.m_data; }
+bool Text::operator!=(Text const &rhs) const { return m_data != rhs.m_data; }
 
-std::ostream &operator<<(std::ostream &out, const Text &op) {
+std::ostream &operator<<(std::ostream &out, Text const &op) {
   out << "Text(" << std::quoted(op.str()) << ')';
   return out;
 }
 
-std::ostream &operator<<(std::ostream &out, const LocalizedText &op) {
-  out << "LocalizedText(" << op.locale() << ", " << op.text() << ')';
-  return out;
+std::ostream &operator<<(std::ostream &out, LocalizedText const &op) {
+  return out << "LocalizedText(" << ostr::fmt(op.locale(), op.text()) << ')';
 }
 
 }  // namespace open62541
