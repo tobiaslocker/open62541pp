@@ -1,4 +1,5 @@
 #include "referencedescription.hpp"
+#include "ostr.hpp"
 
 namespace open62541 {
 
@@ -128,10 +129,14 @@ bool ReferenceDescription::operator!=(ReferenceDescription const &rhs) const {
 }
 
 std::ostream &operator<<(std::ostream &out, ReferenceDescription const &op) {
-  out << "ReferenceDescription(" << op.reference_type_id() << ", "
-      << op.is_forward() << ", " << op.node_id() << ", " << op.browse_name()
-      << ", " << op.display_name() << ", " << op.node_class() << ", "
-      << op.type_definition() << ')';
-  return out;
+  return out << "ReferenceDescription("
+             << ostr::fmt(op.reference_type_id(),
+                          op.is_forward(),
+                          op.node_id(),
+                          op.browse_name(),
+                          op.display_name(),
+                          op.node_class(),
+                          op.type_definition())
+             << ')';
 }
 }  // namespace open62541

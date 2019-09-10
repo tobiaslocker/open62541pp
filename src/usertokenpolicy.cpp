@@ -103,13 +103,12 @@ bool UserTokenPolicy::operator!=(UserTokenPolicy const &rhs) const {
 }
 
 std::ostream &operator<<(std::ostream &out, const UserTokenPolicy &op) {
-  out << "UserTokenPolicy("
-      << ostr::fmt(op.policy_id(),
-                   op.token_type(),
-                   op.issued_token_type(),
-                   op.issuer_endpoint_url(),
-                   op.security_policy_uri())
-      << ')';
-  return out;
+  return out << "UserTokenPolicy("
+             << ostr::fmt(op.policy_id(),
+                          op.token_type(),
+                          op.issued_token_type(),
+                          op.issuer_endpoint_url(),
+                          op.security_policy_uri())
+             << ')';
 }
 }  // namespace open62541

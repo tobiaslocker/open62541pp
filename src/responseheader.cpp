@@ -1,9 +1,6 @@
 #include "responseheader.hpp"
 #include "ostr.hpp"
 
-#include <algorithm>
-#include <iomanip>
-
 namespace open62541 {
 
 class ResponseHeader::impl {
