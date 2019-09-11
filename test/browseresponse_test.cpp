@@ -69,4 +69,29 @@ BOOST_AUTO_TEST_CASE(test_comparison_operators) {
   BOOST_TEST(a == a1);
 }
 
+BOOST_AUTO_TEST_CASE(test_stream_operator) {
+  auto s = std::string(
+      "BrowseResponse(ResponseHeader(DateTime(0), 31, "
+      "[\"string-table-entry-1\", \"string-table-entry-2\"], "
+      "ExtensionObject(ExtensionObjectEncoding::Nobody, NodeId(0, 1234, "
+      "IdentifierType::Numeric), \"this-is-byte-string-content\")), "
+      "[BrowseResult(StatusCode::BadShutdown, \"xyz-1234\", "
+      "[ReferenceDescription(NodeId(0, 0, IdentifierType::Numeric), true, "
+      "ExpandedNodeId(, \"\", 0), QualifiedName(\"\", 0), "
+      "LocalizedText(Locale(\"\"), Text(\"\")), , ExpandedNodeId(, \"\", 0)), "
+      "ReferenceDescription(, false, ExpandedNodeId(, \"\", 0), "
+      "QualifiedName(\"\", 0), LocalizedText(Locale(\"\"), Text(\"\")), "
+      "NodeClass::Unspecified, ExpandedNodeId(, \"\", 0))]), "
+      "BrowseResult(StatusCode::Unitialized, \"\", [])], [DiagnosticInfo(true, "
+      "false, true, false, true, false, 1, 2, 3, 4, \"additional-info\", "
+      "StatusCode::Good), DiagnosticInfo(true, true, false, true, false, true, "
+      "1, 22, 33, 44, \"more-additional-info\", StatusCode::Good)])");
+  auto a = common::make_browse_response_1();
+  std::stringstream ss;
+  ss << a;
+  BOOST_TEST(s == ss.str());
+  auto s_not = "not";
+  BOOST_TEST(s_not != ss.str());
+}
+
 #pragma clang diagnostic pop

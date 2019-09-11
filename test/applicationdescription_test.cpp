@@ -90,6 +90,8 @@ BOOST_AUTO_TEST_CASE(test_stream_operator) {
   std::stringstream ss;
   ss << a;
   BOOST_TEST(s == ss.str());
+  auto s_not = "not";
+  BOOST_TEST(s_not != ss.str());
 }
 
 #pragma clang diagnostic pop

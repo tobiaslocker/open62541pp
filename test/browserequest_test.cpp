@@ -76,12 +76,11 @@ BOOST_AUTO_TEST_CASE(test_stream_operator) {
       "IdentifierType::Numeric), \"this-is-byte-string-content\")), "
       "ViewDescription(NodeId(0, 1234, IdentifierType::Numeric), DateTime(0), "
       "42), 34)";
-  auto s_not = "not";
-
   auto a = common::make_browse_request_1();
   std::stringstream ss;
   ss << a;
   BOOST_TEST(s == ss.str());
+  auto s_not = "not";
   BOOST_TEST(s_not != ss.str());
 }
 
