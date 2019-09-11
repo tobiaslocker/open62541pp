@@ -105,12 +105,14 @@ bool DataTypeMember::operator!=(DataTypeMember const &rhs) const {
   return *d_ptr != *rhs.d_ptr;
 }
 
-std::ostream &operator<<(std::ostream &out, const DataTypeMember &op) {
-  out << "DataTypeMember(" << std::quoted(op.member_name()) << ", "
-      << op.member_type_index() << ", "
-      << static_cast<unsigned int>(op.padding()) << ", " << op.namespace_zero()
-      << ", " << op.is_array() << ')';
-  return out;
+std::ostream &operator<<(std::ostream &out, DataTypeMember const &op) {
+  return out << "DataTypeMember("
+             << ostr::fmt(op.member_name(),
+                          op.member_type_index(),
+                          static_cast<unsigned int>(op.padding()),
+                          op.namespace_zero(),
+                          op.is_array())
+             << ')';
 }
 
 class DataType::impl {
@@ -257,19 +259,17 @@ bool DataType::operator!=(DataType const &rhs) const {
 }
 
 std::ostream &operator<<(std::ostream &out, const DataType &op) {
-  out << "DataType(" << std::quoted(op.type_name()) << ", " << op.type_id()
-      << ", " << op.mem_size() << ", " << op.type_index() << ", "
-      << op.builtin() << ", " << op.pointer_free() << ", " << op.overlayable()
-      << ", " << op.binary_encoding_id() << ", [";
-
-  if (!op.members().empty()) {
-    std::for_each(op.members().begin(),
-                  op.members().end() - 1,
-                  [&](auto const &u) { out << u << ", "; });
-    out << op.members().back();
-  }
-  out << ')';
-  return out;
+  return out << "DataType("
+             << ostr::fmt(op.type_name(),
+                          op.type_id(),
+                          op.mem_size(),
+                          op.type_index(),
+                          op.builtin(),
+                          op.pointer_free(),
+                          op.overlayable(),
+                          op.binary_encoding_id(),
+                          op.members())
+             << ')';
 }
 
 class ExtensionObject::impl {
