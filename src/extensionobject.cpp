@@ -118,12 +118,12 @@ std::ostream &operator<<(std::ostream &out, DataTypeMember const &op) {
 class DataType::impl {
   std::string m_type_name;
   NodeId m_type_id;
-  uint16_t m_mem_size;
-  uint16_t m_type_index;
-  bool m_builtin;
-  bool m_pointer_free;
-  bool m_overlayable;
-  uint16_t m_binary_encoding_id;
+  uint16_t m_mem_size = 0;
+  uint16_t m_type_index = 0;
+  bool m_builtin = false;
+  bool m_pointer_free = false;
+  bool m_overlayable = false;
+  uint16_t m_binary_encoding_id = 0;
   // uint16_t  xml_encoding_id;  /* NodeId of datatype when encoded as XML */
   std::vector<DataTypeMember> m_members;
 
@@ -281,7 +281,7 @@ class ExtensionObject::impl {
 
   bool decoded = false;
 
-  ExtensionObjectEncoding m_encoding;
+  ExtensionObjectEncoding m_encoding = ExtensionObjectEncoding::Xml;
 
   bool m_empty = false;
 

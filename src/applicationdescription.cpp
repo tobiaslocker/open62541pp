@@ -8,7 +8,7 @@ class ApplicationDescription::impl {
   std::string m_application_uri;
   std::string m_product_uri;
   LocalizedText m_application_name;
-  ApplicationType m_application_type;
+  ApplicationType m_application_type = ApplicationType::Client;
   std::string m_gateway_server_uri;
   std::string m_discovery_profile_uri;
   std::vector<std::string> m_discovery_urls;
