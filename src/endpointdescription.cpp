@@ -7,11 +7,12 @@ class EndpointDescription::impl {
   std::string m_endpoint_url;
   ApplicationDescription m_server;
   ByteString m_server_certificate;
-  MessageSecurityMode m_security_mode;
+  MessageSecurityMode m_security_mode = MessageSecurityMode::None;
   std::string m_security_policy_uri;
   std::vector<UserTokenPolicy> m_user_identity_tokens;
   std::string m_transport_profile_uri;
   unsigned char m_security_level = 0;
+
   bool m_empty = false;
 
  public:

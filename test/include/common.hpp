@@ -271,7 +271,10 @@ BrowseResult make_browse_result_1() {
       {make_reference_description_1(), make_reference_description_2()});
 }
 
-BrowseResult make_browse_result_2() { return BrowseResult(); }
+BrowseResult make_browse_result_2() {
+  return BrowseResult(
+      StatusCode::GoodNoData, "adbcd", {make_reference_description_2()});
+}
 
 BrowseResponse make_browse_response_1() {
   return BrowseResponse(make_response_header_1(),

@@ -5,7 +5,7 @@ namespace open62541 {
 
 class BrowseDescription::impl {
   NodeId m_node_id;
-  BrowseDirection m_browse_direction;
+  BrowseDirection m_browse_direction = BrowseDirection::Forward;
   NodeId m_reference_type_id;
   bool m_include_subtypes = false;
   uint32_t m_node_class_mask = 0;

@@ -7,7 +7,8 @@ namespace open62541 {
 class NodeId::impl {
   uint16_t m_namespace_index = 0;
   Identifier m_identifier;
-  IdentifierType m_identifier_type;
+  IdentifierType m_identifier_type = IdentifierType::Guid;
+
   bool m_empty = false;
 
  public:

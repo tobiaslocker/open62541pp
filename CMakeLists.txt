@@ -2,7 +2,8 @@ cmake_minimum_required(VERSION 3.10)
 project(open62541++)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g -Wall -std=c++14 -pthread -Wno-unknown-pragmas")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g -Wall -std=c++1z -pthread -Wno-unknown-pragmas")
+
 
 set(Boost_USE_STATIC_LIBS ON)
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
@@ -19,7 +20,6 @@ endif()
 
 
 find_package(open62541 REQUIRED)
-
 
 #include_directories(include third-party/open62541/build/include third-party/base64/include)
 include_directories(include staging/include/open62541 third-party/ostr/include)

@@ -5,7 +5,7 @@ namespace open62541 {
 
 class UserTokenPolicy::impl {
   std::string m_policy_id;
-  UserTokenType m_token_type;
+  UserTokenType m_token_type = UserTokenType::Anonymous;
   std::string m_issued_token_type;
   std::string m_issuer_endpoint_url;
   std::string m_security_policy_uri;

@@ -5,11 +5,11 @@ namespace open62541 {
 
 class ReferenceDescription::impl {
   NodeId m_reference_type_id;
-  bool m_is_forward;
+  bool m_is_forward = false;
   ExpandedNodeId m_node_id;
   QualifiedName m_browse_name;
   LocalizedText m_display_name;
-  NodeClass m_node_class;
+  NodeClass m_node_class = NodeClass::Unspecified;
   ExpandedNodeId m_type_definition;
 
  public:
