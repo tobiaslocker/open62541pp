@@ -76,4 +76,24 @@ BOOST_AUTO_TEST_CASE(test_comparison_operators) {
   BOOST_TEST(a == a1);
 }
 
+BOOST_AUTO_TEST_CASE(test_stream_operator) {
+  auto s =
+      "EndpointDescription(\"opc.tcp://opcua.demo-this.com:51210/UA/"
+      "SampleServer\", MessageSecurityMode::SignAndEncrypt, 0, "
+      "\"http://opcfoundation.org/UA/SecurityPolicy#Basic256\", "
+      "\"http://opcfoundation.org/UA-Profile/Transport/https-uabinary\", "
+      "[UserTokenPolicy(\"1\", UserTokenType::Anonymous, "
+      "\"issued-token-type-1\", \"opc.tcp://issuer-endpoint.com:51210/url\", "
+      "\"http://opcfoundation.org/UA/SecurityPolicy#None\"), "
+      "UserTokenPolicy(\"2\", UserTokenType::Certificate, "
+      "\"issued-token-type-2\", \"opc.tcp://issuer-endpoint.com:51210/url-2\", "
+      "\"http://opcfoundation.org/UA/SecurityPolicy#Basic256\")])";
+  auto a = common::make_endpoint_description_1();
+  std::stringstream ss;
+  ss << a;
+  BOOST_TEST(s == ss.str());
+  auto s_not = "not";
+  BOOST_TEST(s_not != ss.str());
+}
+
 #pragma clang diagnostic pop

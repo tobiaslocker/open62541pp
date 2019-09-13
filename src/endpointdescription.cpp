@@ -161,7 +161,7 @@ std::ostream &operator<<(std::ostream &out, EndpointDescription const &op) {
   return out << "EndpointDescription("
              << ostr::fmt(op.endpoint_url(),
                           op.security_mode(),
-                          op.security_level(),
+                          static_cast<unsigned int>(op.security_level()),
                           op.security_policy_uri(),
                           op.transport_profile_uri(),
                           op.user_identity_tokens())
