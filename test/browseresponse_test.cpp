@@ -71,7 +71,7 @@ BOOST_AUTO_TEST_CASE(test_comparison_operators) {
 
 BOOST_AUTO_TEST_CASE(test_stream_operator) {
   auto s =
-      "BrowseResponse(ResponseHeader(DateTime(0), 31, "
+      "BrowseResponse(ResponseHeader(DateTime(132097659950000000), 31, "
       "[\"string-table-entry-1\", \"string-table-entry-2\"], "
       "ExtensionObject(ExtensionObjectEncoding::Nobody, NodeId(0, 1234, "
       "IdentifierType::Numeric), \"this-is-byte-string-content\")), "

@@ -71,10 +71,11 @@ BOOST_AUTO_TEST_CASE(test_comparison_operators) {
 BOOST_AUTO_TEST_CASE(test_stream_operator) {
   auto s =
       "BrowseRequest(RequestHeader(NodeId(0, 1234, IdentifierType::Numeric), "
-      "DateTime(0), 7, 13, \"this-audit-entry\", 1888, "
+      "DateTime(132097659950000000), 7, 13, \"this-audit-entry\", 1888, "
       "ExtensionObject(ExtensionObjectEncoding::Nobody, NodeId(0, 1234, "
       "IdentifierType::Numeric), \"this-is-byte-string-content\")), "
-      "ViewDescription(NodeId(0, 1234, IdentifierType::Numeric), DateTime(0), "
+      "ViewDescription(NodeId(0, 1234, IdentifierType::Numeric), "
+      "DateTime(132097659950000000), "
       "42), 34)";
   auto a = common::make_browse_request_1();
   std::stringstream ss;
