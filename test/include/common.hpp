@@ -256,12 +256,48 @@ ResponseHeader make_response_header_2() {
                         make_extension_object_2());
 }
 
+ExpandedNodeId make_expanded_node_id_1() {
+  return ExpandedNodeId(make_node_id_1(), "ns:test:uri:1234", 2);
+}
+
+ExpandedNodeId make_expanded_node_id_2() {
+  return ExpandedNodeId(make_node_id_2(), "ns:test:uri:5678", 3);
+}
+
+QualifiedName make_qualified_name_1() {
+  return QualifiedName("qualified-name-1", 3);
+}
+
+QualifiedName make_qualified_name_2() {
+  return QualifiedName("qualified-name-2", 1);
+}
+
+LocalizedText make_localized_text_1() {
+  return LocalizedText(Locale("en"), Text("text-en"));
+}
+
+LocalizedText make_localized_text_2() {
+  return LocalizedText(Locale("de"), Text("text-de"));
+}
+
 ReferenceDescription make_reference_description_1() {
-  return ReferenceDescription();
+  return ReferenceDescription(make_node_id_1(),
+                              true,
+                              make_expanded_node_id_1(),
+                              make_qualified_name_1(),
+                              make_localized_text_1(),
+                              NodeClass::Variable,
+                              make_expanded_node_id_2());
 }
 
 ReferenceDescription make_reference_description_2() {
-  return ReferenceDescription();
+  return ReferenceDescription(make_node_id_2(),
+                              false,
+                              make_expanded_node_id_2(),
+                              make_qualified_name_2(),
+                              make_localized_text_2(),
+                              NodeClass::Method,
+                              make_expanded_node_id_1());
 }
 
 BrowseResult make_browse_result_1() {

@@ -70,31 +70,61 @@ BOOST_AUTO_TEST_CASE(test_comparison_operators) {
 }
 
 BOOST_AUTO_TEST_CASE(test_stream_operator) {
+  //  auto s =
+  //      "BrowseResponse(ResponseHeader(DateTime(0), 31, "
+  //      "[\"string-table-entry-1\", \"string-table-entry-2\"], "
+  //      "ExtensionObject(ExtensionObjectEncoding::Nobody, NodeId(0, 1234, "
+  //      "IdentifierType::Numeric), \"this-is-byte-string-content\")), "
+  //      "[BrowseResult(StatusCode::BadShutdown, \"xyz-1234\", "
+  //      "[ReferenceDescription(NodeId(0, Guid(\"\"), IdentifierType::Guid), "
+  //      "false, ExpandedNodeId(NodeId(0, Guid(\"\"), IdentifierType::Guid), "
+  //      "\"\", 0), QualifiedName(\"\", 0), LocalizedText(Locale(\"\"), "
+  //      "Text(\"\")), NodeClass::Unspecified, ExpandedNodeId(NodeId(0, "
+  //      "Guid(\"\"), IdentifierType::Guid), \"\", 0)), "
+  //      "ReferenceDescription(NodeId(0, Guid(\"\"), IdentifierType::Guid), "
+  //      "false, ExpandedNodeId(NodeId(0, Guid(\"\"), IdentifierType::Guid), "
+  //      "\"\", 0), QualifiedName(\"\", 0), LocalizedText(Locale(\"\"), "
+  //      "Text(\"\")), NodeClass::Unspecified, ExpandedNodeId(NodeId(0, "
+  //      "Guid(\"\"), IdentifierType::Guid), \"\", 0))]), "
+  //      "BrowseResult(StatusCode::GoodNoData, \"adbcd\", "
+  //      "[ReferenceDescription(NodeId(0, Guid(\"\"), IdentifierType::Guid), "
+  //      "false, ExpandedNodeId(NodeId(0, Guid(\"\"), IdentifierType::Guid), "
+  //      "\"\", 0), QualifiedName(\"\", 0), LocalizedText(Locale(\"\"), "
+  //      "Text(\"\")), NodeClass::Unspecified, ExpandedNodeId(NodeId(0, "
+  //      "Guid(\"\"), IdentifierType::Guid), \"\", 0))])],
+  //      [DiagnosticInfo(true, " "false, true, false, true, false, 1, 2, 3, 4,
+  //      \"additional-info\", " "StatusCode::Good), DiagnosticInfo(true, true,
+  //      false, true, false, true, " "1, 22, 33, 44, \"more-additional-info\",
+  //      StatusCode::Good)])";
+
   auto s =
       "BrowseResponse(ResponseHeader(DateTime(0), 31, "
       "[\"string-table-entry-1\", \"string-table-entry-2\"], "
       "ExtensionObject(ExtensionObjectEncoding::Nobody, NodeId(0, 1234, "
       "IdentifierType::Numeric), \"this-is-byte-string-content\")), "
       "[BrowseResult(StatusCode::BadShutdown, \"xyz-1234\", "
-      "[ReferenceDescription(NodeId(0, Guid(\"\"), IdentifierType::Guid), "
-      "false, ExpandedNodeId(NodeId(0, Guid(\"\"), IdentifierType::Guid), "
-      "\"\", 0), QualifiedName(\"\", 0), LocalizedText(Locale(\"\"), "
-      "Text(\"\")), NodeClass::Unspecified, ExpandedNodeId(NodeId(0, "
-      "Guid(\"\"), IdentifierType::Guid), \"\", 0)), "
-      "ReferenceDescription(NodeId(0, Guid(\"\"), IdentifierType::Guid), "
-      "false, ExpandedNodeId(NodeId(0, Guid(\"\"), IdentifierType::Guid), "
-      "\"\", 0), QualifiedName(\"\", 0), LocalizedText(Locale(\"\"), "
-      "Text(\"\")), NodeClass::Unspecified, ExpandedNodeId(NodeId(0, "
-      "Guid(\"\"), IdentifierType::Guid), \"\", 0))]), "
+      "[ReferenceDescription(NodeId(0, 1234, IdentifierType::Numeric), true, "
+      "ExpandedNodeId(NodeId(0, 1234, IdentifierType::Numeric), "
+      "\"ns:test:uri:1234\", 2), QualifiedName(\"qualified-name-1\", 3), "
+      "LocalizedText(Locale(\"en\"), Text(\"text-en\")), NodeClass::Variable, "
+      "ExpandedNodeId(NodeId(4, \"my-node\", IdentifierType::String), "
+      "\"ns:test:uri:5678\", 3)), ReferenceDescription(NodeId(4, \"my-node\", "
+      "IdentifierType::String), false, ExpandedNodeId(NodeId(4, \"my-node\", "
+      "IdentifierType::String), \"ns:test:uri:5678\", 3), "
+      "QualifiedName(\"qualified-name-2\", 1), LocalizedText(Locale(\"de\"), "
+      "Text(\"text-de\")), NodeClass::Method, ExpandedNodeId(NodeId(0, 1234, "
+      "IdentifierType::Numeric), \"ns:test:uri:1234\", 2))]), "
       "BrowseResult(StatusCode::GoodNoData, \"adbcd\", "
-      "[ReferenceDescription(NodeId(0, Guid(\"\"), IdentifierType::Guid), "
-      "false, ExpandedNodeId(NodeId(0, Guid(\"\"), IdentifierType::Guid), "
-      "\"\", 0), QualifiedName(\"\", 0), LocalizedText(Locale(\"\"), "
-      "Text(\"\")), NodeClass::Unspecified, ExpandedNodeId(NodeId(0, "
-      "Guid(\"\"), IdentifierType::Guid), \"\", 0))])], [DiagnosticInfo(true, "
-      "false, true, false, true, false, 1, 2, 3, 4, \"additional-info\", "
-      "StatusCode::Good), DiagnosticInfo(true, true, false, true, false, true, "
-      "1, 22, 33, 44, \"more-additional-info\", StatusCode::Good)])";
+      "[ReferenceDescription(NodeId(4, \"my-node\", IdentifierType::String), "
+      "false, ExpandedNodeId(NodeId(4, \"my-node\", IdentifierType::String), "
+      "\"ns:test:uri:5678\", 3), QualifiedName(\"qualified-name-2\", 1), "
+      "LocalizedText(Locale(\"de\"), Text(\"text-de\")), NodeClass::Method, "
+      "ExpandedNodeId(NodeId(0, 1234, IdentifierType::Numeric), "
+      "\"ns:test:uri:1234\", 2))])], [DiagnosticInfo(true, false, true, false, "
+      "true, false, 1, 2, 3, 4, \"additional-info\", StatusCode::Good), "
+      "DiagnosticInfo(true, true, false, true, false, true, 1, 22, 33, 44, "
+      "\"more-additional-info\", StatusCode::Good)])";
+
   auto a = common::make_browse_response_1();
   std::stringstream ss;
   ss << a;
