@@ -99,9 +99,24 @@ BrowseDescription make_browse_description_2() {
 }
 
 DateTime make_date_time_1() {
-  // Date and time (GMT): Thursday, August 8, 2019 7:26:35 PM
+  // Thursday, August 8, 2019 7:26:35 PM GMT
   int64_t t = 132097659950000000;
   return DateTime(t);
+}
+
+DateTime make_date_time_1_1() {
+  // Thursday, August 8, 2019 7:26:35 PM GMT
+  uint16_t nano_sec = 0;
+  uint16_t micro_sec = 0;
+  uint16_t milli_sec = 0;
+  uint16_t sec = 35;
+  uint16_t min = 26;
+  uint16_t hour = 19;
+  uint16_t day = 8;
+  uint16_t month = 8;
+  uint16_t year = 2019;
+  return DateTime(
+      nano_sec, micro_sec, milli_sec, sec, min, hour, day, month, year);
 }
 
 DateTime make_date_time_2() {

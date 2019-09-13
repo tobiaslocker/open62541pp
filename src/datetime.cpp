@@ -28,7 +28,7 @@ class DateTime::impl {
     m_micro_sec = static_cast<uint16_t>((ldap_timestamp % 10000) / 10);
     m_milli_sec = static_cast<uint16_t>((ldap_timestamp % 10000000) / 10000);
     time_t secs_since_epoch = ldap_timestamp / 10000000LL - 11644473600LL;
-    auto lt = localtime(&secs_since_epoch);
+    auto lt = gmtime(&secs_since_epoch);
     m_year = static_cast<uint16_t>(lt->tm_year + 1900);
     m_month = static_cast<uint16_t>(lt->tm_mon + 1);
     m_sec = static_cast<uint16_t>(lt->tm_sec);
