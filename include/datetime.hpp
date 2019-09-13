@@ -43,6 +43,8 @@ class DateTime {
   uint16_t year() const;
   int64_t ldap_timestamp() const;
 
+  bool empty() const;
+
   bool operator==(DateTime const &rhs) const;
   bool operator!=(DateTime const &rhs) const;
 };

@@ -18,8 +18,10 @@ class DateTime::impl {
   uint16_t m_year = 0;
   int64_t m_ldap_timestamp = 0;
 
+  bool m_empty = false;
+
  public:
-  impl() {}
+  impl() : m_empty{true} {}
 
   impl(int64_t ldap_timestamp) {
     m_nano_sec = static_cast<uint16_t>((ldap_timestamp % 10) * 100);
@@ -86,6 +88,8 @@ class DateTime::impl {
 
   int64_t ldap_timestamp() const { return m_ldap_timestamp; }
 
+  bool empty() const {return m_empty;}
+
   bool operator==(impl const &rhs) const {
     return nano_sec() == rhs.nano_sec() && micro_sec() == rhs.micro_sec() &&
            milli_sec() == rhs.milli_sec() && sec() == rhs.sec() &&
@@ -103,20 +107,27 @@ class DateTime::impl {
   }
 };
 
-DateTime::DateTime(DateTime &&) noexcept = default;
 
 DateTime::~DateTime() = default;
 
-DateTime::DateTime(DateTime const &op) : d_ptr(new impl(*op.d_ptr)) {}
+DateTime::DateTime(DateTime const &op)
+    : d_ptr(new impl(*op.d_ptr)) {}
 
-DateTime &DateTime::operator=(DateTime const &op) {
+DateTime::DateTime(DateTime &&) noexcept =
+    default;
+
+DateTime &DateTime::operator=(
+    DateTime &&) noexcept = default;
+
+DateTime::DateTime() : d_ptr{std::make_unique<impl>()} {}
+
+DateTime &DateTime::operator=(
+    DateTime const &op) {
   if (this != &op) {
     d_ptr.reset(new impl(*op.d_ptr));
   }
   return *this;
 }
-
-DateTime::DateTime() : d_ptr{std::make_unique<impl>()} {}
 
 DateTime::DateTime(int64_t ldap_timestamp)
     : d_ptr{std::make_unique<impl>(ldap_timestamp)} {}
@@ -152,6 +163,8 @@ uint16_t DateTime::month() const { return d_ptr->month(); }
 uint16_t DateTime::year() const { return d_ptr->year(); }
 
 int64_t DateTime::ldap_timestamp() const { return d_ptr->ldap_timestamp(); }
+
+bool DateTime::empty() const {return d_ptr->empty();}
 
 bool DateTime::operator==(DateTime const &rhs) const {
   return *d_ptr == *rhs.d_ptr;
