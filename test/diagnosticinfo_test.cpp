@@ -69,6 +69,9 @@ BOOST_AUTO_TEST_CASE(test_constructor) {
   BOOST_TEST(a.additional_info() == "additional-info");
   BOOST_TEST(a.inner_status_code() == StatusCode::Good);
   BOOST_TEST(a.inner_diagnostic_info() == nullptr);
+
+  auto a2 = common::make_diagnostic_info_2();
+  BOOST_TEST(*a2.inner_diagnostic_info() == a);
 }
 
 BOOST_AUTO_TEST_CASE(test_comparison_operators) {
