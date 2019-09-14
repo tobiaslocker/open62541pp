@@ -7,3 +7,6 @@
 [submodule "third-party/ostr"]
 	path = third-party/ostr
 	url = https://github.com/tobiaslocker/ostr.git
+[submodule "third-party/flog"]
+	path = third-party/flog
+	url = https://github.com/tobiaslocker/flog.git
