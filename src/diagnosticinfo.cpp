@@ -19,8 +19,10 @@ class DiagnosticInfo::impl {
   StatusCode m_inner_status_code = StatusCode::Unitialized;
   std::shared_ptr<DiagnosticInfo> m_inner_diagnostic_info = nullptr;
 
+  bool m_empty = false;
+
  public:
-  impl() {}
+  impl() : m_empty{true} {}
   impl(bool has_symbolic_id,
        bool has_namespace_uri,
        bool has_localized_text,
@@ -79,6 +81,9 @@ class DiagnosticInfo::impl {
   std::shared_ptr<DiagnosticInfo> inner_diagnostic_info() const {
     return m_inner_diagnostic_info;
   }
+
+  bool empty() const { return m_empty; }
+
   bool operator==(impl const &rhs) const {
     bool b = false;
     if (inner_diagnostic_info() && rhs.inner_diagnostic_info()) {
@@ -204,7 +209,13 @@ StatusCode DiagnosticInfo::inner_status_code() const {
 }
 
 std::shared_ptr<DiagnosticInfo> DiagnosticInfo::inner_diagnostic_info() const {
-  return d_ptr->inner_diagnostic_info();
+    return d_ptr->inner_diagnostic_info();
+}
+
+bool DiagnosticInfo::empty() const
+{
+    return d_ptr->empty();
+
 }
 
 DiagnosticInfo::DiagnosticInfo() : d_ptr{std::make_unique<impl>()} {}

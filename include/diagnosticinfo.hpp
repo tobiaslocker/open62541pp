@@ -38,6 +38,8 @@ class DiagnosticInfo {
       StatusCode inner_status_code,
       std::shared_ptr<DiagnosticInfo> inner_diagnostic_info = nullptr);
 
+ public:
+
   bool has_symbolic_id() const;
   bool has_namespace_uri() const;
   bool has_localized_text() const;
@@ -53,7 +55,8 @@ class DiagnosticInfo {
   StatusCode inner_status_code() const;
   std::shared_ptr<DiagnosticInfo> inner_diagnostic_info() const;
 
- public:
+  bool empty() const;
+
   bool operator==(DiagnosticInfo const &rhs) const;
   bool operator!=(DiagnosticInfo const &rhs) const;
 };
