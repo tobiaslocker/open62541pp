@@ -39,7 +39,6 @@ class DiagnosticInfo {
       std::shared_ptr<DiagnosticInfo> inner_diagnostic_info = nullptr);
 
  public:
-
   bool has_symbolic_id() const;
   bool has_namespace_uri() const;
   bool has_localized_text() const;

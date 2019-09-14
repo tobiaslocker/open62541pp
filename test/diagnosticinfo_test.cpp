@@ -36,19 +36,39 @@ BOOST_AUTO_TEST_CASE(test_copy_assignment) {
 BOOST_AUTO_TEST_CASE(test_default_constructor) {
   DiagnosticInfo const a_empty;
   BOOST_TEST(a_empty.empty());
-//  BOOST_TEST(a_empty.nano_sec() == 0);
-//  BOOST_TEST(a_empty.micro_sec() == 0);
-//  BOOST_TEST(a_empty.milli_sec() == 0);
-//  BOOST_TEST(a_empty.sec() == 0);
-//  BOOST_TEST(a_empty.min() == 0);
-//  BOOST_TEST(a_empty.hour() == 0);
-//  BOOST_TEST(a_empty.day() == 0);
-//  BOOST_TEST(a_empty.month() == 0);
-//  BOOST_TEST(a_empty.year() == 0);
-//  BOOST_TEST(a_empty.ldap_timestamp() == 0);
+  BOOST_TEST(a_empty.has_symbolic_id() == false);
+  BOOST_TEST(a_empty.has_namespace_uri() == false);
+  BOOST_TEST(a_empty.has_localized_text() == false);
+  BOOST_TEST(a_empty.has_locale() == false);
+  BOOST_TEST(a_empty.has_additional_info() == false);
+  BOOST_TEST(a_empty.has_inner_status_code() == false);
+  BOOST_TEST(a_empty.has_inner_diagnostic_info() == false);
+  BOOST_TEST(a_empty.symbolic_id() == 0U);
+  BOOST_TEST(a_empty.namespace_uri() == 0U);
+  BOOST_TEST(a_empty.localized_text() == 0U);
+  BOOST_TEST(a_empty.locale() == 0U);
+  BOOST_TEST(a_empty.additional_info().empty());
+  BOOST_TEST(a_empty.inner_status_code() == StatusCode::Unitialized);
+  BOOST_TEST(a_empty.inner_diagnostic_info() == nullptr);
 }
 
 BOOST_AUTO_TEST_CASE(test_constructor) {
+  auto a = common::make_diagnostic_info_1();
+  BOOST_TEST(!a.empty());
+  BOOST_TEST(a.has_symbolic_id() == true);
+  BOOST_TEST(a.has_namespace_uri() == false);
+  BOOST_TEST(a.has_localized_text() == true);
+  BOOST_TEST(a.has_locale() == false);
+  BOOST_TEST(a.has_additional_info() == true);
+  BOOST_TEST(a.has_inner_status_code() == false);
+  BOOST_TEST(a.has_inner_diagnostic_info() == true);
+  BOOST_TEST(a.symbolic_id() == 1U);
+  BOOST_TEST(a.namespace_uri() == 2U);
+  BOOST_TEST(a.localized_text() == 3U);
+  BOOST_TEST(a.locale() == 4U);
+  BOOST_TEST(a.additional_info() == "additional-info");
+  BOOST_TEST(a.inner_status_code() == StatusCode::Good);
+  BOOST_TEST(a.inner_diagnostic_info() == nullptr);
 }
 
 BOOST_AUTO_TEST_CASE(test_comparison_operators) {
@@ -60,8 +80,10 @@ BOOST_AUTO_TEST_CASE(test_comparison_operators) {
 }
 
 BOOST_AUTO_TEST_CASE(test_stream_operator) {
-  auto s = "";
-  auto a = common::make_date_time_1();
+  auto s =
+      "DiagnosticInfo(true, false, true, false, true, false, 1, 2, 3, 4, "
+      "\"additional-info\", StatusCode::Good)";
+  auto a = common::make_diagnostic_info_1();
   std::stringstream ss;
   ss << a;
   BOOST_TEST(s == ss.str());

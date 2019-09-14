@@ -209,14 +209,10 @@ StatusCode DiagnosticInfo::inner_status_code() const {
 }
 
 std::shared_ptr<DiagnosticInfo> DiagnosticInfo::inner_diagnostic_info() const {
-    return d_ptr->inner_diagnostic_info();
+  return d_ptr->inner_diagnostic_info();
 }
 
-bool DiagnosticInfo::empty() const
-{
-    return d_ptr->empty();
-
-}
+bool DiagnosticInfo::empty() const { return d_ptr->empty(); }
 
 DiagnosticInfo::DiagnosticInfo() : d_ptr{std::make_unique<impl>()} {}
 
