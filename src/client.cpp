@@ -1,12 +1,10 @@
 #include "open62541.h"
 
 #include "client.hpp"
-#include "log.hpp"
+#include "flog.hpp"
 #include "parser.hpp"
 
 namespace open62541 {
-
-using namespace logger;
 
 struct StateCallback {
   static void callback(UA_Client *client, UA_ClientState state) {
@@ -19,7 +17,7 @@ std::function<void(UA_Client *client, UA_ClientState state)>
     StateCallback::func;
 
 class Client::impl {
-  src::severity_channel_logger<severity_level, std::string> m_lg;
+  src::severity_channel_logger<flog::severity_level, std::string> m_lg;
   std::string m_channel = "ua_client";
   std::unique_ptr<ClientEventHandler> m_handler;
   UA_ClientConfig m_config;
@@ -37,7 +35,7 @@ class Client::impl {
     if (m_handler) {
       m_handler->on_state_changed(cs);
     }
-    BOOST_LOG_CHANNEL_SEV(m_lg, m_channel, debug) << "Client state -> " << cs;
+    BOOST_LOG_CHANNEL_SEV(m_lg, m_channel, flog::debug) << "Client state -> " << cs;
   }
 
  public:
@@ -46,7 +44,7 @@ class Client::impl {
         m_config{config()},
         m_client{std::unique_ptr<UA_Client, decltype(&UA_Client_delete)>(
             UA_Client_new(m_config), UA_Client_delete)} {
-    logger::init();
+    flog::init();
   }
 
   impl(ClientConfig const &cfg, std::unique_ptr<ClientEventHandler> handler)
@@ -54,7 +52,7 @@ class Client::impl {
         m_config{config(cfg)},
         m_client{std::unique_ptr<UA_Client, decltype(&UA_Client_delete)>(
             UA_Client_new(m_config), UA_Client_delete)} {
-    logger::init();
+    flog::init();
   }
 
   UA_ClientConfig config() {
@@ -79,7 +77,7 @@ class Client::impl {
   }
 
   std::vector<EndpointDescription> get_endpoints(std::string const &url) {
-    BOOST_LOG_CHANNEL_SEV(m_lg, m_channel, info)
+    BOOST_LOG_CHANNEL_SEV(m_lg, m_channel, flog::info)
         << "Get endpoints from server...";
     std::vector<EndpointDescription> result;
     UA_EndpointDescription *endpoints = nullptr;
@@ -87,14 +85,14 @@ class Client::impl {
     auto status =
         UA_Client_getEndpoints(m_client.get(), url.c_str(), &len, &endpoints);
     if (status == UA_STATUSCODE_GOOD) {
-      BOOST_LOG_CHANNEL_SEV(m_lg, m_channel, info) << "Status: OK";
+      BOOST_LOG_CHANNEL_SEV(m_lg, m_channel, flog::info) << "Status: OK";
     } else {
-      BOOST_LOG_CHANNEL_SEV(m_lg, m_channel, error)
+      BOOST_LOG_CHANNEL_SEV(m_lg, m_channel, flog::error)
           << "Getting endpoints failed. Status code = " << status;
     }
     for (size_t i = 0; i < len; i++) {
       auto ep = parser::from_open62541(endpoints[i]);
-      BOOST_LOG_CHANNEL_SEV(m_lg, m_channel, debug) << "Endpoint " << i << '\n'
+      BOOST_LOG_CHANNEL_SEV(m_lg, m_channel, flog::debug) << "Endpoint " << i << '\n'
                                                     << ep;
       result.push_back(ep);
     }
@@ -103,12 +101,12 @@ class Client::impl {
   }
 
   void connect(std::string const &url) {
-    BOOST_LOG_CHANNEL_SEV(m_lg, m_channel, info) << "Connect to server...";
+    BOOST_LOG_CHANNEL_SEV(m_lg, m_channel, flog::info) << "Connect to server...";
     auto status = UA_Client_connect(m_client.get(), url.c_str());
     if (status == UA_STATUSCODE_GOOD) {
-      BOOST_LOG_CHANNEL_SEV(m_lg, m_channel, info) << "Status: OK";
+      BOOST_LOG_CHANNEL_SEV(m_lg, m_channel, flog::info) << "Status: OK";
     } else {
-      BOOST_LOG_CHANNEL_SEV(m_lg, m_channel, error)
+      BOOST_LOG_CHANNEL_SEV(m_lg, m_channel, flog::error)
           << "Connect failed. Status code = " << status;
     }
   }
@@ -138,7 +136,7 @@ class Client::impl {
       BrowseResultMask br_mask,
       NodeClass node_class,
       ReferenceTypeIdentifier id) {
-    BOOST_LOG_CHANNEL_SEV(m_lg, m_channel, debug) << "Getting child references";
+    BOOST_LOG_CHANNEL_SEV(m_lg, m_channel, flog::debug) << "Getting child references";
     std::vector<ReferenceDescription> children;
     std::shared_ptr<UA_BrowseDescription> browse_desc(new UA_BrowseDescription);
     UA_BrowseDescription_init(browse_desc.get());
@@ -167,7 +165,7 @@ class Client::impl {
     if (status == UA_STATUSCODE_GOOD) {
       return LocalizedText(parser::from_open62541(out));
     }
-    BOOST_LOG_CHANNEL_SEV(m_lg, m_channel, error)
+    BOOST_LOG_CHANNEL_SEV(m_lg, m_channel, flog::error)
         << "Read display name failed. Error code = " << status;
     return LocalizedText();
   }

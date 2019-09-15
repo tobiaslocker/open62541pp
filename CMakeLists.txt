@@ -22,7 +22,7 @@ endif()
 find_package(open62541 REQUIRED)
 
 #include_directories(include third-party/open62541/build/include third-party/base64/include)
-include_directories(include staging/include/open62541 third-party/ostr/include)
+include_directories(include staging/include/open62541 third-party/ostr/include third-party/flog/include)
 
 set(
     SOURCES
@@ -46,7 +46,6 @@ set(
     src/responseheader.cpp
     src/viewdescription.cpp
     src/datetime.cpp
-    src/log.cpp
     src/extensionobject.cpp
 )
 
