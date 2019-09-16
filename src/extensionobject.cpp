@@ -306,7 +306,7 @@ class ExtensionObject::impl {
   bool empty() const { return m_empty; }
 
   bool operator==(impl const &rhs) const { return content() == rhs.content(); }
-  bool operator!=(impl const &rhs) const { return content() == rhs.content(); }
+  bool operator!=(impl const &rhs) const { return content() != rhs.content(); }
 };
 
 ExtensionObject::ExtensionObject() : d_ptr{std::make_unique<impl>()} {}
