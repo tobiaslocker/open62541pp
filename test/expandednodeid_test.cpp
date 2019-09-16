@@ -42,11 +42,11 @@ BOOST_AUTO_TEST_CASE(test_default_constructor) {
 }
 
 BOOST_AUTO_TEST_CASE(test_constructor) {
-    auto e = common::make_expanded_node_id_1();
-    BOOST_TEST(!e.empty());
-    BOOST_TEST(e.node_id() == common::make_node_id_1());
-    BOOST_TEST(e.namespace_uri() == "ns:test:uri:1234");
-    BOOST_TEST(e.server_index() == 2U);
+  auto e = common::make_expanded_node_id_1();
+  BOOST_TEST(!e.empty());
+  BOOST_TEST(e.node_id() == common::make_node_id_1());
+  BOOST_TEST(e.namespace_uri() == "ns:test:uri:1234");
+  BOOST_TEST(e.server_index() == 2U);
 }
 
 BOOST_AUTO_TEST_CASE(test_comparison_operators) {
