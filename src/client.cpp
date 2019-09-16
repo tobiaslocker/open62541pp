@@ -35,7 +35,8 @@ class Client::impl {
     if (m_handler) {
       m_handler->on_state_changed(cs);
     }
-    BOOST_LOG_CHANNEL_SEV(m_lg, m_channel, flog::debug) << "Client state -> " << cs;
+    BOOST_LOG_CHANNEL_SEV(m_lg, m_channel, flog::debug)
+        << "Client state -> " << cs;
   }
 
  public:
@@ -92,8 +93,9 @@ class Client::impl {
     }
     for (size_t i = 0; i < len; i++) {
       auto ep = parser::from_open62541(endpoints[i]);
-      BOOST_LOG_CHANNEL_SEV(m_lg, m_channel, flog::debug) << "Endpoint " << i << '\n'
-                                                    << ep;
+      BOOST_LOG_CHANNEL_SEV(m_lg, m_channel, flog::debug)
+          << "Endpoint " << i << '\n'
+          << ep;
       result.push_back(ep);
     }
     UA_Array_delete(endpoints, len, &UA_TYPES[UA_TYPES_ENDPOINTDESCRIPTION]);
@@ -101,7 +103,8 @@ class Client::impl {
   }
 
   void connect(std::string const &url) {
-    BOOST_LOG_CHANNEL_SEV(m_lg, m_channel, flog::info) << "Connect to server...";
+    BOOST_LOG_CHANNEL_SEV(m_lg, m_channel, flog::info)
+        << "Connect to server...";
     auto status = UA_Client_connect(m_client.get(), url.c_str());
     if (status == UA_STATUSCODE_GOOD) {
       BOOST_LOG_CHANNEL_SEV(m_lg, m_channel, flog::info) << "Status: OK";
@@ -136,7 +139,8 @@ class Client::impl {
       BrowseResultMask br_mask,
       NodeClass node_class,
       ReferenceTypeIdentifier id) {
-    BOOST_LOG_CHANNEL_SEV(m_lg, m_channel, flog::debug) << "Getting child references";
+    BOOST_LOG_CHANNEL_SEV(m_lg, m_channel, flog::debug)
+        << "Getting child references";
     std::vector<ReferenceDescription> children;
     std::shared_ptr<UA_BrowseDescription> browse_desc(new UA_BrowseDescription);
     UA_BrowseDescription_init(browse_desc.get());

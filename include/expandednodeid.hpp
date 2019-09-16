@@ -29,6 +29,8 @@ class ExpandedNodeId {
   NodeId node_id() const;
   uint32_t server_index() const;
 
+  bool empty() const;
+
   bool operator==(ExpandedNodeId const &rhs) const;
   bool operator!=(ExpandedNodeId const &rhs) const;
 };

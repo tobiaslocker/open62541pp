@@ -8,8 +8,10 @@ class ExpandedNodeId::impl {
   std::string m_namespace_uri;
   uint32_t m_server_index = 0;
 
+  bool m_empty = false;
+
  public:
-  impl() {}
+  impl() : m_empty{true} {}
   impl(NodeId const &node_id,
        std::string const &namespace_uri,
        uint32_t server_index)
@@ -22,6 +24,8 @@ class ExpandedNodeId::impl {
   NodeId node_id() const { return m_node_id; }
 
   uint32_t server_index() const { return m_server_index; }
+
+  bool empty() const { return m_empty; }
 
   bool operator==(impl const &rhs) const {
     return namespace_uri() == rhs.namespace_uri() &&
@@ -40,6 +44,8 @@ ExpandedNodeId::ExpandedNodeId(NodeId const &node_id,
     : d_ptr{std::make_unique<impl>(node_id, namespace_uri, server_index)} {}
 
 ExpandedNodeId::ExpandedNodeId() : d_ptr{std::make_unique<impl>()} {}
+
+ExpandedNodeId &ExpandedNodeId::operator=(ExpandedNodeId &&) noexcept = default;
 
 ExpandedNodeId::ExpandedNodeId(ExpandedNodeId &&) noexcept = default;
 
@@ -62,6 +68,8 @@ std::string ExpandedNodeId::namespace_uri() const {
 NodeId ExpandedNodeId::node_id() const { return d_ptr->node_id(); }
 
 uint32_t ExpandedNodeId::server_index() const { return d_ptr->server_index(); }
+
+bool ExpandedNodeId::empty() const { return d_ptr->empty(); }
 
 bool ExpandedNodeId::operator==(ExpandedNodeId const &rhs) const {
   return *d_ptr == *rhs.d_ptr;
