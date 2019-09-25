@@ -212,11 +212,10 @@ BrowseRequest make_browse_request_1() {
 }
 
 BrowseRequest make_browse_request_2() {
-  return BrowseRequest(
-      make_request_header_2(),
-      make_view_description_2(),
-      3,
-      {make_browse_description_2()});
+  return BrowseRequest(make_request_header_2(),
+                       make_view_description_2(),
+                       3,
+                       {make_browse_description_2()});
 }
 
 DiagnosticInfo make_diagnostic_info_1() {

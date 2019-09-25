@@ -305,8 +305,12 @@ class ExtensionObject::impl {
 
   bool empty() const { return m_empty; }
 
-  bool operator==(impl const &rhs) const { return content() == rhs.content(); }
-  bool operator!=(impl const &rhs) const { return content() != rhs.content(); }
+  bool operator==(impl const &rhs) const {
+    return content() == rhs.content() && encoding() == rhs.encoding();
+  }
+  bool operator!=(impl const &rhs) const {
+    return content() != rhs.content() || encoding() != rhs.encoding();
+  }
 };
 
 ExtensionObject::ExtensionObject() : d_ptr{std::make_unique<impl>()} {}
@@ -374,6 +378,10 @@ std::ostream &operator<<(std::ostream &out, const ExtensionObject &op) {
   if (auto v = std::get_if<std::pair<NodeId, ByteString>>(&c)) {
     return out << "ExtensionObject("
                << ostr::fmt(op.encoding(), v->first, v->second) << ')';
+  } else if (auto v = std::get_if<std::pair<DataType, std::shared_ptr<void>>>(&c)) {
+    return out << "ExtensionObject("
+               << ostr::fmt(op.encoding(), v->first, "User data") << ')';
+
   }  // TODO handle void pointer
   return out;
 }
